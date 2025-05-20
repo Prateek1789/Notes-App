@@ -1,2 +1,2 @@
-# Nptes-App
+# Notes-App
 A simple Notes App frontend Project
