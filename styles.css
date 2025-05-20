@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+:root {
+    --clr-background: #f5f5f5;
+    --clr-slate: #e6e6e6;
+    --clr-text: #161616;
+    --clr-text-light: #eaeaea;
+    --clr-bg: #E8D8CD;
+    --clr-accent: #A16B48;
+    --clr-active: #007bff;
+    --clr-delete: #ea4b4b;
+    --font-hero: clamp(2.2rem, 4.4vw + 1rem, 3.5rem);
+    --font-xl: clamp(2.5rem, 2.5vw + 1rem, 5rem);
+    --font-lg: clamp(1.75rem, 2vw + 1rem, 3.25rem);
+    --font-sm: 1rem;
+}
