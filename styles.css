@@ -7,16 +7,203 @@
     font-family: "Inter", sans-serif;
 }
 :root {
-    --clr-background: #f5f5f5;
-    --clr-slate: #e6e6e6;
-    --clr-text: #161616;
-    --clr-text-light: #eaeaea;
-    --clr-bg: #E8D8CD;
-    --clr-accent: #A16B48;
-    --clr-active: #007bff;
-    --clr-delete: #ea4b4b;
-    --font-hero: clamp(2.2rem, 4.4vw + 1rem, 3.5rem);
-    --font-xl: clamp(2.5rem, 2.5vw + 1rem, 5rem);
-    --font-lg: clamp(1.75rem, 2vw + 1rem, 3.25rem);
-    --font-sm: 1rem;
+  --clr-accent-blue: #64adff;
+  --clr-accent-orange: #ffc681;
+  --clr-accent-red: #ff7e7e;
+  --clr-background: #f2f2f2;
+  --clr-slate: #e6ecf1;
+  --clr-divider: #191919;
+  --clr-text: #191919;
+}
+.dark-mode {
+  --clr-accent-blue: #438ce0;
+  --clr-accent-orange: #e78e35;
+  --clr-accent-red: #d54d4d;
+  --clr-background: #151515;
+  --clr-slate: #252525;
+  --clr-text: #dedede;
+  --clr-divider: #e4e4e4;
+}
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 2.8em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.app-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--clr-background);
+    display: grid;
+    grid-template-columns: 17rem 1fr;
+    grid-template-rows: 6rem 1fr;
+    grid-template-areas: 
+      "header header"
+      "main main";
+    color: var(--clr-text);
+}
+header {
+  grid-area: header;
+}
+main {
+    grid-area: main;
+}
+
+header {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 100%;
+    width: 20rem;
+    display: grid;
+    place-content: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-inline: 2.75rem;
+}
+
+.nav-list {
+    width: 100%;
+    display: flex;
+    list-style: none;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input[type="search"] {
+    width: 20rem;
+    height: calc(5rem / 2);
+    padding: 0.5rem;
+    border-radius: 0.35rem;
+    border: 1px solid var(--clr-slate);
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500
+    ;
+}
+
+.circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--clr-accent-blue);
+    display: grid;
+    place-content: center;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background-color: var(--clr-background);
+  display: grid;
+  grid-template-columns: 17rem 1fr;
+  grid-template-areas: 
+    "sidebar notes-area";
+  color: var(--clr-text);
+}
+
+.sidebar {
+  grid-area: sidebar;
+  padding: 20px;
+}
+
+.notes-area {
+  grid-area: notes-area;
+}
+.notes-area {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border-radius: 20px 0px 0px 0px;
+    background-color: var(--clr-slate);
+}
+
+.note {
+    width: 100%;
+    height: 100%;
+    padding-inline: 1rem;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    color: var(--clr-text);
+    background-color: var(--clr-accent-orange);
+}
+.note-header {
+    padding-block-start: 1.75rem;
+    padding-block-end: 1rem;
+    border-bottom: 1px solid var(--clr-divider);
+}
+.note-date {
+    font-size: 0.75rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+.note-content {
+    padding-block: 1rem;
+}
+.note-footer {
+    font-size: 0.75rem;
+    padding-block-start: 1rem;
+    padding-block-end: 1.75rem;
 }
