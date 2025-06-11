@@ -7,23 +7,24 @@
     font-family: "Inter", sans-serif;
 }
 :root {
-  --clr-accent-blue: #64adff;
-  --clr-accent-orange: #ffc681;
-  --clr-accent-red: #ff7e7e;
-  --clr-accent-hover: #c7e1fe;
-  --clr-background: #f2f2f2;
-  --clr-slate: #e6ecf1;
-  --clr-divider: #191919;
-  --clr-text: #191919;
+    --clr-logo: linear-gradient(90deg, #5ab5ff, #ffb152, #ff4646);
+    --clr-accent-blue: #64adff;
+    --clr-accent-orange: #ffc681;
+    --clr-accent-red: #ff7e7e;
+    --clr-accent-hover: #c7e1fe;
+    --clr-background: #f2f2f2;
+    --clr-slate: #e6ecf1;
+    --clr-divider: #191919;
+    --clr-text: #191919;
 }
 .dark-mode {
-  --clr-accent-blue: #438ce0;
-  --clr-accent-orange: #e78e35;
-  --clr-accent-red: #d54d4d;
-  --clr-background: #151515;
-  --clr-slate: #252525;
-  --clr-text: #dedede;
-  --clr-divider: #e4e4e4;
+    --clr-accent-blue: #438ce0;
+    --clr-accent-orange: #e78e35;
+    --clr-accent-red: #d54d4d;
+    --clr-background: #151515;
+    --clr-slate: #252525;
+    --clr-text: #dedede;
+    --clr-divider: #e4e4e4;
 }
 svg {
     fill: var(--clr-text);
@@ -112,6 +113,9 @@ header {
     place-content: center;
     font-size: 2rem;
     font-weight: 600;
+    background: var(--clr-logo);
+    background-clip: text;
+    color: transparent;
 }
 
 .navbar {
@@ -170,60 +174,80 @@ main {
   grid-area: sidebar;
 }
 .sidebar {
-    padding: 20px;
+    padding-inline: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
 }
 .add-note-tab {
     width: 100%;
     display: grid;
-    grid-template-rows: repeat(1, 40px);
+    grid-template-rows: repeat(4, 50px);
     overflow: hidden;
     transition: 240ms ease;
 }
-.add-note-tab.active {
-    grid-template-rows: repeat(4, 40px);
-}
-.head {
+.note-opt-head {
     width: 100%;
     height: 100%;
+}
+.add-note-btn {
+    width: 100%;
+    height: 100%;
+    background-color: #e4f0fd;
+    border-radius: 10px;
+    padding-inline: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
-    border-radius: 10px;
     transition: 240ms ease;
-    padding-inline: 10px;
-    background-color: #e4f0fd;
 }
-.head svg {
-    transform: translateY(2px);
-}
-.head:hover {
+.add-note-btn:hover {
     background-color: var(--clr-accent-hover);
 }
+
 .new-note-option {
     width: 100%;
-    height: 0%;
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 7rem;
-    padding-inline-start: 2rem;
-    padding-inline-end: 10px;
-    cursor: pointer;
-    transition: 240ms ease allow-descrete;
-    overflow: hidden;
-}
-.new-note-option.active {
-    height: 100%;
+    justify-content: flex-start;
+    padding-inline-start: 2.5rem;
 }
 .clr-circle {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    background-color: #438ce0;
+    cursor: pointer;
+}
+.crcl-1 {
+    background-color: var(--clr-accent-blue);
+}
+.crcl-2 {
+    background-color: var(--clr-accent-orange);
+}
+.crcl-3 {
+    background-color: var(--clr-accent-red);
+}
+.add-notebook-tab {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: 240ms ease;
+}
+.add-notebook-btn {
+    width: 100%;
+    height: 50px;
+    background-color: #e4f0fd;
+    border-radius: 10px;
+    padding-inline: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 240ms ease;
+}
+.add-notebook-btn:hover {
+    background-color: var(--clr-accent-hover);
 }
 
 .notes-area {
@@ -261,7 +285,14 @@ h3 {
     font-size: 1.5rem;
 }
 .note-content {
-    padding-block: 1rem;
+    font-size: 1.25rem;
+    padding-block: 0.75rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+.note-content:disabled {
+    color: var(--clr-text);
 }
 .note-footer {
     font-size: 0.75rem;
