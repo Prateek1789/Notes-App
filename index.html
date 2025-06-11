@@ -12,7 +12,7 @@
 <body>
     <div class="app-container">
         <header>
-            <span class="logo">LOGO</span>
+            <span class="logo">Notes-Book</span>
             <nav class="navbar">
                 <ul class="nav-list">
                     <li class="nav-items"><h1>Project 1</h1></li>
@@ -28,35 +28,35 @@
                 </ul>
             </nav>
         </header>
+
         <main>
         <section class="sidebar">
             <div class="add-note-tab">
-                <div class="head">
-                    <h4>Add New Note</h4>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
+                <div class="note-opt-head">
+                    <button type="button" class="add-note-btn">
+                        <span>Add New Note</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    </button>
                 </div>
-                <div class="new-note-option opt-1">
-                    <div class="clr-circle"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-                </div>
-                <div class="new-note-option opt-2">
-                    <div class="clr-circle"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-                </div>
-                <div class="new-note-option opt-3">
-                    <div class="clr-circle"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-                </div>
+                <div class="new-note-option opt-1"><div class="clr-circle crcl-1"></div></div>
+                <div class="new-note-option opt-2"><div class="clr-circle crcl-2"></div></div>
+                <div class="new-note-option opt-3"><div class="clr-circle crcl-3"></div></div>
+            </div>
+            <div class="add-notebook-tab">
+                <button type="button" class="add-notebook-btn">
+                        <span>Add Notebook</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                </button>
             </div>
         </section>
+
         <section class="notes-area">
             <div class="note">
                 <div class="note-header">
                     <span class="note-date">09-06-2025</span>
                     <h3>Homework</h3>
                 </div>
-                <p class="note-content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, praesentium nisi? Saepe deserunt pariatur harum hic numquam alias, exercitationem odio natus quo. Earum veniam in, reprehenderit odio blanditiis placeat hic?</p>
+                <textarea name="content" id="note-1" class="note-content" autofocus="on"></textarea>
                 <div class="note-footer">
                     <span class="note-time">08:08PM, </span>
                     <span class="note-day">Monday</span>
