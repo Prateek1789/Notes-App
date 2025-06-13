@@ -13,6 +13,32 @@ class App {
         this.appFunctions();
     };
 
+    noteColourSelector(e) {
+        if (e.target.closest(".crcl-1")) {
+            e.target.classList.toggle("active");
+            if (this.noteColourOptions[1].classList.contains("active") || this.noteColourOptions[2].classList.contains("active")) {
+                this.noteColourOptions[1].classList.remove("active");
+                this.noteColourOptions[2].classList.remove("active");
+            }
+        }
+        
+        if (e.target.closest(".crcl-2")) {
+            e.target.classList.toggle("active");
+            if (this.noteColourOptions[0].classList.contains("active") || this.noteColourOptions[2].classList.contains("active")) {
+                this.noteColourOptions[0].classList.remove("active");
+                this.noteColourOptions[2].classList.remove("active");
+            }
+        }
+
+        if (e.target.closest(".crcl-3")) {
+            e.target.classList.toggle("active");
+            if (this.noteColourOptions[0].classList.contains("active") || this.noteColourOptions[1].classList.contains("active")) {
+                this.noteColourOptions[0].classList.remove("active");
+                this.noteColourOptions[1].classList.remove("active");
+            }
+        }
+    }
+
     createNote(id, colour) {
         const note = document.createElement("div");
         note.setAttribute("class", "note");
@@ -30,45 +56,20 @@ class App {
     }
 
     addNote() {
-        if (this.noteColourOptions[0].classList.contains("active")) {
-            this.noteArea.appendChild(this.createNote(this.noteID, this.notesColour[0]));
-            this.noteID++;
-        }
-        else if (this.noteColourOptions[1].classList.contains("active")) {
-            this.noteArea.appendChild(this.createNote(this.noteID, this.notesColour[1]));
-            this.noteID++;
-        }
-        else if (this.noteColourOptions[2].classList.contains("active")) {
-            this.noteArea.appendChild(this.createNote(this.noteID, this.notesColour[2]));
-            this.noteID++;
-        }
+        this.noteColourOptions.forEach((itm, idx) => {
+            if (itm.classList.contains("active")) {
+                this.noteArea.appendChild(this.createNote(this.noteID, this.notesColour[idx]));
+                this.noteID++;
+            }
+        })
     }
+
+
     appFunctions() {
-        
         this.app.addEventListener("click", e => {
-            
-            if (e.target.closest(".crcl-1")) {
-                e.target.classList.toggle("active");
-                if (this.noteColourOptions[1].classList.contains("active") || this.noteColourOptions[2].classList.contains("active")) {
-                    this.noteColourOptions[1].classList.remove("active");
-                    this.noteColourOptions[2].classList.remove("active");
-                }
-            }
-            else if (e.target.closest(".crcl-2")) {
-                e.target.classList.toggle("active");
-                if (this.noteColourOptions[0].classList.contains("active") || this.noteColourOptions[2].classList.contains("active")) {
-                    this.noteColourOptions[0].classList.remove("active");
-                    this.noteColourOptions[2].classList.remove("active");
-                }
-            }
-            else if (e.target.closest(".crcl-3")) {
-                e.target.classList.toggle("active");
-                if (this.noteColourOptions[0].classList.contains("active") || this.noteColourOptions[1].classList.contains("active")) {
-                    this.noteColourOptions[0].classList.remove("active");
-                    this.noteColourOptions[1].classList.remove("active");
-                }
-            }
-            else if (e.target.closest(".add-note-btn")) {
+            this.noteColourSelector(e);
+
+            if (e.target.closest(".add-note-btn")) {
                 this.addNote();
             }
         });
