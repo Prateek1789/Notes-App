@@ -9,8 +9,11 @@
 :root {
     --clr-logo: linear-gradient(90deg, #5ab5ff, #ffb152, #ff4646);
     --clr-accent-blue: #64adff;
+    --clr-accent-blue-border: #1582ff;
     --clr-accent-orange: #ffc681;
+    --clr-accent-orange-border: #fc9a22;
     --clr-accent-red: #ff7e7e;
+    --clr-accent-red-border: #fa2828;
     --clr-accent-hover: #c7e1fe;
     --clr-background: #f2f2f2;
     --clr-slate: #e6ecf1;
@@ -88,7 +91,7 @@ button:focus-visible {
     background-color: var(--clr-background);
     display: grid;
     grid-template-columns: 17rem 1fr;
-    grid-template-rows: 6rem 1fr;
+    grid-template-rows: 6rem calc(100% - 6rem);
     grid-template-areas: 
       "header header"
       "main main";
@@ -220,14 +223,24 @@ main {
     border-radius: 50%;
     cursor: pointer;
 }
+
 .crcl-1 {
     background-color: var(--clr-accent-blue);
+}
+.crcl-1.active {
+    border: 2px solid var(--clr-accent-blue-border);
 }
 .crcl-2 {
     background-color: var(--clr-accent-orange);
 }
+.crcl-2.active {
+    border: 2px solid var(--clr-accent-orange-border);
+}
 .crcl-3 {
     background-color: var(--clr-accent-red);
+}
+.crcl-3.active {
+    border: 2px solid var(--clr-accent-red-border);
 }
 .add-notebook-tab {
     width: 100%;
@@ -254,13 +267,16 @@ main {
   grid-area: notes-area;
 }
 .notes-area {
+    height: 100%;
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 1.25rem;
-    padding: 1.25rem;
+    grid-template-columns: repeat(auto-fit, 359px);
+    grid-auto-rows: 426px;
+    gap: 1.15rem;
+    padding: 1.15rem;
     border-radius: 20px 0px 0px 0px;
     background-color: var(--clr-slate);
+    overflow: scroll;
 }
 
 .note {
@@ -272,6 +288,7 @@ main {
     grid-template-rows: auto 1fr auto;
     color: var(--clr-text);
     background-color: var(--clr-accent-orange);
+    box-shadow: 4px 8px 15px #b7bfc9;
 }
 .note-header {
     padding-block-start: 1.75rem;
@@ -290,6 +307,7 @@ h3 {
     background-color: transparent;
     border: none;
     outline: none;
+    resize: none;
 }
 .note-content:disabled {
     color: var(--clr-text);
