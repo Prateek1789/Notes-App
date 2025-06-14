@@ -1,16 +1,28 @@
 class App {
     constructor() {
         this.app = document.querySelector(".app-container");
+        this.themeBall = document.querySelector(".toggle-ball");
         this.addNoteBtn = document.querySelector(".add-note-btn");
         this.noteArea = document.querySelector(".notes-area");
         this.noteColourOptions = [...document.querySelectorAll(".clr-circle")];
-        this.noteColours = ['#64adff', '#ffc681', '#ff7e7e'];
+        this.noteColours = [];
+        this.isDarkMode = this.app.classList.contains("dark-mode");
         this.noteID = 0;
         this.init();
     };
 
-    init() { 
+    init() {
+        // Event listener to handle App click events
         this.app.addEventListener("click", e => {
+            if (e.target.closest(".theme-toggle")) {
+                this.setTheme();
+                let isPressed = e.target.getAttribute("aria-pressed") == "true";
+                e.target.setAttribute("aria-pressed", !isPressed ? "true" : "false");
+
+                // Set note colour array based on theme
+                this.isDarkMode ? this.noteColours = ['#2c81e3', '#e99733', '#e02929'] : this.noteColours = ['#64adff', '#ffc681', '#ff7e7e'];
+            }
+
             if (e.target.closest(".clr-circle")) {
                 this.noteColourSelector(e);
             }
@@ -20,6 +32,12 @@ class App {
             }
         });
     };
+
+    setTheme() {
+        this.app.classList.toggle("dark-mode");
+        this.themeBall.classList.toggle("active");
+        this.isDarkMode = this.app.classList.contains("dark-mode");
+    }
 
     noteColourSelector(e) {
         // Get colour option clicked by user
