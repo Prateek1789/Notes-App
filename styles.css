@@ -150,6 +150,51 @@ input[type="search"] {
     padding: 0.5rem;
     border-radius: 0.35rem;
     border: 1px solid var(--clr-slate);
+    background-color: var(--clr-slate);
+    color: var(--clr-text);
+}
+
+.itm-3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+.theme-toggle {
+    width: 70px;
+    height: 35px;
+    position: relative;
+    background-color: var(--clr-slate);
+    border: none;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem;
+    cursor: pointer;
+    /* box-shadow: inset 3px 3px 10px #b7bfc9; */
+}
+.theme-toggle:focus {
+    outline: none;
+}
+.dark-mode-icon,
+.light-mode-icon {
+    width: 25px;
+    height: 25px;
+}
+.toggle-ball {
+    height: 30px;
+    width: 30px;
+    top: 0.25rem;
+    right: 0.25rem;
+    border-radius: 50%;
+    position: absolute;
+    background-color: var(--clr-text);
+    transform: translateY(-5%) translateX(5%);
+    transition: 240ms ease;
+}
+.toggle-ball.active {
+    transform: translateY(-5%) translateX(-110%)
 }
 
 .user {
