@@ -3,40 +3,37 @@ class App {
         this.app = document.querySelector(".app-container");
         this.addNoteBtn = document.querySelector(".add-note-btn");
         this.noteArea = document.querySelector(".notes-area");
-        this.noteColourOptions = document.querySelectorAll(".clr-circle");
-        this.notesColour = ['#64adff', '#ffc681', '#ff7e7e'];
+        this.noteColourOptions = [...document.querySelectorAll(".clr-circle")];
+        this.noteColours = ['#64adff', '#ffc681', '#ff7e7e'];
         this.noteID = 0;
-        this.init()
+        this.init();
     };
 
-    init() {
-        this.appFunctions();
+    init() { 
+        this.app.addEventListener("click", e => {
+            if (e.target.closest(".clr-circle")) {
+                this.noteColourSelector(e);
+            }
+        
+            if (e.target.closest(".add-note-btn")) {
+                this.addNote();
+            }
+        });
     };
 
     noteColourSelector(e) {
-        if (e.target.closest(".crcl-1")) {
-            e.target.classList.toggle("active");
-            if (this.noteColourOptions[1].classList.contains("active") || this.noteColourOptions[2].classList.contains("active")) {
-                this.noteColourOptions[1].classList.remove("active");
-                this.noteColourOptions[2].classList.remove("active");
-            }
-        }
-        
-        if (e.target.closest(".crcl-2")) {
-            e.target.classList.toggle("active");
-            if (this.noteColourOptions[0].classList.contains("active") || this.noteColourOptions[2].classList.contains("active")) {
-                this.noteColourOptions[0].classList.remove("active");
-                this.noteColourOptions[2].classList.remove("active");
-            }
-        }
+        // Get colour option clicked by user
+        const clickedElement = e.target.closest(".clr-circle");
+        if (!clickedElement) return;
 
-        if (e.target.closest(".crcl-3")) {
-            e.target.classList.toggle("active");
-            if (this.noteColourOptions[0].classList.contains("active") || this.noteColourOptions[1].classList.contains("active")) {
-                this.noteColourOptions[0].classList.remove("active");
-                this.noteColourOptions[1].classList.remove("active");
-            }
-        }
+        // Toggle Active class on the clicked colour option
+        let isActive = clickedElement.classList.contains("active");
+        isActive ? clickedElement.classList.remove("active") : clickedElement.classList.add("active");
+
+        // Remove 'active' class only from unselected color options
+        this.noteColourOptions.forEach(option => {
+           if (option !== clickedElement && option.classList.contains("active")) option.classList.remove("active");
+        });
     }
 
     createNote(id, colour) {
@@ -58,23 +55,15 @@ class App {
     addNote() {
         this.noteColourOptions.forEach((itm, idx) => {
             if (itm.classList.contains("active")) {
-                this.noteArea.appendChild(this.createNote(this.noteID, this.notesColour[idx]));
+                this.noteArea.appendChild(this.createNote(this.noteID, this.noteColours[idx]));
                 this.noteID++;
             }
-        })
+        });
     }
 
 
-    appFunctions() {
-        this.app.addEventListener("click", e => {
-            this.noteColourSelector(e);
-
-            if (e.target.closest(".add-note-btn")) {
-                this.addNote();
-            }
-        });
-    
-        /* const noteContent = [...document.querySelectorAll(".note-content")];
+    /* appFunctions() {
+        const noteContent = [...document.querySelectorAll(".note-content")];
         noteContent.forEach(itm => {
             itm.addEventListener("keydown", (e) => {
                     if (itm.value && e.key === "Enter") {
@@ -83,8 +72,8 @@ class App {
                         itm.setAttribute("disabled", "");
                 }
             })
-        }); */
-    }
+        });
+    } */
 }
 
 const myApp = new App;
