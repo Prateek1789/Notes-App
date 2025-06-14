@@ -5,8 +5,13 @@ class App {
         this.addNoteBtn = document.querySelector(".add-note-btn");
         this.noteArea = document.querySelector(".notes-area");
         this.noteColourOptions = [...document.querySelectorAll(".clr-circle")];
-        this.noteColours = [];
         this.isDarkMode = this.app.classList.contains("dark-mode");
+        this.noteColours = [];
+        this.noteColourMap = new Map([
+            ['#64adff',' #2c81e3'],
+            ['#ffc681',' #e99733'],
+            ['#ff7e7e',' #e02929']
+        ]);
         this.noteID = 0;
         this.init();
     };
@@ -18,10 +23,9 @@ class App {
                 this.setTheme();
                 let isPressed = e.target.getAttribute("aria-pressed") == "true";
                 e.target.setAttribute("aria-pressed", !isPressed ? "true" : "false");
-
-                // Set note colour array based on theme
-                this.isDarkMode ? this.noteColours = ['#2c81e3', '#e99733', '#e02929'] : this.noteColours = ['#64adff', '#ffc681', '#ff7e7e'];
             }
+            // Set note colour array based on theme
+            this.noteColours = this.isDarkMode ? [...this.noteColourMap.values()] : [...this.noteColourMap.keys()];
 
             if (e.target.closest(".clr-circle")) {
                 this.noteColourSelector(e);
@@ -37,6 +41,7 @@ class App {
         this.app.classList.toggle("dark-mode");
         this.themeBall.classList.toggle("active");
         this.isDarkMode = this.app.classList.contains("dark-mode");
+        this.updateAllNotesTheme();
     }
 
     noteColourSelector(e) {
@@ -54,6 +59,30 @@ class App {
         });
     }
 
+    updateAllNotesTheme() {
+        // Select all existing note 
+        const allNotes = this.noteArea.querySelectorAll(".note");
+
+        // Iterate over each note and retrieve colour hex code from dataset
+        allNotes.forEach(note => {
+            let currentColour = note.dataset.hexColor;
+
+            if (this.isDarkMode) {
+                note.style.backgroundColor = `${this.noteColourMap.get(currentColour)}`;
+                note.dataset.hexColor = `${this.noteColourMap.get(currentColour)}`;
+                currentColour = note.dataset.hexColor;
+            }
+            else {
+                let originalColour;
+                for (const [key, val] of this.noteColourMap.entries()) {
+                    if (val === currentColour) originalColour = key;
+                }
+                note.style.backgroundColor = originalColour;
+                note.dataset.hexColor = `${originalColour}`;
+            }
+        });
+    }
+
     createNote(id, colour) {
         const note = document.createElement("div");
         note.setAttribute("class", "note");
@@ -67,6 +96,7 @@ class App {
                                 <span class="note-day">Monday</span>
                           </div>`;
         note.style.backgroundColor = `${colour}`;
+        note.dataset.hexColor = `${colour}`;
         return note;
     }
 
