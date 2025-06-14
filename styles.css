@@ -19,15 +19,22 @@
     --clr-slate: #e6ecf1;
     --clr-divider: #191919;
     --clr-text: #191919;
+    --clr-note-shadow: 4px 8px 15px #b7bfc9;
 }
 .dark-mode {
-    --clr-accent-blue: #438ce0;
-    --clr-accent-orange: #e78e35;
-    --clr-accent-red: #d54d4d;
+    --clr-logo: linear-gradient(90deg, #34a3ff, #ffa02b, #ff2f2f);
+    --clr-accent-blue: #2c81e3;
+    --clr-accent-blue-border: #78b7ff;
+    --clr-accent-orange: #e99733;
+    --clr-accent-orange-border: #ffc277;
+    --clr-accent-red: #e02929;
+    --clr-accent-red-border: #ff8484;
+    --clr-accent-hover: #84bdff;
     --clr-background: #151515;
     --clr-slate: #252525;
     --clr-text: #dedede;
     --clr-divider: #e4e4e4;
+    --clr-note-shadow: 4px 8px 15px #0d0d0d;
 }
 svg {
     fill: var(--clr-text);
@@ -288,7 +295,7 @@ main {
     grid-template-rows: auto 1fr auto;
     color: var(--clr-text);
     background-color: var(--clr-accent-orange);
-    box-shadow: 4px 8px 15px #b7bfc9;
+    box-shadow: var(--clr-note-shadow);
 }
 .note-header {
     padding-block-start: 1.75rem;
@@ -308,6 +315,7 @@ h3 {
     border: none;
     outline: none;
     resize: none;
+    color: var(--clr-text);
 }
 .note-content:disabled {
     color: var(--clr-text);
