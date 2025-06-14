@@ -6,7 +6,6 @@ class App {
         this.noteArea = document.querySelector(".notes-area");
         this.noteColourOptions = [...document.querySelectorAll(".clr-circle")];
         this.isDarkMode = this.app.classList.contains("dark-mode");
-        this.noteColours = [];
         this.noteColourMap = new Map([
             ['#64adff',' #2c81e3'],
             ['#ffc681',' #e99733'],
@@ -24,8 +23,6 @@ class App {
                 let isPressed = e.target.getAttribute("aria-pressed") == "true";
                 e.target.setAttribute("aria-pressed", !isPressed ? "true" : "false");
             }
-            // Set note colour array based on theme
-            this.noteColours = this.isDarkMode ? [...this.noteColourMap.values()] : [...this.noteColourMap.keys()];
 
             if (e.target.closest(".clr-circle")) {
                 this.noteColourSelector(e);
@@ -36,6 +33,34 @@ class App {
             }
         });
     };
+
+    createNote(id, colour) {
+        const note = document.createElement("div");
+        note.setAttribute("class", "note");
+        note.innerHTML = `<div class="note-header">
+                            <span class="note-date">09-06-2025</span>
+                            <h3>Homework</h3>
+                          </div>
+                          <textarea name="content" id="note-${id}" class="note-content" autofocus="on"></textarea>
+                          <div class="note-footer">
+                                <span class="note-time">08:08PM, </span>
+                                <span class="note-day">Monday</span>
+                          </div>`;
+
+        note.dataset.hexColor = `${colour}`;
+        note.style.backgroundColor = `${colour}`;
+        return note;
+    }
+
+    addNote() {
+        this.noteColourOptions.forEach((itm, idx) => {
+            let displayColour = this.isDarkMode ? [...this.noteColourMap.values()] : [...this.noteColourMap.keys()];
+            if (itm.classList.contains("active")) {
+                this.noteArea.appendChild(this.createNote(this.noteID, displayColour[idx]));
+                this.noteID++;
+            }
+        });
+    }
 
     setTheme() {
         this.app.classList.toggle("dark-mode");
@@ -79,32 +104,6 @@ class App {
                 }
                 note.style.backgroundColor = originalColour;
                 note.dataset.hexColor = `${originalColour}`;
-            }
-        });
-    }
-
-    createNote(id, colour) {
-        const note = document.createElement("div");
-        note.setAttribute("class", "note");
-        note.innerHTML = `<div class="note-header">
-                            <span class="note-date">09-06-2025</span>
-                            <h3>Homework</h3>
-                          </div>
-                          <textarea name="content" id="note-${id}" class="note-content" autofocus="on"></textarea>
-                          <div class="note-footer">
-                                <span class="note-time">08:08PM, </span>
-                                <span class="note-day">Monday</span>
-                          </div>`;
-        note.style.backgroundColor = `${colour}`;
-        note.dataset.hexColor = `${colour}`;
-        return note;
-    }
-
-    addNote() {
-        this.noteColourOptions.forEach((itm, idx) => {
-            if (itm.classList.contains("active")) {
-                this.noteArea.appendChild(this.createNote(this.noteID, this.noteColours[idx]));
-                this.noteID++;
             }
         });
     }
