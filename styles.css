@@ -151,20 +151,40 @@ header {
 
 .itm-2 {
     width: 40%;
-}
-input[type="search"] {
-    width: 100%;
     height: calc(5rem / 2);
-    padding: 0.5rem;
-    border-radius: 0.75rem;
-    border: none;
+    padding-inline: 0.75rem;
+    padding-inline-start: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: var(--clr-slate);
+    border-radius: 12px;
+    border: 1px solid transparent;
+}
+.itm-2.active {
+    border-color: var(--clr-border);
+}
+
+input[type="search"] {
+    width: auto;
+    flex: 1;
+    height: 90%;
+    padding: 0.5rem;
+    border: none;
+    background-color: transparent;
     color: var(--clr-text);
-    box-shadow: 1px 2px 8px var(--clr-shadow);
+    font-size: 14px;
+    transition: 240ms ease;
 }
 input[type="search"]:focus {
-    outline-color: var(--clr-border);
-    outline-style: solid;
+    outline: none;
+}
+.search-shortcut {
+    font-size: 14px;
+    color: #636c72;
+}
+.search-shortcut.active {
+    display: none;
 }
 
 .itm-3 {
@@ -269,7 +289,6 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: 240ms ease;
     color: var(--clr-text);
 }
 .add-note-btn:hover {
@@ -352,7 +371,6 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: 240ms ease;
 }
 .add-notebook-btn:hover {
     background-color: var(--clr-accent-hover);
