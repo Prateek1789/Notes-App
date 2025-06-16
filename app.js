@@ -1,6 +1,9 @@
 class App {
     constructor() {
         this.app = document.querySelector(".app-container");
+        this.searchArea = document.querySelector(".itm-2");
+        this.searchInput = document.querySelector("#search");
+        this.shortCutStr = document.querySelector(".search-shortcut");
         this.themeBall = document.querySelector(".toggle-ball");
         this.addNoteBtn = document.querySelector(".add-note-btn");
         this.noteArea = document.querySelector(".notes-area");
@@ -17,8 +20,23 @@ class App {
     };
 
     init() {
+        document.addEventListener("keydown", e => {
+            if (e.metaKey && e.key === "k") {
+                e.preventDefault();
+                this.activateSearch(true);
+            }
+        });
+
         // Event listener to handle App click events
-        this.app.addEventListener("click", e => {
+        document.addEventListener("click", e => {
+            if (e.target === this.searchInput) {
+                this.activateSearch(true);
+            }
+
+            if (!e.target.closest("#search")) {
+                this.activateSearch(false);
+            }
+
             if (e.target.closest(".theme-toggle")) {
                 this.setTheme();
                 let isPressed = e.target.getAttribute("aria-pressed") == "true";
@@ -34,6 +52,19 @@ class App {
             }
         });
     };
+
+    activateSearch(bool) {
+        if (bool) {
+            this.searchArea.classList.add("active");
+            this.shortCutStr.classList.add("active");
+            this.searchInput.focus();
+        }
+        else {
+            this.searchArea.classList.remove("active");
+            this.shortCutStr.classList.remove("active");
+            this.searchInput.blur();
+        }
+    }
 
     createNote(id, title, colour, dateObj) {
         const note = document.createElement("div");
@@ -163,20 +194,6 @@ class App {
             }
         });
     }
-
-
-    /* appFunctions() {
-        const noteContent = [...document.querySelectorAll(".note-content")];
-        noteContent.forEach(itm => {
-            itm.addEventListener("keydown", (e) => {
-                    if (itm.value && e.key === "Enter") {
-                        console.log(itm.value);
-                        itm.textContent = itm.value;
-                        itm.setAttribute("disabled", "");
-                }
-            })
-        });
-    } */
 }
 
 const myApp = new App;
