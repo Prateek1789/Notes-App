@@ -34,17 +34,17 @@ class App {
         });
     };
 
-    createNote(id, colour) {
+    createNote(id, colour, dateObj) {
         const note = document.createElement("div");
         note.setAttribute("class", "note");
         note.innerHTML = `<div class="note-header">
-                            <span class="note-date">09-06-2025</span>
+                            <span class="note-date">${dateObj.date}</span>
                             <h3>Homework</h3>
                           </div>
                           <textarea name="content" id="note-${id}" class="note-content" autofocus="on"></textarea>
                           <div class="note-footer">
-                                <span class="note-time">08:08PM, </span>
-                                <span class="note-day">Monday</span>
+                                <span class="note-time">${dateObj.time}, </span>
+                                <span class="note-day">${dateObj.day}</span>
                           </div>`;
 
         note.dataset.hexColor = `${colour}`;
@@ -53,13 +53,29 @@ class App {
     }
 
     addNote() {
+        const date = this.getDate();
+
+        // Check if at least one colour option is selected
         this.noteColourOptions.forEach((itm, idx) => {
             let displayColour = this.isDarkMode ? [...this.noteColourMap.values()] : [...this.noteColourMap.keys()];
             if (itm.classList.contains("active")) {
-                this.noteArea.appendChild(this.createNote(this.noteID, displayColour[idx]));
+                this.noteArea.appendChild(this.createNote(this.noteID, displayColour[idx], date));
                 this.noteID++;
             }
         });
+    }
+
+    // Method to get current date object
+    getDate() {
+        const newDate = new Date();
+
+        const date = {
+            date: newDate.toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric' }),
+            time: newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            day: newDate.toLocaleString('default', { weekday: 'long' }),
+            month: newDate.toLocaleString('default', { month: 'long' })
+        };
+        return date;
     }
 
     setTheme() {
