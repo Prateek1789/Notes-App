@@ -14,7 +14,7 @@
     --clr-accent-orange-border: #fc9a22;
     --clr-accent-red: #ff7e7e;
     --clr-accent-red-border: #fa2828;
-    --clr-accent-hover: #c7e1fe;
+    --clr-accent-hover: #a5cfff;
     --clr-background: #f2f2f2;
     --clr-slate: #e6ecf1;
     --clr-divider: #191919;
@@ -29,7 +29,7 @@
     --clr-accent-orange-border: #ffc277;
     --clr-accent-red: #e02929;
     --clr-accent-red-border: #ff8484;
-    --clr-accent-hover: #84bdff;
+    --clr-accent-hover: #565656;
     --clr-background: #151515;
     --clr-slate: #252525;
     --clr-text: #dedede;
@@ -144,8 +144,11 @@ header {
     justify-content: space-between;
 }
 
+.itm-2 {
+    width: 40%;
+}
 input[type="search"] {
-    width: 20rem;
+    width: 100%;
     height: calc(5rem / 2);
     padding: 0.5rem;
     border-radius: 0.35rem;
@@ -233,12 +236,13 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
 }
 .add-note-tab {
     width: 100%;
     display: grid;
-    grid-template-rows: repeat(4, 50px);
+    grid-template-rows: repeat(4, 2.5rem);
+    gap: 0.45rem;
     overflow: hidden;
     transition: 240ms ease;
 }
@@ -249,13 +253,14 @@ main {
 .add-note-btn {
     width: 100%;
     height: 100%;
-    background-color: #e4f0fd;
-    border-radius: 10px;
-    padding-inline: 10px;
+    background-color: var(--clr-slate);
+    border-radius: 20px;
+    padding-inline: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     transition: 240ms ease;
+    color: var(--clr-text);
 }
 .add-note-btn:hover {
     background-color: var(--clr-accent-hover);
@@ -267,8 +272,19 @@ main {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding-inline-start: 2.5rem;
+    gap: 0.5rem;
+    padding-inline-start: 6px;
+    background-color: var(--clr-slate);
+    border-radius: 20px;
+    cursor: pointer;
 }
+.new-note-option:hover {
+    background-color: var(--clr-accent-hover);
+}
+.new-note-option.active {
+    background-color: var(--clr-accent-hover);
+}
+
 .clr-circle {
     width: 30px;
     height: 30px;
@@ -294,6 +310,18 @@ main {
 .crcl-3.active {
     border: 2px solid var(--clr-accent-red-border);
 }
+
+.note-title {
+    width: 80.5%;
+    height: 30px;
+    border-radius: 0px 14px 14px 0px;
+    border: none;
+    border-left: 1px solid #a5a5a5;
+    padding-inline: 0.35rem;
+    background-color: transparent;
+    color: var(--clr-text);
+}
+
 .add-notebook-tab {
     width: 100%;
     display: flex;
@@ -302,9 +330,9 @@ main {
 }
 .add-notebook-btn {
     width: 100%;
-    height: 50px;
+    height: 2.5rem;
     background-color: #e4f0fd;
-    border-radius: 10px;
+    border-radius: 20px;
     padding-inline: 10px;
     display: flex;
     align-items: center;
@@ -323,7 +351,7 @@ main {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, 359px);
-    grid-auto-rows: 426px;
+    grid-auto-rows: 427px;
     gap: 1.15rem;
     padding: 1.15rem;
     border-radius: 20px 0px 0px 0px;
