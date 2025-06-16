@@ -4,7 +4,8 @@ class App {
         this.themeBall = document.querySelector(".toggle-ball");
         this.addNoteBtn = document.querySelector(".add-note-btn");
         this.noteArea = document.querySelector(".notes-area");
-        this.noteColourOptions = [...document.querySelectorAll(".clr-circle")];
+        this.noteOptions = [...document.querySelectorAll(".new-note-option")];
+        this.noteTitle = '';
         this.isDarkMode = this.app.classList.contains("dark-mode");
         this.noteColourMap = new Map([
             ['#64adff',' #2c81e3'],
@@ -24,8 +25,8 @@ class App {
                 e.target.setAttribute("aria-pressed", !isPressed ? "true" : "false");
             }
 
-            if (e.target.closest(".clr-circle")) {
-                this.noteColourSelector(e);
+            if (e.target.closest(".new-note-option")) {
+                this.newNoteSelector(e);
             }
         
             if (e.target.closest(".add-note-btn")) {
@@ -34,12 +35,12 @@ class App {
         });
     };
 
-    createNote(id, colour, dateObj) {
+    createNote(id, title, colour, dateObj) {
         const note = document.createElement("div");
         note.setAttribute("class", "note");
         note.innerHTML = `<div class="note-header">
                             <span class="note-date">${dateObj.date}</span>
-                            <h3>Homework</h3>
+                            <h3>${title}</h3>
                           </div>
                           <textarea name="content" id="note-${id}" class="note-content" autofocus="on"></textarea>
                           <div class="note-footer">
@@ -52,16 +53,33 @@ class App {
         return note;
     }
 
-    addNote() {
-        const date = this.getDate();
-
-        // Check if at least one colour option is selected
-        this.noteColourOptions.forEach((itm, idx) => {
-            let displayColour = this.isDarkMode ? [...this.noteColourMap.values()] : [...this.noteColourMap.keys()];
-            if (itm.classList.contains("active")) {
-                this.noteArea.appendChild(this.createNote(this.noteID, displayColour[idx], date));
-                this.noteID++;
-            }
+    newNoteSelector(e) {
+        // Get colour option clicked by user
+        const clickedElement = e.target.closest(".new-note-option");
+        const colourCircle = clickedElement.querySelector(".clr-circle");
+        
+        // If no colour option is selected, return early
+        if (!clickedElement) return;
+        
+        // Toggle Active class on the selected note option
+        let isActive = clickedElement.classList.contains("active");
+        if (isActive) {
+            clickedElement.classList.remove("active");
+            colourCircle.classList.remove("active");
+        }
+        else {
+            clickedElement.classList.add("active");
+            colourCircle.classList.add("active");
+        }
+        /* isActive ? clickedElement.classList.remove("active") : clickedElement.classList.add("active"); */
+        
+        // Remove 'active' class from unselected note options
+        this.noteOptions.forEach(option => {
+            const colourCircle = option.querySelector(".clr-circle");
+            if (option !== clickedElement && option.classList.contains("active") && colourCircle.classList.contains("active")) {
+                option.classList.remove("active");
+                colourCircle.classList.remove("active");
+            };
         });
     }
 
@@ -78,26 +96,32 @@ class App {
         return date;
     }
 
+    addNote() {
+        const date = this.getDate();
+        // Get the note title from the input field
+        this.noteOptions.forEach(itm => {
+            // Checks which note option is selected
+            if (itm.classList.contains("active")) {
+                // Gets input field withing the selected note option gets the value, If no value is entered, sets default title
+                const titleInput = itm.querySelector(".note-title");
+                this.noteTitle = titleInput.value ? titleInput.value : `Untitled ${this.noteID + 1}`;
+            }
+        });
+        // Check if at least one colour option is selected
+        this.noteOptions.forEach((itm, idx) => {
+            let displayColour = this.isDarkMode ? [...this.noteColourMap.values()] : [...this.noteColourMap.keys()];
+            if (itm.classList.contains("active")) {
+                this.noteArea.appendChild(this.createNote(this.noteID, this.noteTitle, displayColour[idx], date));
+                this.noteID++;
+            }
+        });
+    }
+    
     setTheme() {
         this.app.classList.toggle("dark-mode");
         this.themeBall.classList.toggle("active");
         this.isDarkMode = this.app.classList.contains("dark-mode");
         this.updateAllNotesTheme();
-    }
-
-    noteColourSelector(e) {
-        // Get colour option clicked by user
-        const clickedElement = e.target.closest(".clr-circle");
-        if (!clickedElement) return;
-
-        // Toggle Active class on the clicked colour option
-        let isActive = clickedElement.classList.contains("active");
-        isActive ? clickedElement.classList.remove("active") : clickedElement.classList.add("active");
-
-        // Remove 'active' class only from unselected color options
-        this.noteColourOptions.forEach(option => {
-           if (option !== clickedElement && option.classList.contains("active")) option.classList.remove("active");
-        });
     }
 
     updateAllNotesTheme() {
