@@ -15,9 +15,11 @@
             <span class="logo">Notes-Book</span>
             <nav class="navbar">
                 <ul class="nav-list">
-                    <li class="nav-items itm-1"><h1>Project 1</h1></li>
+                    <li class="nav-items itm-1"><h1>Home</h1></li>
                     <li class="nav-items itm-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#eaeaea"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                         <input type="search" name="search-notes" id="search" placeholder="Search by title, content, date..." />
+                        <span class="search-shortcut">Cmd + K</span>
                     </li>
                     <li class="nav-items itm-3">
                         <button class="theme-toggle" aria-label="Toggle Dark/Light Mode" aria-pressed="false">
@@ -40,7 +42,7 @@
                 <div class="note-opt-head">
                     <button type="button" class="add-note-btn">
                         <span>Add New Note</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M440-240h80v-120h120v-80H520v-120h-80v120H320v80h120v120ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
                     </button>
                 </div>
                 <div class="new-note-option opt-1">
@@ -59,7 +61,7 @@
             <div class="add-notebook-tab">
                 <button type="button" class="add-notebook-btn">
                         <span>Add Notebook</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M560-320h80v-80h80v-80h-80v-80h-80v80h-80v80h80v80ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"/></svg>
                 </button>
             </div>
         </section>
@@ -72,8 +74,24 @@
                 </div>
                 <textarea name="content" id="note-NAN" class="note-content" autofocus="on"></textarea>
                 <div class="note-footer">
-                    <span class="note-time">08:08PM, </span>
-                    <span class="note-day">Monday</span>
+                    <span class="note-time-day">08:08PM, Monday</span>
+                    <ul class="note-actions-list">
+                        <li class="note-action-items">
+                            <button type="button" class="note-action-btn btn-star-note">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Zm400 160v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z"/></svg>
+                            </button>
+                        </li>
+                        <li class="note-action-items">
+                            <button type="button" class="note-action-btn btn-edit-content">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
+                            </button>
+                        </li>
+                        <li class="note-action-items">
+                            <button type="button" class="note-action-btn btn-del">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
