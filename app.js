@@ -25,6 +25,9 @@ class App {
                 e.preventDefault();
                 this.activateSearch(true);
             }
+            if (e.key === "Escape" && this.searchArea.classList.contains("active") && this.shortCutStr.classList.contains("active") && this.searchInput.value === "") {
+                this.activateSearch(false);
+            }
         });
 
         // Event listener to handle App click events
