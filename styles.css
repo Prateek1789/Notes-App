@@ -16,11 +16,12 @@
     --clr-accent-red-border: #fa2828;
     --clr-accent-hover: #a5cfff;
     --clr-background: #f2f2f2;
-    --clr-border: #b4b4b4;
-    --clr-slate: #e6ecf1;
-    --clr-divider: #191919;
+    --clr-border: #cccccc;
+    --clr-border-deep: #525252;
+    --clr-slate: #f1f1f1;
+    --clr-divider: #777777;
     --clr-text: #191919;
-    --clr-shadow: #b7bfc9;
+    --clr-shadow: #dadada;
     --clr-note-shadow: 4px 8px 15px var(--clr-shadow);
 }
 .dark-mode {
@@ -33,8 +34,9 @@
     --clr-accent-red-border: #ff8484;
     --clr-accent-hover: #3d3d3d;
     --clr-background: #0f0f0f;
-    --clr-border: #5e5e5e;
-    --clr-slate: #1e1f22;
+    --clr-border: #424242;
+    --clr-border-deep: #b7b7b7;
+    --clr-slate: #18191c;
     --clr-text: #dedede;
     --clr-divider: #e4e4e4;
     --clr-shadow: #0d0d0d;
@@ -59,7 +61,7 @@ body {
 }
 
 h1 {
-  font-size: 2.8em;
+  font-size: 2.5em;
   line-height: 1.1;
 }
 h4 {
@@ -103,7 +105,7 @@ button:focus-visible {
     background-color: var(--clr-background);
     display: grid;
     grid-template-columns: 17rem 1fr;
-    grid-template-rows: 5rem calc(100% - 5rem);
+    grid-template-rows: 4.25rem calc(100% - 4.25rem);
     grid-template-areas: 
       "header header"
       "main main";
@@ -137,7 +139,7 @@ header {
     width: 100%;
     display: flex;
     align-items: center;
-    padding-inline: 2.75rem;
+    padding-inline: 2.25rem;
 }
 
 .nav-list {
@@ -159,10 +161,12 @@ header {
     justify-content: space-between;
     background-color: var(--clr-slate);
     border-radius: 12px;
-    border: 1px solid transparent;
+    border: 1px solid var(--clr-border);
+    transition: border-color 140ms ease, box-shadow 240ms ease;
 }
 .itm-2.active {
-    border-color: var(--clr-border);
+    border-color: var(--clr-border-deep);
+    box-shadow: 2px 2px 8px var(--clr-shadow);
 }
 
 input[type="search"] {
@@ -182,6 +186,13 @@ input[type="search"]:focus {
 .search-shortcut {
     font-size: 14px;
     color: #636c72;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search-shortcut svg {
+    fill: #636c72;
+    margin-inline-end: 0.18rem;
 }
 .search-shortcut.active {
     display: none;
@@ -198,14 +209,14 @@ input[type="search"]:focus {
     height: 35px;
     position: relative;
     background-color: var(--clr-slate);
-    border: 0.5px solid var(--clr-border);
+    border: 1px solid var(--clr-border);
     border-radius: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.25rem;
     cursor: pointer;
-    /* box-shadow: inset 3px 3px 10px #b7bfc9; */
+    box-shadow: inset 2px 2px 10px var(--clr-shadow);
 }
 .theme-toggle:focus {
     outline: none;
@@ -223,11 +234,13 @@ input[type="search"]:focus {
     border-radius: 50%;
     position: absolute;
     background-color: var(--clr-text);
-    transform: translateY(-6%) translateX(5%);
+    transform: translateY(-8.5%) translateX(6%);
     transition: 240ms ease;
 }
 .toggle-ball.active {
-    transform: translateY(-6%) translateX(-110%)
+    height: 29px;
+    width: 29px;
+    transform: translateY(-7.2%) translateX(-112%)
 }
 
 .user {
@@ -262,7 +275,7 @@ main {
   grid-area: sidebar;
 }
 .sidebar {
-    padding-inline: 20px;
+    padding-inline: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -284,12 +297,13 @@ main {
     width: 100%;
     height: 100%;
     background-color: var(--clr-slate);
-    border-radius: 20px;
+    border-radius: 10px;
     padding-inline: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: var(--clr-text);
+    border: 1px solid var(--clr-border);
 }
 .add-note-btn:hover {
     background-color: var(--clr-accent-hover);
@@ -366,11 +380,12 @@ main {
     height: 2.5rem;
     background-color: var(--clr-slate);
     color: var(--clr-text);
-    border-radius: 20px;
+    border-radius: 10px;
     padding-inline: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border: 1px solid var(--clr-border);
 }
 .add-notebook-btn:hover {
     background-color: var(--clr-accent-hover);
@@ -383,12 +398,12 @@ main {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, 359px);
-    grid-auto-rows: 435px;
-    gap: 1.15rem;
-    padding: 1.15rem;
-    border-radius: 20px 0px 0px 0px;
-    border: 0.5px solid var(--clr-border);
+    grid-template-columns: repeat(auto-fit, 361px);
+    grid-auto-rows: 442px;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem 0rem 0rem 0rem;
+    border: 1px solid var(--clr-border);
     border-right: none;
     border-bottom: none;
     background-color: var(--clr-slate);
@@ -399,12 +414,12 @@ main {
     width: 100%;
     height: 100%;
     padding-inline: 1rem;
-    border-radius: 10px;
+    border-radius: 8px;
     display: grid;
     grid-template-rows: auto 1fr auto;
     color: var(--clr-text);
     background-color: var(--clr-accent-orange);
-    box-shadow: var(--clr-note-shadow);
+    /* box-shadow: var(--clr-note-shadow); */
 }
 .note-header {
     padding-block-start: 1.25rem;
