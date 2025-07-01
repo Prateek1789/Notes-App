@@ -2,8 +2,8 @@ class NoteFactory {
     constructor() {
         this.noteColourMap = new Map([
             ['var(--color-Blue-200)', 'var(--color-Blue-500)'],
-            ['var(--color-Amber-300)', 'var(--color-Amber-400)'],
-            ['var(--color-Red-300)', 'var(--color-Red-600)']
+            ['var(--color-Amber-300)', 'var(--color-Amber-500)'],
+            ['var(--color-Red-300)', 'var(--color-Red-400)']
         ]);
     }
 
