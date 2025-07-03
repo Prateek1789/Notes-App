@@ -18,6 +18,7 @@
     --color-Amber-500: oklch(76.9% 0.188 70.08);
     --color-Red-300: oklch(80.8% 0.114 19.571);
     --color-Red-400: oklch(70.4% 0.191 22.216);
+    --color-Green-200: oklch(70.4% 0.161 165.216);
     --color-Gradient-1: linear-gradient(90deg, var(--color-Blue-500), oklch(82.8% 0.189 84.429), oklch(63.7% 0.237 25.331));
 
     /* Neutral Colors */
@@ -39,7 +40,7 @@
 
     /* ---- Colors used in the app ---- */
 
-    --color-BG-1: var(--color-Gray-300);
+    --color-BG-1: var(--color-Gray-200);
     --color-BG-2: var(--color-Gray-100);
     --color-Text-1: var(--color-Dark-900);
     --color-Text-2: var(--color-Gray-600);
@@ -55,6 +56,8 @@
     --color-Border: var(--color-Gray-400);
     --color-Border-Deep: var(--color-Dark-700);
     --note-Shadow: 2px 4px 16px var(--color-Gray-400);
+
+    --color-Button-Dark: var(--color-Dark-900);
 }
 
 .dark-mode { 
@@ -82,9 +85,9 @@
     }
 }
 
-svg {
+/* svg {
     fill: var(--color-Text-1);
-}
+} */
 
 body {
   width: 100vw;
@@ -96,19 +99,81 @@ h1 {
   font-size: 2.5em;
   line-height: 1.1;
 }
+
 h4 {
     font-weight: 600;
 }
+
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/* ----- Custom Utility Classes ----- */
+
+.button-dark {
+    background-color: var(--color-Button-Dark);
+    color: var(--color-Gray-200);
+}
+
+.svg-light {
+    fill: var(--color-Gray-200);
+}
+
+.svg-dark {
+    fill: var(--color-Dark-900);
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.justify-sart {
+    justify-content: flex-start;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.items-start {
+    align-items: start;
+}
+
+.items-end {
+    align-items: end;
 }
 
 @media (prefers-color-scheme: light) {
@@ -124,7 +189,7 @@ button {
   }
 }
 
-.app-container {
+/* .app-container {
     height: 100vh;
     width: 100vw;
     padding: 0.75rem;
@@ -137,33 +202,23 @@ button {
     color: var(--color-Text-1);
     gap: 0.75rem;
 }
-
-header,
+ */
+/* header,
 .sidebar,
 .notes-area {
     background: var(--color-BG-2);
     border-radius: 1rem;
-}
+} */
 
-header {
+/* header {
     height: 100%;
     width: 100%;
     grid-area: header;
     display: flex;
     align-items: center;
+    border-radius: 2rem;
 }
 
-.logo {
-    height: 100%;
-    width: 20rem;
-    display: grid;
-    place-content: center;
-    font-size: 2rem;
-    font-weight: 600;
-    background: var(--color-Gradient-1);
-    background-clip: text;
-    color: transparent;
-}
 
 .navbar {
     width: 100%;
@@ -190,7 +245,7 @@ header {
     align-items: center;
     justify-content: space-between;
     background-color: var(--color-BG-2);
-    border-radius: 12px;
+    border-radius: 1.25rem;
     border: 1px solid var(--color-Border);
     transition: border-color 140ms ease, box-shadow 240ms ease;
 }
@@ -247,14 +302,15 @@ input[type="search"]:focus {
     align-items: center;
     padding: 0.25rem;
     cursor: pointer;
-    /* box-shadow: inset 2px 2px 10px var(--clr-shadow); */
+    box-shadow: inset 2px 2px 10px var(--clr-shadow); 
     overflow: hidden;
     &:focus {
         outline: none;
     }
-}
+} 
+*/
 
-.moon,
+/* .moon,
 .sun {
     width: 25px;
     height: 25px;
@@ -306,15 +362,6 @@ main {
     gap: 0.75rem;
 }
 
-.sidebar {
-    grid-area: sidebar;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 1rem;
-}
-
 .add-note-tab {
     width: 100%;
     display: grid;
@@ -327,19 +374,6 @@ main {
 .note-opt-head {
     width: 100%;
     height: 100%;
-}
-
-.add-note-btn {
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-BG-2);
-    border-radius: 10px;
-    padding-inline: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--color-Text-1);
-    border: 1px solid var(--color-Border);
 }
 
 .add-note-btn:hover {
@@ -586,4 +620,4 @@ h3 {
 .btn-edit-content svg {
     transform: translateY(2px);
     color: #858585;
-}
+} */
