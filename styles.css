@@ -12,6 +12,10 @@
     /* ---- Color Palette ---- */
     
     /* Accent Colors */
+   /*  --color-Volcano-Orange-100: hsl(21, 100%, 66%);
+    --color-Lava-Orange: #f76806;
+    --color-Volcano-Orange-300: #FF8C00; */
+    --color-Volcano-Orange-500: #FC5800;
     --color-Blue-200: oklch(80.9% 0.105 251.813);
     --color-Blue-500: oklch(68.3% 0.214 259.815);
     --color-Amber-300: oklch(87.9% 0.169 91.605);
@@ -19,6 +23,7 @@
     --color-Red-300: oklch(80.8% 0.114 19.571);
     --color-Red-400: oklch(70.4% 0.191 22.216);
     --color-Green-200: oklch(70.4% 0.161 165.216);
+    --color-Green-500: oklch(55.4% 0.161 170.216);
     --color-Gradient-1: linear-gradient(90deg, var(--color-Blue-500), oklch(82.8% 0.189 84.429), oklch(63.7% 0.237 25.331));
 
     /* Neutral Colors */
@@ -29,8 +34,8 @@
     --color-Dark-800: oklch(26.9% 0 0);
     --color-Dark-900: oklch(20.5% 0 0);
 
-    --color-Gray-100: oklch(96.7% 0.003 264.542);
-    --color-Gray-200: oklch(92.8% 0.006 264.531);
+    --color-Gray-100: oklch(95.7% 0.003 264.542);
+    --color-Gray-200: oklch(89.8% 0.006 264.531);
     --color-Gray-300: oklch(87.2% 0.01 258.338);
     --color-Gray-400: oklch(80.2% 0.01 258.338);
     /* --color-Gray-400: oklch(70.8% 0 0); */
@@ -54,10 +59,13 @@
     --color-Ring-Blue: var(--color-Blue-500);
     --color-Ring-Amber: var(--color-Amber-500);
     --color-Ring-Red: var(--color-Red-400);
+    --color-Ring-Green: var(--color-Green-500);
+
+    --color-Sort-Filter: var(--color-White);
 
     --color-Border: var(--color-Gray-400);
     --color-Border-Deep: var(--color-Dark-700);
-    --note-Shadow: 2px 4px 16px var(--color-Gray-400);
+    --color-Shadow: var(--color-Gray-300);
 
     --color-Button-Dark: var(--color-Dark-900);
 }
@@ -71,20 +79,35 @@
     --color-Note-Blue: var(--color-Blue-500);
     --color-Note-Amber: var(--color-Amber-500);
     --color-Note-Red: var(--color-Red-400);
+    --color-Note-Green: var(--color-Green-500);
 
     --color-Ring-Blue: var(--color-Blue-200);
     --color-Ring-Amber: var(--color-Amber-300);
     --color-Ring-Red: var(--color-Red-300);
+    --color-Ring-Green: var(--color-Green-200);
+
+    --color-Sort-Filter: var(--color-Gray-500);
 
     --color-Border: var(--color-Gray-500);
     --color-Border-Deep: var(--color-Gray-300);
-    --note-Shadow: 2px 4px 16px var(--color-Dark-900);
+    --color-Shadow: var(--color-Dark-900);
 
     --clr-accent-hover: #3d3d3d;
-    
-    .note-content {
-        background-color: var(--color-Dark-700);
+
+    .global-date {
+        /* background-color: var(--color-Dark-800); */
+        color: var(--color-Gray-200);
+        /* box-shadow: -3px -3px 6px 2px var(--color-Gray-600), 6px 4px 6px 3px var(--color-Dark-900); */
     }
+    .theme-toggle {
+        border-color: var(--color-Dark-700);
+        background-color: var(--color-Dark-700);
+        box-shadow: -2px -2px 4px 2px var(--color-Gray-600), 
+                    2px 2px 4px 2px var(--color-Dark-900),
+                    inset -2px -2px 4px var(--color-Gray-600),
+                    inset 3px 3px 6px var(--color-Dark-900);
+    }
+    
 }
 
 /* svg {
@@ -237,17 +260,38 @@ ul {
 .note-color-option {
     width: auto;
     height: auto;
-    border-radius: 20px;
+    border-radius: 1.25rem;
     padding: 0.25rem;
     gap: 1rem;
-    background-color: var(--color-Gray-200);
+    /* background-color: var(--color-Gray-200); */
     position: relative;
 }
 
-.note-color {
-    width: 25px;
-    height: 25px;
+.note-color-label {
+    width: 1.5625rem;
+    height: 1.5625rem;
     border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    place-content: center;
+}
+
+.note-color-label > input {
+    position: relative;
+    z-index: -1;
+}
+
+.note-color-label:first-child:has(input:checked) {
+    border: 2px solid var(--color-Ring-Blue)/* rgb(0, 136, 255) */;
+}
+.note-color-label:nth-child(2):has(input:checked) {
+    border: 2px solid var(--color-Ring-Amber)/* rgb(255, 123, 0) */;
+}
+.note-color-label:nth-child(3):has(input:checked) {
+    border: 2px solid var(--color-Ring-Red)/* rgb(228, 30, 0) */;
+}
+.note-color-label:last-child:has(input:checked) {
+    border: 2px solid var(--color-Ring-Green)/* rgb(0, 161, 27) */;
 }
 
 .color-1 {
@@ -267,16 +311,26 @@ main {
     grid-area: main;
     width: 100%;
     height: 100%;
+    position: relative;
     border-radius: 2rem;
-    background-color: var(--color-BG-2);
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas: 
+        "header"
+        "notes";
+    gap: 0.75rem;
+    /* background-color: var(--color-BG-2); */
 }
 
 header {
+    grid-area: header;
     width: 100%;
     height: auto;
     padding: 2rem;
-    gap: 4rem;
-    /* border-bottom: 1px solid var(--color-Border); */
+    gap: 2.75rem;
+   /*  border-bottom: 1px solid var(--color-Border); */
+    border-radius: 2rem;
+    background-color: var(--color-BG-2);
    /*  padding-block: 1.55rem; */
 }
 
@@ -284,23 +338,30 @@ header {
     width: 100%;
 }
 
-.global-date {
+/* .global-date {
     padding-block: 0.75rem;
     padding-inline: 1.25rem;
     border-radius: 2rem;
-    background-color: var(--color-Gray-200);
+    background-color: rgb(246, 246, 246);
     color: var(--color-Dark-900);
-}
+    box-shadow: -4px -4px 8px var(--color-White), 4px 4px 8px var(--color-Gray-300);
+} */
 
-.search {
+.search-container {
     width: 45rem;
     height: 2.5rem;
+    position: relative;
     padding-inline: 0.75rem;
     padding-inline-start: 0.5rem;
     background-color: var(--color-BG-2);
     border-radius: 1.25rem;
     border: 1px solid var(--color-Border);
     transition: border-color 140ms ease, box-shadow 240ms ease;
+    /* z-index: 1; */
+}
+
+.search-container.active {
+    border: 1px solid var(--color-Border-Deep);
 }
 
 input[type="search"] {
@@ -313,11 +374,18 @@ input[type="search"] {
     font-size: 14px;
     transition: 240ms ease;
     color: var(--color-Text-1);
+    &:focus {
+        outline: none;
+    }
 }
 
 .search-shortcut {
     font-size: 14px;
     color: #636c72;
+}
+
+.search-shortcut.hide {
+    display: none;
 }
 
 .search-shortcut svg {
@@ -329,12 +397,15 @@ input[type="search"] {
     width: 70px;
     height: 35px;
     position: relative;
-    background-color: var(--color-BG-2);
-    border: 1px solid var(--color-Border);
+    border: 1px solid var(--color-Gray-200);
     border-radius: 25px;
     padding: 0.25rem;
     cursor: pointer;
-    box-shadow: inset 2px 2px 10px var(--color-Gray-300); 
+    background-color: rgb(246, 246, 246);
+    box-shadow: -2px -2px 4px 2px var(--color-White), 
+                2px 2px 4px 2px var(--color-Shadow),
+                inset -2px -2px 4px var(--color-White),
+                inset 2px 2px 4px var(--color-Shadow); 
     overflow: hidden;
     &:focus {
         outline: none;
@@ -367,13 +438,22 @@ input[type="search"] {
 }
 
 .notes-toolbar {
+    width: 100%;
     gap: 1.5rem;
 }
 
-.sort-list {
-    gap: 1rem;
+.sort-bar {
+    width: 100%;
+    padding: 0.25rem;
+    border-radius: 1.5rem;
 }
 
+.sort-list {
+    height: 100%;
+    width: 100%;
+    gap: 1rem;
+    border-radius: 1.5rem;
+}
 
 .sort-option {
     height: 2.5rem;
@@ -381,35 +461,38 @@ input[type="search"] {
     padding: 0.55rem;
     padding-inline: 1rem;
     border-radius: 1.5rem;
-    background-color: var(--color-Gray-200);
+    color: var(--color-Text-1);
+    background-color: var(--color-Sort-Filter);
+    box-shadow: 2px 4px 8px var(--color-Shadow);
     cursor: pointer;
-    transition: 240ms ease;
-    gap: 0.25rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 240ms ease;
 
     &:hover {
-        background-color: var(--color-Dark-900);
+        background-color: var(--color-Volcano-Orange-500);
         color: var(--color-Gray-100);
     }
 }
 
 .sort-option:nth-child(1) {
-    background-color: var(--color-Dark-900);
+    background-color: var(--color-Volcano-Orange-500);
     color: var(--color-Gray-100);
 }
 
 .notes-area {
+    grid-area: notes;
     height: calc(100vh - 17.130rem - 1.5rem);
     width: 100%;
-    padding: 1rem;
-    padding-inline: 2rem;
+    padding: 1.25rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, calc((100% - 4rem) / 5));
+    grid-template-columns: repeat(auto-fit, minmax(19rem, calc((100% - 4rem) / 5)));
     grid-auto-rows: calc((100% - 1rem) / 2);
-    gap: 2rem;
+    gap: 1.25rem;
     overflow-y: scroll;
+    border-radius: 2rem;
+    background-color: var(--color-BG-2);
 }
 
 .note {
@@ -419,14 +502,17 @@ input[type="search"] {
     border-radius: 1.25rem;
     display: grid;
     grid-template-rows: 1fr auto auto;
+    gap: 0.5rem;
     color: var(--color-Text-1);
-    background-color: var(--color-Note-Red);
+    background-color: var(--color-Note-Blue);
     cursor: pointer;
+    position: relative;
+    z-index: 5;
 }
 
-.note:nth-child(2) {
+/* .note:nth-child(2) {
     background-color: var(--color-Note-Blue);
-}
+} */
 
 .note-content {
     border: none;
@@ -453,7 +539,7 @@ input[type="search"] {
 .note-actions-list {
     display: flex;
     list-style: none;
-    gap: 0.5rem;
+    gap: 0.1rem;
 }
 
 .note-action-btn {
