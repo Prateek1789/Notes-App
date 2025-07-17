@@ -51,12 +51,7 @@ class NotesApp {
 
             if (e.target.closest(".theme-toggle")) this.handleTheme(this.elements.themeToggle);
 
-            if (e.target.closest(".btn-add-note")) {
-                let noteColor =  this.handleNoteColour();
-                const formHead = this.elements.dialog.querySelector(".form-head");
-                formHead.style.backgroundColor = `var(${noteColor})`;
-                this.elements.dialog.showModal();
-            };
+            if (e.target.closest(".btn-add-note")) this.openForm();
 
             if (e.target.closest(".btn-del")) this.handleDeleteNote(e);
         });
@@ -84,35 +79,37 @@ class NotesApp {
 
         this.elements.dialog.querySelector("form").addEventListener("click", (e) => {
             e.preventDefault();
-            this.handleAddNote(e, noteTitle, noteContent);
+
+            if (e.target.closest(".btn-cancel")) this.closeForm(noteTitle, noteContent);
+
+            if (e.target.closest(".btn-save")) this.handleAddNote(noteTitle, noteContent);
         });
     };
 
-    handleAddNote(e, title, content) {
+    openForm() {
+        let noteColor =  this.handleNoteColour();
+        const formHead = this.elements.dialog.querySelector(".form-head");
+        formHead.style.backgroundColor = `var(${noteColor})`;
+        this.elements.dialog.showModal();
+        this.elements.dialog.querySelector("#note-form-heading").focus();
+    }
+
+    closeForm(elm1, elm2) {
+        elm1.value = '';
+        elm2.value = '';
+        this.elements.dialog.close();
+    };
+
+    handleAddNote(title, content) {
         const noteColor = this.handleNoteColour();
+        const noteTitle = title.value || 'Untitled';
+        const noteContent = content.value;
 
-        const clearForm = () => {
-            title.value = '';
-            content.value = '';
-        }
+        if (content) {
+            const newNote = this.manager.create(noteTitle, noteContent, noteColor);
+            this.ui.renderNoteUI(newNote, this.noteArea);
 
-        if (e.target.closest(".btn-cancel")) {
-            clearForm();
-            this.elements.dialog.close();
-            this.isFormOpen = false;
-        }
-
-        if (e.target.closest(".btn-save")) {
-            if (content.value) {
-                const noteTitle = title.value || 'Untitled';
-                const noteContent = content.value;
-                const newNote = this.manager.create(noteTitle, noteContent, noteColor);
-                this.ui.renderNoteUI(newNote, this.noteArea);
-
-                clearForm();
-                this.elements.dialog.close();
-                this.isFormOpen = false;
-            }
+            this.closeForm(title, content);
         }
     };
 
@@ -121,7 +118,8 @@ class NotesApp {
     }
 
     handleDeleteNote(event) {
-        
+        const parent = event.target.closest('.note');
+        parent.remove();
     }
 
     handleSearchNote(isActive, element, input, shortcut) {
@@ -152,6 +150,8 @@ class NotesApp {
 
 const App = new NotesApp();
 
+
+// Kept old Appp class for reference and comparision 
 /* class App {
     constructor() {
         this.app = document.querySelector(".app-container");
