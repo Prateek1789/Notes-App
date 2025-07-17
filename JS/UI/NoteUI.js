@@ -41,8 +41,12 @@ class NoteUI {
                                          </ul>
                                      </div>
                                  </div>`;
-
         return noteElement;
+    }
+
+    renderNoteUI(note, parent) {
+        const newNoteElement = this.createNoteElement(note);
+        parent.appendChild(newNoteElement);
     }
 } 
 
