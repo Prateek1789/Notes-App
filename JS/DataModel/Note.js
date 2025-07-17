@@ -1,8 +1,8 @@
 import DateUtility from "../Utils/DateUtility.js";
 
 class Note {
-    constructor(title = '', content = '', color, id = new Date()) {
-        this.id = id;
+    constructor(title = '', content = '', color) {
+        this.id = 'n_' + Date.now().toString(36).slice(-6);
         this.title = title;
         this.content = content;
         this.color = color;
