@@ -21,7 +21,6 @@
     --color-Red-400: oklch(50.4% 0.150 22.216);
     --color-Green-200: oklch(82.4% 0.138 147.216);
     --color-Green-500: oklch(50.4% 0.128 145.216);
-    /* --color-Gradient-1: linear-gradient(90deg, var(--color-Blue-500), oklch(82.8% 0.189 84.429), oklch(63.7% 0.237 25.331)); */ /* Not used */
 
     /* Neutral Colors */
     --color-Black: oklch(0% 0 0);   /* Not used */
@@ -35,11 +34,8 @@
     --color-Gray-200: oklch(89.8% 0.006 264.531);
     --color-Gray-300: oklch(85.2% 0.01 258.338);
     --color-Gray-400: oklch(80.2% 0.01 258.338);    /* Not used */
-    /* --color-Gray-400: oklch(70.8% 0 0); */
     --color-Gray-500: oklch(55.6% 0 0);    /* Not used */
     --color-Gray-600: oklch(40.8% 0 0);
-
-    --clr-accent-hover: #a5cfff;    /* Not used */
 
     /* ---- Colors used in the app ---- */
 
@@ -74,7 +70,7 @@
     --color-BG-1: var(--color-Dark-900);
     --color-BG-2: var(--color-Dark-800);
     --color-Text-1: var(--color-Gray-100);
-    --color-Text-2: var(--color-Gray-400);
+    --color-Text-2: var(--color-Gray-300);
 
     --color-Note-BG: var(--color-Dark-700);
     --color-Note-Blue: var(--color-Blue-500);
@@ -109,6 +105,22 @@
                     2px 2px 4px 3px var(--color-Dark-900),
                     inset -2px -2px 4px var(--color-Gray-600),
                     inset 3px 3px 6px var(--color-Dark-900);
+    }
+
+    .form-btn {
+        background-color: var(--color-Gray-200);
+        transition: 240ms ease;
+
+        svg {
+            fill: var(--color-Drak-700);
+        }
+    
+        &:hover {
+            background-color: var(--color-Accent);
+        }
+        &:hover svg {
+            fill: var(--color-White);
+        }
     }
     
 }
@@ -353,7 +365,7 @@ header {
 } */
 
 .search-container {
-    width: 45rem;
+    width: 35vw;
     height: 2.5rem;
     position: relative;
     padding-inline: 0.75rem;
@@ -466,7 +478,6 @@ input[type="search"] {
     padding: 0.55rem;
     padding-inline: 1rem;
     border-radius: 1.5rem;
-    color: var(--color-Text-1);
     background-color: var(--color-Sort-Filter);
     box-shadow: 2px 4px 8px var(--color-Shadow);
     cursor: pointer;
@@ -500,6 +511,145 @@ input[type="search"] {
     background-color: var(--color-BG-2);
 }
 
+dialog {
+    top: 5%;
+    left: 50%;
+    width: 50%;
+    height: 95%;
+    position: absolute;
+   /*  padding: 2rem; */
+    border: none;
+    border-radius: 2rem;
+    background-color: var(--color-BG-2);
+    color: var(--color-Text-1);
+    transform: translateX(-50%) translateY(-2.5%);
+    overflow: hidden;
+}
+
+dialog::backdrop {
+    background-color: rgba(117, 122, 129, 0.528);
+    backdrop-filter: blur(8px);
+}
+
+dialog > form {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 2fr;
+    position: relative;
+    /* gap: 2rem; */
+}
+
+dialog > form input {
+    background-color: transparent;
+}
+
+.form-head {
+    /* background-color: var(--color-Note-Blue); */
+    border-radius: 2rem 2rem 0rem 0rem;
+    padding: 2rem 2rem;
+
+    gap: 0.5rem;
+    /* border-block-end: 1px solid var(--color-Gray-300) */
+}
+
+.form-head label {
+    font-size: 3.5rem;
+    font-weight: 600;
+}
+
+#note-form-heading {
+    width: 100%;
+    height: 55px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    border: 1px solid var(--color-Gray-300);
+    outline: none;
+    caret-color: var(--color-Ring-Blue);
+    color: var(--color-Text-1);
+    border: none;
+}
+#note-form-heading::placeholder {
+    color: var(--color-Text-2);
+}
+
+.tag-container {
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
+}
+
+#note-tags {
+    height: 30px;
+    outline: none;
+    border: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-Text-1);
+}
+#note-tags::placeholder {
+    color: var(--color-Text-2);
+}
+
+.tag-list-item {
+    height: 2.5rem;
+    width: auto;
+    padding: 0.55rem;
+    border-radius: 1.5rem;
+    background-color: var(--color-Volcano-Orange-100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#note-form-text {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0rem 0rem 2rem 2rem;
+    padding: 2rem;
+    font-size: 1.25rem;
+    caret-color: var(--color-Ring-Blue);
+    resize: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-Text-1);
+}
+
+.form-buttons {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    border-radius: 2.5rem;
+    background-color: #dddddd1d;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    backdrop-filter: blur(5px);
+}
+
+.form-btn {
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    background-color: var(--color-Dark-700);
+    transition: 240ms ease;
+
+    svg {
+        fill: white;
+    }
+
+    &:hover {
+        background-color: var(--color-Accent);
+        color: var(--color-White);
+    }
+}
+
+
+
 .note {
     width: 100%;
     height: 100%;
@@ -513,27 +663,6 @@ input[type="search"] {
     box-shadow: 4px 4px 10px var(--color-Shadow);
     color: var(--color-Text-1);
 }
-
-.note:nth-child(1) {
-    .note-footer {
-        background-color: var(--color-Note-Blue);
-    }
-}
-/* .note:nth-child(2) {
-    .note-footer {
-        background-color: var(--color-Note-Amber);
-    }
-}
-.note:nth-child(3) {
-    .note-footer {
-        background-color: var(--color-Note-Red);
-    }
-}
-.note:nth-child(4) {
-    .note-footer {
-        background-color: var(--color-Note-Green);
-    }
-} */
 
 .note-content {
     border: none;
