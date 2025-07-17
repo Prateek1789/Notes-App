@@ -7,6 +7,8 @@ class NotesApp {
     constructor() {
         this.app = document.querySelector('#root');
         this.noteArea = document.querySelector(".notes-area");
+        this.isEditing = false;
+        this.editingNote;
         this.manager = new Manager();
         this.ui = new NoteUI();
         this.elements = this.getAppElements();
@@ -53,6 +55,12 @@ class NotesApp {
 
             if (e.target.closest(".btn-add-note")) this.openForm();
 
+            if (e.target.closest(".btn-edit")) {
+                this.isEditing = true;
+                this.editingNote = e.target.closest('.note');
+                this.openForm();
+            }
+
             if (e.target.closest(".btn-del")) this.handleDeleteNote(e);
         });
     };
@@ -64,13 +72,23 @@ class NotesApp {
     };
 
     handleNoteColour() {
-        const checkedInput = this.elements.colorOptions.find(itm => itm.checked);
+        let color = '';
 
-        if (checkedInput) {
-            const label = checkedInput.parentElement;
-            const color = label.dataset.color || '';
-            return color;
+        if (!this.isEditing) {
+            const checkedInput = this.elements.colorOptions.find(itm => itm.checked);
+            if (checkedInput) {
+                const label = checkedInput.parentElement;
+                const colorProperty = label.dataset.color;
+                color = `var(${colorProperty})` || '';
+            }
         }
+        
+        if (this.isEditing) {
+           const noteFooter = this.editingNote.querySelector(".note-footer");
+           color = noteFooter.style.backgroundColor;
+        }
+
+        return color;
     };
 
     handleFormListener() {
@@ -82,22 +100,36 @@ class NotesApp {
 
             if (e.target.closest(".btn-cancel")) this.closeForm(noteTitle, noteContent);
 
-            if (e.target.closest(".btn-save")) this.handleAddNote(noteTitle, noteContent);
+            if (e.target.closest(".btn-save") && !this.isEditing) this.handleAddNote(noteTitle, noteContent);
+
+            if (e.target.closest(".btn-save") && this.isEditing) this.handleEditNote(noteTitle, noteContent);
         });
     };
 
     openForm() {
-        let noteColor =  this.handleNoteColour();
         const formHead = this.elements.dialog.querySelector(".form-head");
-        formHead.style.backgroundColor = `var(${noteColor})`;
+        const titleElement = this.elements.dialog.querySelector("#note-form-heading");
+        const contentElement = this.elements.dialog.querySelector("#note-form-text");
+        let noteColor =  this.handleNoteColour();
+
+        formHead.style.backgroundColor = noteColor;
         this.elements.dialog.showModal();
-        this.elements.dialog.querySelector("#note-form-heading").focus();
+        titleElement.focus();
+
+        if (this.isEditing) {
+            const noteTitle = this.editingNote.querySelector("h3");
+            const noteContent = this.editingNote.querySelector("textarea");
+            titleElement.value = noteTitle.textContent;
+            contentElement.value = noteContent.value;
+        }
     }
 
     closeForm(elm1, elm2) {
         elm1.value = '';
         elm2.value = '';
         this.elements.dialog.close();
+        this.isEditing = false;
+        this.editingNote = '';
     };
 
     handleAddNote(title, content) {
@@ -108,13 +140,20 @@ class NotesApp {
         if (content) {
             const newNote = this.manager.create(noteTitle, noteContent, noteColor);
             this.ui.renderNoteUI(newNote, this.noteArea);
-
             this.closeForm(title, content);
         }
     };
 
-    handleEditNote() {
+    handleEditNote(title, content) {
+        const noteID = this.editingNote.dataset.id;
+        const noteTitle = this.editingNote.querySelector("h3");
+        const noteContent = this.editingNote.querySelector("textarea");
 
+        noteTitle.textContent = title.value;
+        noteContent.value = content.value;
+        
+        this.manager.update(noteID, title.value, content.value);
+        this.closeForm(title, content);
     }
 
     handleDeleteNote(event) {
