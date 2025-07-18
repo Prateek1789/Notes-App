@@ -1,12 +1,9 @@
 class NoteUI {
-    constructor(manager, onEditNote, onDeleteNote) {
+    constructor(manager) {
         this.NotesManager = manager;
-        this.onEdit = onEditNote;
-        this.onDelete = onDeleteNote;
     }
 
     createNoteElement(note) {
-        const noteData = note;
         const noteElement = document.createElement("div");
         noteElement.setAttribute("class", "note");
         noteElement.setAttribute("data-id", note.id);
@@ -44,9 +41,21 @@ class NoteUI {
         return noteElement;
     }
 
-    renderNoteUI(note, parent) {
+    renderNote(note, container) {
         const newNoteElement = this.createNoteElement(note);
-        parent.appendChild(newNoteElement);
+        container.appendChild(newNoteElement);
+    }
+
+    renderAllNotes(container) {
+        const notes = this.NotesManager.getAll();
+        container.innerHTML = '';
+        notes.forEach(note => !note.isTrashed && this.renderNote(note, container));
+    }
+
+    renderDeletedNotes(container) {
+        const deletedNotes = this.NotesManager.getDeletedNotes();
+        container.innerHTML = '';
+        deletedNotes.forEach(note => this.renderNote(note, container));
     }
 } 
 
