@@ -6,7 +6,7 @@
     <meta name="description" content="Simple Notes App">
     <meta name="author" content="Prateek">
     <meta name="robots" content="index, follow">
-    <title>Notes-Book</title>
+    <title>iNotes</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,8 +15,8 @@
             <span class="logo">iNote</span>
 
             <div class="sidebar-functions flex flex-col items-center">
-                <button type="button" class="btn-add-note button-dark">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" class="svg-light"><path d="M450-450H200v-60h250v-250h60v250h250v60H510v250h-60v-250Z"/></svg>
+                <button type="button" class="btn-add-note" aria-pressed="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z"/></svg>
                 </button>
                 <div class="note-color-option flex flex-col items-center justify-between">
                     <label for="color-blue" class="note-color-label color-1" data-color="--color-Note-Blue">
@@ -32,6 +32,12 @@
                         <input type="radio" name="note_color" id="color-green" class="input-radio">
                     </label>
                 </div>
+                <button type="button" class="home-btn" aria-pressed="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+                </button>
+                <button type="button" class="trash-btn" aria-pressed="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#eaeaea"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                </button>
             </div>
         </aside>
 
