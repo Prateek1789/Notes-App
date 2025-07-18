@@ -8,9 +8,11 @@ class NotesApp {
         this.app = document.querySelector('#root');
         this.noteArea = document.querySelector(".notes-area");
         this.isEditing = false;
+        this.inHome = true;
+        this.inTrash = false;
         this.editingNote;
         this.manager = new Manager();
-        this.ui = new NoteUI();
+        this.ui = new NoteUI(this.manager);
         this.elements = this.getAppElements();
         this.initialiseAppEvents();
     }
@@ -53,7 +55,11 @@ class NotesApp {
 
             if (e.target.closest(".theme-toggle")) this.handleTheme(this.elements.themeToggle);
 
-            if (e.target.closest(".btn-add-note")) this.openForm();
+            if (e.target.closest(".btn-add-note") && !this.inTrash) this.openForm();
+
+            if (e.target.closest(".home-btn")) this.handleSwitchTabs();
+
+            if (e.target.closest(".trash-btn")) this.handleSwitchTabs();
 
             if (e.target.closest(".btn-edit")) {
                 this.isEditing = true;
@@ -139,7 +145,7 @@ class NotesApp {
 
         if (content) {
             const newNote = this.manager.create(noteTitle, noteContent, noteColor);
-            this.ui.renderNoteUI(newNote, this.noteArea);
+            this.ui.renderNote(newNote, this.noteArea);
             this.closeForm(title, content);
         }
     };
@@ -159,6 +165,14 @@ class NotesApp {
     handleDeleteNote(event) {
         const parent = event.target.closest('.note');
         parent.remove();
+
+        if (!this.inTrash) this.manager.trash(parent.dataset.id);
+    }
+
+    handleSwitchTabs() {
+        this.inHome = this.inHome ? false : true;
+        this.inTrash = !this.inHome ? true : false;
+        this.loadNotes();
     }
 
     handleSearchNote(isActive, element, input, shortcut) {
@@ -179,7 +193,9 @@ class NotesApp {
     }
 
     loadNotes() {
+        if (this.inHome && !this.inTrash) this.ui.renderAllNotes(this.noteArea);
 
+        if (this.inTrash && !this.inHome) this.ui.renderDeletedNotes(this.noteArea);
     }
 
     saveNotes() {
