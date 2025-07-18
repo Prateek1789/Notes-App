@@ -3,6 +3,7 @@ import Note from '../DataModel/Note.js'
 class NotesManager {
     constructor() {
         this.notes = [];
+        this.deletedNotes = [];
     };
 
     create(title, content, color) {
@@ -25,14 +26,28 @@ class NotesManager {
         return null;
     };
 
-    delete(id) {
+    trash(id) {
         const noteIndex = this.notes.findIndex(note => note.id === id);
-        if(noteIndex > -1) return this.notes.splice(noteIndex, 1)[0];
-        return null;
-    };
+        const note = this.read(id);
+        this.deletedNotes.push(note);
+        this.notes[noteIndex] = note.createSkeleton(id);
+    }
 
     getAll() {
         return [...this.notes];
+    };
+
+    getDeletedNotes() {
+        return [...this.deletedNotes];
+    }
+
+    delete(id) {
+        const noteIndexOnMain = this.notes.findIndex(note => note.id === id);
+        const noteIndexOnTrash = this.deletedNotes.findIndex(note => note.id === id);
+        if (noteIndexOnMain > -1) return this.notes.splice(noteIndexOnMain, 1)[0];
+        if (noteIndexOnTrash > -1) return this.deletedNotes.splice(noteIndexOnTrash, 1)[0];
+
+        return null;
     };
 
     search(query) {
