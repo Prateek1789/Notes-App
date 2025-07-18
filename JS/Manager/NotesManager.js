@@ -26,26 +26,28 @@ class NotesManager {
         return null;
     };
 
-    trash(id) {
+    sendToTrash(id) {
         const noteIndex = this.notes.findIndex(note => note.id === id);
-        const note = this.read(id);
-        this.deletedNotes.push(note);
-        this.notes[noteIndex] = note.createSkeleton(id);
-    }
+        this.deletedNotes.push(this.notes[noteIndex]);
+        this.notes[noteIndex] = this.notes[noteIndex].createSkeleton(id);
+    };
 
     getAll() {
-        return [...this.notes];
+        return this.notes;
     };
 
     getDeletedNotes() {
-        return [...this.deletedNotes];
-    }
+        return this.deletedNotes;
+    };
 
     delete(id) {
         const noteIndexOnMain = this.notes.findIndex(note => note.id === id);
         const noteIndexOnTrash = this.deletedNotes.findIndex(note => note.id === id);
-        if (noteIndexOnMain > -1) return this.notes.splice(noteIndexOnMain, 1)[0];
-        if (noteIndexOnTrash > -1) return this.deletedNotes.splice(noteIndexOnTrash, 1)[0];
+
+        if (noteIndexOnMain > -1 && noteIndexOnTrash > -1) {
+            this.notes.splice(noteIndexOnMain, 1);
+            this.deletedNotes.splice(noteIndexOnTrash, 1);
+        }
 
         return null;
     };
@@ -55,7 +57,7 @@ class NotesManager {
             note.title.toLowerCase().includes(query.toLowerCase()) || 
             note.content.toLowerCase().includes(query.toLowerCase());
         });
-    }
+    };
 }
 
 export default NotesManager;
