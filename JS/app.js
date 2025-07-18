@@ -7,14 +7,21 @@ class NotesApp {
     constructor() {
         this.app = document.querySelector('#root');
         this.noteArea = document.querySelector(".notes-area");
-        this.isEditing = false;
+        this.tabName = document.querySelector(".tab");
         this.inHome = true;
         this.inTrash = false;
+        this.isEditing = false;
         this.editingNote;
+        this.elements;
         this.manager = new Manager();
         this.ui = new NoteUI(this.manager);
+        this.initApp();
+    }
+
+    initApp() {
         this.elements = this.getAppElements();
-        this.initialiseAppEvents();
+        this.initAppEvents();
+        this.tabName.textContent = "All Notes";
     }
 
     getAppElements() {
@@ -28,7 +35,7 @@ class NotesApp {
         }
     }
 
-    initialiseAppEvents() {
+    initAppEvents() {
 
         // Event Listener for KEYDOWN events 
         document.addEventListener("keydown", (e) => {
@@ -57,9 +64,9 @@ class NotesApp {
 
             if (e.target.closest(".btn-add-note") && !this.inTrash) this.openForm();
 
-            if (e.target.closest(".home-btn")) this.handleSwitchTabs();
+            if (e.target.closest(".home-btn")) this.handleSwitchTabs(e);
 
-            if (e.target.closest(".trash-btn")) this.handleSwitchTabs();
+            if (e.target.closest(".trash-btn")) this.handleSwitchTabs(e);
 
             if (e.target.closest(".btn-edit")) {
                 this.isEditing = true;
@@ -167,11 +174,23 @@ class NotesApp {
         parent.remove();
 
         if (!this.inTrash) this.manager.trash(parent.dataset.id);
+
+        if (this.inTrash) this.manager.delete(parent.dataset.id);
     }
 
-    handleSwitchTabs() {
-        this.inHome = this.inHome ? false : true;
-        this.inTrash = !this.inHome ? true : false;
+    handleSwitchTabs(event) {
+        if (event.target.closest('.home-btn')) {
+            this.inHome = true;
+            this.inTrash = false;
+            this.tabName.textContent = "All Notes";
+        }
+
+        if (event.target.closest('.trash-btn')) {
+            this.inHome = false;
+            this.inTrash = true;
+            this.tabName.textContent = "Trash";
+        }
+
         this.loadNotes();
     }
 
@@ -199,7 +218,7 @@ class NotesApp {
     }
 
     saveNotes() {
-
+        
     }
 }
 
