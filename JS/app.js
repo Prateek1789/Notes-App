@@ -1,6 +1,6 @@
 import Manager from './Manager/NotesManager.js'
-/* import Storage from './Data/Storage.js';
-import Note from './DataModel/Note.js'; */
+import Storage from './Data/Storage.js';
+/* import Note from './DataModel/Note.js'; */
 import NoteUI from './UI/NoteUI.js'
 
 class NotesApp {
@@ -21,7 +21,7 @@ class NotesApp {
     initApp() {
         this.elements = this.getAppElements();
         this.initAppEvents();
-        this.tabName.textContent = "All Notes";
+        this.tabName.textContent = "Home";
     }
 
     getAppElements() {
@@ -36,7 +36,8 @@ class NotesApp {
     }
 
     initAppEvents() {
-
+        /* Storage.clear(); */
+        this.loadNotes();
         // Event Listener for KEYDOWN events 
         document.addEventListener("keydown", (e) => {
             if (e.metaKey && e.key === "k") {
@@ -153,6 +154,7 @@ class NotesApp {
         if (content) {
             const newNote = this.manager.create(noteTitle, noteContent, noteColor);
             this.ui.renderNote(newNote, this.noteArea);
+            this.saveNotes();
             this.closeForm(title, content);
         }
     };
@@ -173,16 +175,17 @@ class NotesApp {
         const parent = event.target.closest('.note');
         parent.remove();
 
-        if (!this.inTrash) this.manager.trash(parent.dataset.id);
+        if (!this.inTrash) this.manager.softDelete(parent.dataset.id);
 
-        if (this.inTrash) this.manager.delete(parent.dataset.id);
+        if (this.inTrash) this.manager.hardDelete(parent.dataset.id);
+
     }
 
     handleSwitchTabs(event) {
         if (event.target.closest('.home-btn')) {
             this.inHome = true;
             this.inTrash = false;
-            this.tabName.textContent = "All Notes";
+            this.tabName.textContent = "Home";
         }
 
         if (event.target.closest('.trash-btn')) {
@@ -212,171 +215,14 @@ class NotesApp {
     }
 
     loadNotes() {
-        if (this.inHome && !this.inTrash) this.ui.renderAllNotes(this.noteArea);
+        if (this.inHome && !this.inTrash) this.ui.renderMainNotes(this.noteArea);
 
         if (this.inTrash && !this.inHome) this.ui.renderDeletedNotes(this.noteArea);
     }
 
     saveNotes() {
-        
+        this.manager.saveNotes();
     }
 }
 
 const App = new NotesApp();
-
-
-// Kept old Appp class for reference and comparision 
-/* class App {
-    constructor() {
-        this.app = document.querySelector(".app-container");
-        this.searchArea = document.querySelector(".itm-2");
-        this.searchInput = document.querySelector("#search");
-        this.shortCutStr = document.querySelector(".search-shortcut");
-        this.themeBall = document.querySelector(".toggle-ball");
-        this.addNoteBtn = document.querySelector(".add-note-btn");
-        this.noteArea = document.querySelector(".notes-area");
-        this.noteGrid = document.querySelector(".note-container");
-        this.noteOptions = [...document.querySelectorAll(".new-note-option")];
-        this.noteTitle = '';
-        this.isDarkMode = this.app.classList.contains("dark-mode");
-        this.noteFactory = new NoteFactory();
-        this.noteID = 0;
-        this.init();
-    };
-
-    init() {
-        document.addEventListener("keydown", e => {
-            if (e.metaKey && e.key === "k") {
-                e.preventDefault();
-                this.activateSearch(true);
-            }
-            if (e.key === "Escape" && this.searchArea.classList.contains("active") && this.shortCutStr.classList.contains("active") && this.searchInput.value === "") {
-                this.activateSearch(false);
-            }
-        });
-
-        // Event listener to handle App click events
-        document.addEventListener("click", e => {
-            if (e.target === this.searchInput) {
-                this.activateSearch(true);
-            }
-
-            if (!e.target.closest("#search")) {
-                this.activateSearch(false);
-            }
-
-            if (e.target.closest(".theme-toggle")) {
-                this.setTheme();
-                let isPressed = e.target.getAttribute("aria-pressed") == "true";
-                e.target.setAttribute("aria-pressed", !isPressed ? "true" : "false");
-            }
-
-            if (e.target.closest(".new-note-option")) {
-                this.newNoteSelector(e);
-            }
-        
-            if (e.target.closest(".add-note-btn")) {
-                this.addNote();
-            }
-        });
-    };
-
-    activateSearch(bool) {
-        if (bool) {
-            this.searchArea.classList.add("active");
-            this.shortCutStr.classList.add("active");
-            this.searchInput.focus();
-        }
-        else {
-            this.searchArea.classList.remove("active");
-            this.shortCutStr.classList.remove("active");
-            this.searchInput.blur();
-        }
-    }
-
-    newNoteSelector(e) {
-        // Get colour option clicked by user
-        const clickedElement = e.target.closest(".new-note-option");
-        const colourCircle = clickedElement.querySelector(".clr-circle");
-        
-        // If no colour option is selected, return early
-        if (!clickedElement) return;
-        
-        // Toggle Active class on the selected note option
-        let isActive = clickedElement.classList.contains("active");
-        if (isActive) {
-            clickedElement.classList.remove("active");
-            colourCircle.classList.remove("active");
-        }
-        else {
-            clickedElement.classList.add("active");
-            colourCircle.classList.add("active");
-        }
-        // isActive ? clickedElement.classList.remove("active") : clickedElement.classList.add("active"); 
-        
-        // Remove 'active' class from unselected note options
-        this.noteOptions.forEach(option => {
-            const colourCircle = option.querySelector(".clr-circle");
-            if (option !== clickedElement && option.classList.contains("active") && colourCircle.classList.contains("active")) {
-                option.classList.remove("active");
-                colourCircle.classList.remove("active");
-            };
-        });
-    }
-
-    addNote() {
-        const date = DateUtility.getCurrentDate();
-        // Get the note title from the input field
-        this.noteOptions.forEach(itm => {
-            // Checks which note option is selected
-            if (itm.classList.contains("active")) {
-                // Gets input field withing the selected note option gets the value, If no value is entered, sets default title
-                const titleInput = itm.querySelector(".note-title");
-                this.noteTitle = titleInput.value ? titleInput.value : `Untitled ${this.noteID + 1}`;
-            }
-        });
-        // Check if at least one colour option is selected
-        this.noteOptions.forEach((itm, idx) => {
-            if (itm.classList.contains("active")) {
-                const colour = this.noteFactory.getColourForMode(this.isDarkMode, idx);
-                this.noteGrid.appendChild(this.noteFactory.createNote(this.noteID, this.noteTitle, colour, date));
-                this.noteID++;
-            }
-        });
-    }
-    
-    setTheme() {
-        this.app.classList.toggle("dark-mode");
-        this.themeBall.classList.toggle("active");
-        this.isDarkMode = this.app.classList.contains("dark-mode");
-        document.querySelector(".moon").classList.toggle("active");
-        this.updateAllNotesTheme();
-    }
-
-    updateAllNotesTheme() {
-        // Select all existing note 
-        const allNotes = this.noteArea.querySelectorAll(".note");
-        const noteColourMap = this.noteFactory.getColourMap();
-
-        // Iterate over each note and retrieve colour hex code from dataset
-        allNotes.forEach(note => {
-            let currentColour = note.dataset.hexColor;
-
-            if (this.isDarkMode) {
-                note.style.backgroundColor = `${noteColourMap.get(currentColour)}`;
-                note.dataset.hexColor = `${noteColourMap.get(currentColour)}`;
-                currentColour = note.dataset.hexColor;
-            }
-            else {
-                let originalColour;
-                for (const [key, val] of noteColourMap.entries()) {
-                    if (val === currentColour) originalColour = key;
-                }
-                note.style.backgroundColor = originalColour;
-                note.dataset.hexColor = `${originalColour}`;
-            }
-        });
-    }
-}
-
-const myApp = new App(); */
