@@ -1,4 +1,5 @@
 import Note from '../DataModel/Note.js'
+import NotesStorage from '../Data/Storage.js';
 
 class NotesManager {
     constructor() {
@@ -10,6 +11,7 @@ class NotesManager {
         const note = new Note(title, content, color);
         this.notes.push(note);
         /* this.notes.unshift(note); */
+        /* this.save(this.notes, this.deletedNotes); */
         return note;
     };
 
@@ -26,21 +28,44 @@ class NotesManager {
         return null;
     };
 
-    sendToTrash(id) {
-        const noteIndex = this.notes.findIndex(note => note.id === id);
-        this.deletedNotes.push(this.notes[noteIndex]);
-        this.notes[noteIndex] = this.notes[noteIndex].createSkeleton(id);
-    };
-
     getAll() {
-        return this.notes;
+        return NotesStorage.load('notes');
     };
 
     getDeletedNotes() {
-        return this.deletedNotes;
+        return NotesStorage.load('trash');
     };
 
-    delete(id) {
+    saveNotes() {
+        const savedData = this.getAll();
+        savedData.push(...this.notes);
+        console.log(savedData);
+        NotesStorage.save('notes', savedData);
+
+        this.notes = [];
+    };
+
+    setTrash(deletedNotes) {
+        const savedTrash = this.getDeletedNotes();
+        savedTrash.push(...deletedNotes);
+        console.log(savedTrash);
+        NotesStorage.save('trash', savedTrash);
+
+        this.deletedNotes = [];
+    };
+
+    softDelete(id) {
+        const savedNotes = this.getAll();
+        const noteIndex = savedNotes.findIndex(note => note.id === id);
+
+        this.deletedNotes.push(savedNotes[noteIndex]);
+        savedNotes[noteIndex] = Note.createSkeleton(id);
+
+        NotesStorage.save('notes', savedNotes);
+        this.setTrash(this.deletedNotes);
+    };
+
+    hardDelete(id) {
         const noteIndexOnMain = this.notes.findIndex(note => note.id === id);
         const noteIndexOnTrash = this.deletedNotes.findIndex(note => note.id === id);
 
