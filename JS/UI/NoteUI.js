@@ -46,7 +46,7 @@ class NoteUI {
         container.appendChild(newNoteElement);
     }
 
-    renderAllNotes(container) {
+    renderMainNotes(container) {
         const notes = this.NotesManager.getAll();
         container.innerHTML = '';
         notes.forEach(note => !note.isTrashed && this.renderNote(note, container));
