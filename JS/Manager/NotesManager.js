@@ -8,23 +8,22 @@ class NotesManager {
     };
 
     create(title, content, color) {
-        const note = new Note(title, content, color);
+        const note = new Note('', title, content, color);
         this.notes.push(note);
-        /* this.notes.unshift(note); */
-        /* this.save(this.notes, this.deletedNotes); */
         return note;
-    };
-
-    read(id) {
-        return this.notes.find(note => note.id === id);
+        /* this.notes.unshift(note);
+        this.save(this.notes, this.deletedNotes); */
     };
 
     update(id, title, content) {
-        const note = this.read(id);
-        if (note) {
-            note.update(title, content);
-            return note;
-        }
+        const savedNotes = this.getAll();
+        const noteIndex = savedNotes.findIndex(note => note.id === id);
+
+        if (noteIndex > -1) {
+            const note = savedNotes[noteIndex];
+            savedNotes[noteIndex] = new Note(id, title, content, note.color, note.createdAt, note.createdOn);
+            NotesStorage.save('notes', savedNotes);
+        };
         return null;
     };
 
@@ -39,7 +38,6 @@ class NotesManager {
     saveNotes() {
         const savedData = this.getAll();
         savedData.push(...this.notes);
-        console.log(savedData);
         NotesStorage.save('notes', savedData);
 
         this.notes = [];
@@ -48,7 +46,6 @@ class NotesManager {
     setTrash(deletedNotes) {
         const savedTrash = this.getDeletedNotes();
         savedTrash.push(...deletedNotes);
-        console.log(savedTrash);
         NotesStorage.save('trash', savedTrash);
 
         this.deletedNotes = [];
