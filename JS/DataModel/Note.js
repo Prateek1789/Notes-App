@@ -20,7 +20,7 @@ class Note {
         this.updatedAt = DateUtility.getCurrentDate().time;
     };
 
-    createSkeleton(id) {
+    static createSkeleton(id) {
         return {
             id,
             isTrashed: true
