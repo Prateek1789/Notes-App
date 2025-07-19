@@ -63,12 +63,17 @@ class NotesManager {
     };
 
     hardDelete(id) {
-        const noteIndexOnMain = this.notes.findIndex(note => note.id === id);
-        const noteIndexOnTrash = this.deletedNotes.findIndex(note => note.id === id);
+        const savedNotes = this.getAll();
+        const trashNotes = this.getDeletedNotes();
 
-        if (noteIndexOnMain > -1 && noteIndexOnTrash > -1) {
-            this.notes.splice(noteIndexOnMain, 1);
-            this.deletedNotes.splice(noteIndexOnTrash, 1);
+        const mainIndex = savedNotes.findIndex(note => note.id === id);
+        const trashIndex = trashNotes.findIndex(note => note.id === id);
+
+        if (mainIndex > -1 && trashIndex > -1) {
+            savedNotes.splice(mainIndex, 1);
+            trashNotes.splice(trashIndex, 1);
+            NotesStorage.save('notes', savedNotes);
+            NotesStorage.save('trash', trashNotes);
         }
 
         return null;
@@ -80,6 +85,6 @@ class NotesManager {
             note.content.toLowerCase().includes(query.toLowerCase());
         });
     };
-}
+};
 
 export default NotesManager;
