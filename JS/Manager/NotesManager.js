@@ -7,21 +7,21 @@ class NotesManager {
         this.deletedNotes = [];
     };
 
-    create(title, content, color) {
-        const note = new Note('', title, content, color);
+    create(title, content, tags, color) {
+        const note = new Note('', title, content, tags, color);
         this.notes.push(note);
         return note;
         /* this.notes.unshift(note);
         this.save(this.notes, this.deletedNotes); */
     };
 
-    update(id, title, content) {
+    update(id, title, content, tags) {
         const savedNotes = this.getAll();
         const noteIndex = savedNotes.findIndex(note => note.id === id);
 
         if (noteIndex > -1) {
             const note = savedNotes[noteIndex];
-            savedNotes[noteIndex] = new Note(id, title, content, note.color, note.createdAt, note.createdOn);
+            savedNotes[noteIndex] = new Note(id, title, content, tags, note.color, note.createdAt, note.createdOn);
             NotesStorage.save('notes', savedNotes);
         };
         return null;
@@ -91,10 +91,14 @@ class NotesManager {
     }
 
     search(query) {
-        return this.notes.filter(note => {
-            note.title.toLowerCase().includes(query.toLowerCase()) || 
-            note.content.toLowerCase().includes(query.toLowerCase());
-        });
+        const notes = this.getAll().filter(note => !note.isTrashed);
+        const searchTerm = query.toLowerCase().trim();
+
+        if (!query) return notes;
+        
+        return notes.filter(note => note.title?.toLowerCase().includes(searchTerm) || 
+                                    note.content?.toLowerCase().includes(searchTerm) || 
+                                    note.tags?.toLowerCase().includes(searchTerm));
     };
 };
 
