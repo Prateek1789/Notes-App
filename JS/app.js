@@ -69,13 +69,11 @@ class NotesApp {
 
             if (e.target.closest(".trash-btn")) this.handleSwitchTabs(e);
 
-            if (e.target.closest(".btn-edit")) {
-                this.isEditing = true;
-                this.editingNote = e.target.closest('.note');
-                this.openForm();
-            }
+            if (e.target.closest(".btn-edit")) this.handleEditForm(e);
 
             if (e.target.closest(".btn-del")) this.handleDeleteNote(e);
+
+            if (e.target.closest(".btn-restore")) this.handleRestore(e);
         });
     };
 
@@ -159,6 +157,12 @@ class NotesApp {
         }
     };
 
+    handleEditForm(e) {
+        this.isEditing = true;
+        this.editingNote = e.target.closest('.note');
+        this.openForm();
+    }
+
     handleEditNote(title, content) {
         const noteID = this.editingNote.dataset.id;
         const noteTitle = this.editingNote.querySelector("h3");
@@ -172,13 +176,19 @@ class NotesApp {
     }
 
     handleDeleteNote(event) {
-        const parent = event.target.closest('.note');
+        const parent = event.target.closest(".note");
         parent.remove();
 
         if (!this.inTrash) this.manager.softDelete(parent.dataset.id);
 
         if (this.inTrash) this.manager.hardDelete(parent.dataset.id);
 
+    }
+
+    handleRestore(event) {
+        const parent = event.target.closest(".note");
+        parent.remove();
+        this.manager.restoreNote(parent.dataset.id);
     }
 
     handleSwitchTabs(event) {
