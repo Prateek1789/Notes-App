@@ -79,6 +79,17 @@ class NotesManager {
         return null;
     };
 
+    restoreNote(id) {
+        const savedNotes = this.getAll();
+        const trashNotes = this.getDeletedNotes();
+        const indexMain = savedNotes.findIndex(note => note.id === id);
+        const note = trashNotes.find(note => note.id === id);
+        savedNotes[indexMain] = note;
+
+        NotesStorage.save('notes', savedNotes);
+        NotesStorage.save('trash', trashNotes.filter(note => note.id !== id));
+    }
+
     search(query) {
         return this.notes.filter(note => {
             note.title.toLowerCase().includes(query.toLowerCase()) || 
