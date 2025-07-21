@@ -1,10 +1,11 @@
 import DateUtility from "../Utils/DateUtility.js";
 
 class Note {
-    constructor(id, title = '', content = '', color, createdAt, createdOn) {
+    constructor(id, title = '', content = '', tags = '', color, createdAt, createdOn) {
         this.id = id || 'n_' + Date.now().toString(36).slice(-6);
         this.title = title;
         this.content = content;
+        this.tags = tags 
         this.color = color;
         this.isTrashed = false;
         this.createdOn = createdOn || DateUtility.getCurrentDate().date;
