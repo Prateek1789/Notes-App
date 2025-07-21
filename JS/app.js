@@ -13,6 +13,7 @@ class NotesApp {
         this.isEditing = false;
         this.editingNote;
         this.elements;
+        this.timer;
         this.manager = new Manager();
         this.ui = new NoteUI(this.manager);
         this.initApp();
@@ -31,18 +32,20 @@ class NotesApp {
             searchShortcut: document.querySelector(".search-shortcut"),
             themeToggle: document.querySelector('.theme-toggle'),
             dialog: document.querySelector("dialog"),
-            colorOptions: [...document.querySelectorAll(".input-radio")]
+            colorOptions: [...document.querySelectorAll(".input-radio")],
+            btnHome: document.querySelector(".home-btn"),
+            btnTrash: document.querySelector(".trash-btn")
         }
     }
 
     initAppEvents() {
         /* Storage.clear(); */
-        this.loadNotes();
+        this.displayNotesForActiveTab();
         // Event Listener for KEYDOWN events 
         document.addEventListener("keydown", (e) => {
             if (e.metaKey && e.key === "k") {
                 e.preventDefault();
-                this.handleSearchNote(true, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
+                this.toggleSearchVisibility(true, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
             }
 
             if (e.key === "Escape" && 
@@ -50,40 +53,56 @@ class NotesApp {
                 this.elements.searchShortcut.classList.contains("hide") && 
                 this.elements.searchInput.value === "") {
 
-                this.handleSearchNote(false, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
+                this.toggleSearchVisibility(false, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
             }
         });
 
-        this.handleFormListener();
+        // Event listener for Search Events
+        this.elements.searchInput.addEventListener('input', () => this.performNoteSearch());
+
         // Event Listeners for CLICK events
         document.addEventListener("click", (e) => {
-            if (e.target.closest(".search-container")) this.handleSearchNote(true, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
+            if (e.target.closest(".search-container")) this.toggleSearchVisibility(true, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
 
-            if (!e.target.closest(".search-container")) this.handleSearchNote(false, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
+            if (!e.target.closest(".search-container")) this.toggleSearchVisibility(false, this.elements.searchBar, this.elements.searchInput, this.elements.searchShortcut);
 
-            if (e.target.closest(".theme-toggle")) this.handleTheme(this.elements.themeToggle);
+            if (e.target.closest(".theme-toggle")) this.switchTheme(this.elements.themeToggle);
 
-            if (e.target.closest(".btn-add-note") && !this.inTrash) this.openForm();
+            if (e.target.closest(".btn-add-note") && !this.inTrash) this.showNoteModal();
 
-            if (e.target.closest(".home-btn")) this.handleSwitchTabs(e);
+            if (e.target.closest(".btn-cancel")) {
+                e.preventDefault();
+                this.closeNoteModal(...this.getNoteModalInputs());
+            };
 
-            if (e.target.closest(".trash-btn")) this.handleSwitchTabs(e);
+            if (e.target.closest(".btn-save")) {
+                e.preventDefault();
+                if (!this.isEditing) this.createNewNote(...this.getNoteModalInputs());
+                
+                if (this.isEditing) this.updateNote(...this.getNoteModalInputs());
+            };
 
-            if (e.target.closest(".btn-edit")) this.handleEditForm(e);
+            if (e.target.closest(".home-btn")) this.switchToTab(e);
 
-            if (e.target.closest(".btn-del")) this.handleDeleteNote(e);
+            if (e.target.closest(".trash-btn")) this.switchToTab(e);
 
-            if (e.target.closest(".btn-restore")) this.handleRestore(e);
+            if (e.target.closest(".btn-star")) this.bookmarkNotes(e);
+
+            if (e.target.closest(".btn-edit")) this.enterEditMode(e);
+
+            if (e.target.closest(".btn-del")) this.deleteNote(e);
+
+            if (e.target.closest(".btn-restore")) this.restoreTrashedNotes(e);
         });
     };
 
-    handleTheme(toggle) {
+    switchTheme(toggle) {
         document.querySelector('.toggle-ball').classList.toggle('active');
         toggle.classList.toggle('active');
         this.app.classList.toggle('dark-mode');
     };
 
-    handleNoteColour() {
+    getNoteColor() {
         let color = '';
 
         if (!this.isEditing) {
@@ -103,67 +122,65 @@ class NotesApp {
         return color;
     };
 
-    handleFormListener() {
+    getNoteModalInputs() {
         const noteTitle = this.elements.dialog.querySelector("#note-form-heading");
         const noteContent = this.elements.dialog.querySelector("#note-form-text");
+        const noteTags = this.elements.dialog.querySelector("#note-tags");
 
-        this.elements.dialog.querySelector("form").addEventListener("click", (e) => {
-            e.preventDefault();
-
-            if (e.target.closest(".btn-cancel")) this.closeForm(noteTitle, noteContent);
-
-            if (e.target.closest(".btn-save") && !this.isEditing) this.handleAddNote(noteTitle, noteContent);
-
-            if (e.target.closest(".btn-save") && this.isEditing) this.handleEditNote(noteTitle, noteContent);
-        });
+        return [noteTitle, noteContent, noteTags];
     };
 
-    openForm() {
+    showNoteModal() {
         const formHead = this.elements.dialog.querySelector(".form-head");
-        const titleElement = this.elements.dialog.querySelector("#note-form-heading");
-        const contentElement = this.elements.dialog.querySelector("#note-form-text");
-        let noteColor =  this.handleNoteColour();
+        const formInputs = this.getNoteModalInputs();
+        let noteColor =  this.getNoteColor();
 
         formHead.style.backgroundColor = noteColor;
         this.elements.dialog.showModal();
-        titleElement.focus();
+        formInputs[0].focus();
 
         if (this.isEditing) {
-            const noteTitle = this.editingNote.querySelector("h3");
-            const noteContent = this.editingNote.querySelector("textarea");
-            titleElement.value = noteTitle.textContent;
-            contentElement.value = noteContent.value;
+            formInputs[0].value = this.editingNote.querySelector("h3").textContent;
+            formInputs[1].value = this.editingNote.querySelector("textarea").value;
+            formInputs[2].value = this.manager.getAll().find(note => note.id === this.editingNote.dataset.id).tags;
         }
     }
 
-    closeForm(elm1, elm2) {
+    closeNoteModal(elm1, elm2, elm3) {
         elm1.value = '';
         elm2.value = '';
+        elm3.value = '';
         this.elements.dialog.close();
         this.isEditing = false;
         this.editingNote = '';
     };
 
-    handleAddNote(title, content) {
-        const noteColor = this.handleNoteColour();
+    createNewNote(title, content, tags) {
+        const noteColor = this.getNoteColor();
         const noteTitle = title.value || 'Untitled';
         const noteContent = content.value;
+        const noteTags = tags.value;
 
         if (content) {
-            const newNote = this.manager.create(noteTitle, noteContent, noteColor);
+            const newNote = this.manager.create(noteTitle, noteContent, noteTags, noteColor);
             this.ui.renderNote(newNote, this.noteArea);
             this.saveNotes();
-            this.closeForm(title, content);
+            this.closeNoteModal(title, content, tags);
         }
     };
 
-    handleEditForm(e) {
+    enterEditMode(e) {
         this.isEditing = true;
         this.editingNote = e.target.closest('.note');
-        this.openForm();
+        this.showNoteModal();
     }
 
-    handleEditNote(title, content) {
+    bookmarkNotes(event) {
+        const btn = event.target.closest(".btn-star");
+        btn.classList.toggle("active");
+    }
+
+    updateNote(title, content, tags) {
         const noteID = this.editingNote.dataset.id;
         const noteTitle = this.editingNote.querySelector("h3");
         const noteContent = this.editingNote.querySelector("textarea");
@@ -171,27 +188,26 @@ class NotesApp {
         noteTitle.textContent = title.value;
         noteContent.value = content.value;
         
-        this.manager.update(noteID, title.value, content.value);
-        this.closeForm(title, content);
+        this.manager.update(noteID, title.value, content.value, tags.value);
+        this.closeNoteModal(title, content, tags);
     }
 
-    handleDeleteNote(event) {
+    deleteNote(event) {
         const parent = event.target.closest(".note");
         parent.remove();
 
         if (!this.inTrash) this.manager.softDelete(parent.dataset.id);
 
         if (this.inTrash) this.manager.hardDelete(parent.dataset.id);
-
     }
 
-    handleRestore(event) {
+    restoreTrashedNotes(event) {
         const parent = event.target.closest(".note");
         parent.remove();
         this.manager.restoreNote(parent.dataset.id);
     }
 
-    handleSwitchTabs(event) {
+    switchToTab(event) {
         if (event.target.closest('.home-btn')) {
             this.inHome = true;
             this.inTrash = false;
@@ -203,11 +219,10 @@ class NotesApp {
             this.inTrash = true;
             this.tabName.textContent = "Trash";
         }
-
-        this.loadNotes();
+        this.displayNotesForActiveTab();
     }
 
-    handleSearchNote(isActive, element, input, shortcut) {
+    toggleSearchVisibility(isActive, element, input, shortcut) {
         if (isActive) {
             element.classList.add('active');
             shortcut.classList.add('hide');
@@ -220,14 +235,39 @@ class NotesApp {
         }
     }
 
-    handlClearAll() {
-
+    performNoteSearch() {
+        const delay = 750;
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+            const query = this.elements.searchInput.value;
+            const result = this.manager.search(query);
+            this.noteArea.innerHTML = '';
+            result.forEach(note => this.ui.renderNote(note, this.noteArea));
+        }, delay);
     }
 
-    loadNotes() {
+    /* clearAllNotes() {
+
+    } */
+
+    updateActiveTabButton() {
+        if (this.inHome && !this.elements.btnHome.classList.contains("btn-active")) {
+            this.elements.btnHome.classList.add("btn-active");
+            this.elements.btnTrash.classList.remove("btn-active");
+        }
+        
+        if (this.inTrash && !this.elements.btnTrash.classList.contains("btn-active")) {
+            this.elements.btnTrash.classList.add("btn-active");
+            this.elements.btnHome.classList.remove("btn-active");
+        }
+    }
+
+    displayNotesForActiveTab() {
         if (this.inHome && !this.inTrash) this.ui.renderMainNotes(this.noteArea);
 
         if (this.inTrash && !this.inHome) this.ui.renderDeletedNotes(this.noteArea);
+
+        this.updateActiveTabButton();
     }
 
     saveNotes() {
