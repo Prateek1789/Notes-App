@@ -62,8 +62,8 @@ class NoteUI {
         notes.forEach(note => !note.isTrashed && this.renderNote(note, container));
     }
 
-    renderDeletedNotes(container) {
-        const deletedNotes = this.NotesManager.getDeletedNotes();
+    renderDeletedNotes(container, noteArray) {
+        const deletedNotes = noteArray || this.NotesManager.getDeletedNotes();
         container.innerHTML = '';
         deletedNotes.forEach(note => this.renderNote(note, container));
         const notes = document.querySelectorAll(".note");
