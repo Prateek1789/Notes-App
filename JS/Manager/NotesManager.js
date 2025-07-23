@@ -90,15 +90,28 @@ class NotesManager {
         NotesStorage.save('trash', trashNotes.filter(note => note.id !== id));
     }
 
-    search(query) {
-        const notes = this.getAll().filter(note => !note.isTrashed);
+    geSearchParameters(query, tab) {
         const searchTerm = query.toLowerCase().trim();
 
-        if (!query) return notes;
+        if (tab === 'dashboard') {
+            const notes = this.getAll().filter(note => !note.isTrashed);
+            if (!query) return notes;
+
+            return this.search(searchTerm, notes);
+        }
         
-        return notes.filter(note => note.title?.toLowerCase().includes(searchTerm) || 
-                                    note.content?.toLowerCase().includes(searchTerm) || 
-                                    note.tags?.toLowerCase().includes(searchTerm));
+        if (tab === 'trash') {
+            const notes = this.getDeletedNotes();
+            if (!query) return notes;
+
+            return this.search(searchTerm, notes);
+        }
+    };
+
+    search(query, noteArray) {
+        return noteArray.filter(note => note.title?.toLowerCase().includes(query) || 
+                                    note.content?.toLowerCase().includes(query) || 
+                                    note.tags?.toLowerCase().includes(query));
     };
 };
 
