@@ -22,7 +22,7 @@ class NotesApp {
     initApp() {
         this.domRef = this.getDOMReference();
         this.initAppEvents();
-        this.tabName.textContent = "Home";
+        this.tabName.textContent = "Dashboard";
     }
 
     getDOMReference() {
@@ -228,7 +228,7 @@ class NotesApp {
         if (event.target.closest('.home-btn')) {
             this.inHome = true;
             this.inTrash = false;
-            this.tabName.textContent = "Home";
+            this.tabName.textContent = "Dashboard";
         }
 
         if (event.target.closest('.trash-btn')) {
@@ -241,12 +241,14 @@ class NotesApp {
 
     performNoteSearch() {
         const delay = 750;
+        const tab = this.inHome ? 'dashboard' : 'trash';
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             const query = this.domRef.searchInput.value;
-            const result = this.manager.search(query);
+            const result = this.manager.geSearchParameters(query, tab);
             this.noteArea.innerHTML = '';
-            result.forEach(note => this.ui.renderNote(note, this.noteArea));
+            this.inHome ? result.forEach(note => this.ui.renderNote(note, this.noteArea)) : 
+                          this.ui.renderDeletedNotes(this.noteArea, result);
         }, delay);
     };
 
