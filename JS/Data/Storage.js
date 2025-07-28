@@ -1,16 +1,15 @@
 class NotesStorage {
-    static save(itm, items) {
-        localStorage.setItem(itm, JSON.stringify(items));
+    static save(allNotes) {
+        localStorage.setItem("notes", JSON.stringify(allNotes));
     }
 
-    static load(itm) {
-        const data = localStorage.getItem(itm);
+    static load() {
+        const data = localStorage.getItem("notes");
         return data ? JSON.parse(data) : [];
     }
 
     static clear() {
         localStorage.removeItem('notes');
-        localStorage.removeItem('trash');
     }
 }
 
