@@ -70,9 +70,9 @@ class NotesApp {
                 if (this.isEditing) this.updateNote(...this.getNoteModalInputs());
             };
 
-            if (e.target.closest(".home-btn")) this.switchToTab(e);
+            if (e.target.closest(".home-btn")) this.switchTab(e);
 
-            if (e.target.closest(".trash-btn")) this.switchToTab(e);
+            if (e.target.closest(".trash-btn")) this.switchTab(e);
 
             if (e.target.closest(".btn-star")) this.bookmarkNotes(e);
 
@@ -159,7 +159,7 @@ class NotesApp {
         if (this.isEditing) {
             formInputs[0].value = this.editingNote.querySelector("h3").textContent;
             formInputs[1].value = this.editingNote.querySelector("textarea").value;
-            formInputs[2].value = this.manager.getAll().find(note => note.id === this.editingNote.dataset.id).tags;
+            formInputs[2].value = this.manager.getAllNotes().find(note => note.id === this.editingNote.dataset.id).tags;
         }
     };
 
@@ -219,12 +219,12 @@ class NotesApp {
     };
 
     restoreTrashedNotes(event) {
-        const parent = event.target.closest(".note");
-        parent.remove();
-        this.manager.restoreNote(parent.dataset.id);
+        const note = event.target.closest(".note");
+        note.remove();
+        this.manager.restoreNote(note.dataset.id);
     };
 
-    switchToTab(event) {
+    switchTab(event) {
         if (event.target.closest('.home-btn')) {
             this.inHome = true;
             this.inTrash = false;
@@ -247,8 +247,7 @@ class NotesApp {
             const query = this.domRef.searchInput.value;
             const result = this.manager.geSearchParameters(query, tab);
             this.noteArea.innerHTML = '';
-            this.inHome ? result.forEach(note => this.ui.renderNote(note, this.noteArea)) : 
-                          this.ui.renderDeletedNotes(this.noteArea, result);
+            result.forEach(note => this.ui.renderNote(note, this.noteArea));
         }, delay);
     };
 
@@ -269,9 +268,17 @@ class NotesApp {
     };
 
     displayNotesForActiveTab() {
-        if (this.inHome && !this.inTrash) this.ui.renderMainNotes(this.noteArea);
+        if (this.inHome && !this.inTrash) {
+            const activeNotes = this.manager.getAllNotes().filter(note => !note.isTrashed);
+            this.noteArea.innerHTML = '';
+            activeNotes.forEach(note => this.ui.renderNote(note, this.noteArea));
+        };
 
-        if (this.inTrash && !this.inHome) this.ui.renderDeletedNotes(this.noteArea);
+        if (this.inTrash && !this.inHome) {
+            const deletedNotes = this.manager.getAllNotes().filter(note => note.isTrashed);
+            this.noteArea.innerHTML = '';
+            deletedNotes.forEach(note => this.ui.renderNote(note, this.noteArea));
+        };
 
         this.updateActiveTabButton();
     };
