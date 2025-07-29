@@ -32,6 +32,15 @@ class NotesManager {
         NotesStorage.save(savedNotes);
     };
 
+    toggleStar(id) {
+        const savedNotes = this.getAllNotes();
+        const noteIndex = savedNotes.findIndex(note => note.id === id);
+        if (noteIndex > -1) {
+            savedNotes[noteIndex].isStarred = !savedNotes[noteIndex].isStarred;
+            NotesStorage.save(savedNotes);
+        }
+    }
+
     softDelete(id) {
         const savedNotes = this.getAllNotes();
         const noteIndex = savedNotes.findIndex(note => note.id === id);
