@@ -26,6 +26,18 @@ class NotesManager {
         return NotesStorage.load();
     };
 
+    getStarredNotes() {
+        return this.getAllNotes().filter(note => note.isStarred);
+    }
+
+    getWorkNotes() {
+        return this.getAllNotes().filter(note => note.tags?.toLowerCase().includes("work"));
+    }
+
+    getPersonalNotes() {
+        return this.getAllNotes().filter(note => note.tags?.toLowerCase().includes("personal"));
+    }
+
     saveNote(note) {
         const savedNotes = this.getAllNotes();
         savedNotes.push(note);
