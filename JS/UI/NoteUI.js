@@ -1,11 +1,13 @@
 class NoteUI {
-    constructor(manager) {
-        this.NotesManager = manager;
-    }
-
     createNoteElement(note) {
         const noteElement = document.createElement("div");
-        noteElement.setAttribute("class", `note ${note.isTrashed ? 'deleted' : 'active'}`);
+        const classes = [
+            'note', 
+            note.isStarred ? 'starred' : '',
+            note.isTrashed ? 'deleted' : 'active'
+        ].filter(Boolean).join(" ");
+
+        noteElement.setAttribute("class", classes);
         noteElement.setAttribute("data-id", note.id);
 
         noteElement.innerHTML = `<textarea name="content" id="note-${note.id + 1}" class="note-content" autofocus="on" disabled>${note.content}</textarea>
