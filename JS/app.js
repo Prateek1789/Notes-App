@@ -11,8 +11,9 @@ class NotesApp {
         this.inHome = true;
         this.inTrash = false;
         this.isEditing = false;
+        this.currentTagView = "all"
         this.editingNote;
-        this.domRef;
+        this.domREF;
         this.timer;
         this.manager = new Manager();
         this.ui = new NoteUI();
@@ -20,7 +21,7 @@ class NotesApp {
     }
 
     initApp() {
-        this.domRef = this.getDOMReference();
+        this.domREF = this.getDOMReference();
         this.initAppEvents();
         this.tabName.textContent = "Dashboard";
     }
@@ -32,7 +33,8 @@ class NotesApp {
             searchShortcut: document.querySelector(".search-shortcut"),
             themeToggle: document.querySelector('.theme-toggle'),
             dialog: document.querySelector("dialog"),
-            colorOptions: [...document.querySelectorAll(".input-radio")],
+            colorOptions: [...document.querySelectorAll(".color-option-radio")],
+            tagViewOptions: [...document.querySelectorAll(".tag-view-radio")],
             btnHome: document.querySelector(".home-btn"),
             btnTrash: document.querySelector(".trash-btn")
         }
@@ -41,6 +43,9 @@ class NotesApp {
     initAppEvents() {
         /* Storage.clear(); */
         this.displayNotesForActiveTab();
+
+        // Event Listener for tag view changes
+        this.activateTagViewEvents();
 
         // Event Listener for Search Bar
         this.activateSearchEvents();
@@ -54,7 +59,7 @@ class NotesApp {
 
     activateClickEvents() {
         document.addEventListener("click", (e) => {
-            if (e.target.closest(".theme-toggle")) this.switchTheme(this.domRef.themeToggle);
+            if (e.target.closest(".theme-toggle")) this.switchTheme(this.domREF.themeToggle);
 
             if (e.target.closest(".btn-add-note") && !this.inTrash) this.showNoteModal();
 
@@ -82,35 +87,46 @@ class NotesApp {
 
             if (e.target.closest(".btn-restore")) this.restoreTrashedNotes(e);
         });
-    }
+    };
 
     activateKeyboardEvents() {
         document.addEventListener("keydown", (e) => {
             if (e.metaKey && e.key === "k") {
                 e.preventDefault();
-                this.domRef.searchInput.focus();
+                this.domREF.searchInput.focus();
             }
         
-            if (e.key === "Escape" && this.domRef.searchInput.value === "") this.domRef.searchInput.blur();
+            if (e.key === "Escape" && this.domREF.searchInput.value === "") this.domREF.searchInput.blur();
         });
-    }
+    };
+
+    activateTagViewEvents() {
+        this.domREF.tagViewOptions.forEach(input => {
+            input.addEventListener("change", (e) => {
+                if (e.target.checked) {
+                    this.currentTagView = e.target.value;
+                    this.displayNotesForActiveTab();
+                }
+            });
+        });
+    };
 
     activateSearchEvents() {
-        this.domRef.searchInput.addEventListener('focus', () => this.activateSearch());
+        this.domREF.searchInput.addEventListener('focus', () => this.activateSearch());
 
-        this.domRef.searchInput.addEventListener('blur', () => this.deactivateSearch());
+        this.domREF.searchInput.addEventListener('blur', () => this.deactivateSearch());
 
-        this.domRef.searchInput.addEventListener('input', () => this.performNoteSearch());
+        this.domREF.searchInput.addEventListener('input', () => this.performNoteSearch());
     };
 
     activateSearch() {
-        this.domRef.searchBar.classList.add('active');
-        this.domRef.searchShortcut.classList.add('hide');
+        this.domREF.searchBar.classList.add('active');
+        this.domREF.searchShortcut.classList.add('hide');
     };
 
     deactivateSearch() {
-        this.domRef.searchBar.classList.remove('active');
-        this.domRef.searchShortcut.classList.remove('hide');
+        this.domREF.searchBar.classList.remove('active');
+        this.domREF.searchShortcut.classList.remove('hide');
     };
 
     switchTheme(toggle) {
@@ -123,7 +139,7 @@ class NotesApp {
         let color = '';
 
         if (!this.isEditing) {
-            const checkedInput = this.domRef.colorOptions.find(itm => itm.checked);
+            const checkedInput = this.domREF.colorOptions.find(itm => itm.checked);
             if (checkedInput) {
                 const label = checkedInput.parentElement;
                 const colorProperty = label.dataset.color;
@@ -140,20 +156,20 @@ class NotesApp {
     };
 
     getNoteModalInputs() {
-        const noteTitle = this.domRef.dialog.querySelector("#note-form-heading");
-        const noteContent = this.domRef.dialog.querySelector("#note-form-text");
-        const noteTags = this.domRef.dialog.querySelector("#note-tags");
+        const noteTitle = this.domREF.dialog.querySelector("#note-form-heading");
+        const noteContent = this.domREF.dialog.querySelector("#note-form-text");
+        const noteTags = this.domREF.dialog.querySelector("#note-tags");
 
         return [noteTitle, noteContent, noteTags];
     };
 
     showNoteModal() {
-        const formHead = this.domRef.dialog.querySelector(".form-head");
+        const formHead = this.domREF.dialog.querySelector(".form-head");
         const formInputs = this.getNoteModalInputs();
         let noteColor =  this.getNoteColor();
 
         formHead.style.backgroundColor = noteColor;
-        this.domRef.dialog.showModal();
+        this.domREF.dialog.showModal();
         formInputs[0].focus();
 
         if (this.isEditing) {
@@ -167,7 +183,7 @@ class NotesApp {
         elm1.value = '';
         elm2.value = '';
         elm3.value = '';
-        this.domRef.dialog.close();
+        this.domREF.dialog.close();
         this.isEditing = false;
         this.editingNote = '';
     };
@@ -244,7 +260,7 @@ class NotesApp {
         const tab = this.inHome ? 'dashboard' : 'trash';
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
-            const query = this.domRef.searchInput.value;
+            const query = this.domREF.searchInput.value;
             const result = this.manager.geSearchParameters(query, tab);
             this.noteArea.innerHTML = '';
             result.forEach(note => this.ui.renderNote(note, this.noteArea));
@@ -256,32 +272,51 @@ class NotesApp {
     } */
 
     updateActiveTabButton() {
-        if (this.inHome && !this.domRef.btnHome.classList.contains("btn-active")) {
-            this.domRef.btnHome.classList.add("btn-active");
-            this.domRef.btnTrash.classList.remove("btn-active");
+        if (this.inHome && !this.domREF.btnHome.classList.contains("btn-active")) {
+            this.domREF.btnHome.classList.add("btn-active");
+            this.domREF.btnTrash.classList.remove("btn-active");
         }
         
-        if (this.inTrash && !this.domRef.btnTrash.classList.contains("btn-active")) {
-            this.domRef.btnTrash.classList.add("btn-active");
-            this.domRef.btnHome.classList.remove("btn-active");
+        if (this.inTrash && !this.domREF.btnTrash.classList.contains("btn-active")) {
+            this.domREF.btnTrash.classList.add("btn-active");
+            this.domREF.btnHome.classList.remove("btn-active");
+        }
+    };
+
+    getNotesbyTags() {
+        switch (this.currentTagView) {
+            case "bookmarks":
+                return this.manager.getStarredNotes();
+            case "work":
+                return this.manager.getWorkNotes();
+            case "personal":
+                return this.manager.getPersonalNotes();
+            case "all":
+            default:
+                return this.manager.getAllNotes();
         }
     };
 
     displayNotesForActiveTab() {
+        const allNotes = this.getNotesbyTags();
+
         if (this.inHome && !this.inTrash) {
-            const activeNotes = this.manager.getAllNotes().filter(note => !note.isTrashed);
-            this.noteArea.innerHTML = '';
-            activeNotes.forEach(note => this.ui.renderNote(note, this.noteArea));
+            const activeNotes = allNotes.filter(note => !note.isTrashed);
+            this.noteRenderer(activeNotes);
         };
 
         if (this.inTrash && !this.inHome) {
-            const deletedNotes = this.manager.getAllNotes().filter(note => note.isTrashed);
-            this.noteArea.innerHTML = '';
-            deletedNotes.forEach(note => this.ui.renderNote(note, this.noteArea));
+            const deletedNotes = allNotes.filter(note => note.isTrashed);
+            this.noteRenderer(deletedNotes);
         };
 
         this.updateActiveTabButton();
     };
+
+    noteRenderer(notes) {
+        this.noteArea.innerHTML = "";
+        notes.forEach(note => this.ui.renderNote(note, this.noteArea));
+    }
 }
 
 const App = new NotesApp();
