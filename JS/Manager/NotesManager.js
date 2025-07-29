@@ -2,13 +2,9 @@ import Note from '../DataModel/Note.js'
 import NotesStorage from '../Data/Storage.js';
 
 class NotesManager {
-    constructor() {
-        this.notes = [];
-    };
-
     create(title, content, tags, color) {
         const note = new Note('', title, content, tags, color);
-        this.notes.push(note);
+        this.saveNote(note);
         return note;
         /* this.notes.unshift(note);
         this.save(this.notes, this.deletedNotes); */
@@ -30,12 +26,10 @@ class NotesManager {
         return NotesStorage.load();
     };
 
-    saveNotes() {
+    saveNote(note) {
         const savedNotes = this.getAllNotes();
-        savedNotes.push(...this.notes);
+        savedNotes.push(note);
         NotesStorage.save(savedNotes);
-
-        this.notes = [];
     };
 
     softDelete(id) {
@@ -64,7 +58,7 @@ class NotesManager {
         savedNotes[indexMain].isTrashed = false;
 
         NotesStorage.save(savedNotes);
-    }
+    };
 
     geSearchParameters(query, tab) {
         const searchTerm = query.toLowerCase().trim();
