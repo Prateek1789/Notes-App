@@ -15,7 +15,7 @@ class NotesApp {
         this.domRef;
         this.timer;
         this.manager = new Manager();
-        this.ui = new NoteUI(this.manager);
+        this.ui = new NoteUI();
         this.initApp();
     }
 
@@ -192,8 +192,9 @@ class NotesApp {
     };
 
     bookmarkNotes(event) {
-        const btn = event.target.closest(".btn-star");
-        btn.classList.toggle("marked");
+        const note = event.target.closest(".note");
+        note.classList.toggle("starred");
+        this.manager.toggleStar(note.dataset.id);
     };
 
     updateNote(title, content, tags) {
