@@ -763,10 +763,10 @@ dialog > form input { background-color: transparent; }
     border-radius: 0.75rem;
 }
 
-.btn-star svg:nth-child(2) { display: none; }
-
-.btn-star.marked svg:first-child { display: none; }
-.btn-star.marked svg:last-child { display: block; }
+.note:not(.starred) .btn-star svg:first-child { display: block; }
+.note:not(.starred) .btn-star svg:last-child { display: none; }
+.note.starred .btn-star svg:first-child { display: none; }
+.note.starred .btn-star svg:last-child { display: block; }
 
 .note.active .na-list-item-1,
 .note.active .na-list-item-2 { display: block; }
