@@ -350,6 +350,7 @@ input[type="search"] {
     font-size: 14px;
     transition: 240ms ease;
     color: var(--color-Text-1);
+    caret-color: var(--color-Accent);
     &:focus {
         outline: none;
     }
@@ -435,30 +436,37 @@ input[type="search"] {
 .sort-option {
     height: auto;
     width: auto;
-    padding: 0.5rem 0.75rem;
     border-radius: 1.25rem;
-    background-color: var(--color-Sort-Filter);
     box-shadow: 2px 4px 8px var(--color-Shadow);
-    cursor: pointer;
+}
+
+.sort-option label {
+    height: auto;
+    width: auto;
+    position: relative;
+    padding: 0.5rem 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.25rem;
+    border-radius: 1.25rem;
+    cursor: pointer;
+    background-color: var(--color-Sort-Filter);
     transition: background-color 240ms ease;
 
-    &:hover {
-        background-color: var(--color-Accent);
-        color: var(--color-Gray-100);
-        svg { fill: var(--color-White); }
-    }
+    &:hover { background-color: var(--color-Sort-highlight); }
 }
 
-.sort-option.active {
+.sort-option label input {
+    position: absolute;
+    z-index: -1;
+}
+
+.sort-option label:has(input:checked) {
     background-color: var(--color-Accent);
     color: var(--color-Gray-100);
-
-    svg { fill: var(--color-White); }
 }
+.sort-option label:has(input:checked) svg { fill: var(--color-White); }
 
 .dropdown-menu {
     width: 200px;
