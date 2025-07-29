@@ -8,18 +8,12 @@ class Note {
         this.tags = tags 
         this.color = color;
         this.isTrashed = false;
+        this.isStarred = false;
         this.createdOn = createdOn || DateUtility.getCurrentDate().date;
         this.createdAt = createdAt || DateUtility.getCurrentDate().time;
         this.updatedOn = DateUtility.getCurrentDate().date;
         this.updatedAt = DateUtility.getCurrentDate().time;
     };
-
-    static createSkeleton(id) {
-        return {
-            id,
-            isTrashed: true
-        }
-    }
 }
 
 export default Note;
