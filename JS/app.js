@@ -181,7 +181,6 @@ class NotesApp {
         if (content) {
             const newNote = this.manager.create(noteTitle, noteContent, noteTags, noteColor);
             this.ui.renderNote(newNote, this.noteArea);
-            this.saveNotes();
             this.closeNoteModal(title, content, tags);
         }
     };
@@ -281,10 +280,6 @@ class NotesApp {
         };
 
         this.updateActiveTabButton();
-    };
-
-    saveNotes() {
-        this.manager.saveNotes();
     };
 }
 
