@@ -768,6 +768,18 @@ dialog > form input { background-color: transparent; }
 .btn-star.marked svg:first-child { display: none; }
 .btn-star.marked svg:last-child { display: block; }
 
+.note.active .na-list-item-1,
+.note.active .na-list-item-2 { display: block; }
+.note.active .na-list-item-3 { display: none; }
+.note.active .btn-del svg:first-child { display: block; }
+.note.active .btn-del svg:last-child { display: none; }
+
+.note.deleted .na-list-item-1,
+.note.deleted .na-list-item-2 { display: none; }
+.note.deleted .na-list-item-3 { display: block; }
+.note.deleted .btn-del svg:first-child { display: none; }
+.note.deleted .btn-del svg:last-child { display: block; }
+
 /* .note-action-btn:hover {
     border-color: none;
 } */
