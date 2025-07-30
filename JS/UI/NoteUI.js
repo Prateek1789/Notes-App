@@ -56,10 +56,10 @@ class NoteUI {
         return noteElement;
     }
 
-    renderNote(note, container) {
-        const newNoteElement = this.createNoteElement(note);
-        container.appendChild(newNoteElement);
+    renderNote(note, container, position = 'end') {
+        const newNote = this.createNoteElement(note);
+        position === 'start' ? container.prepend(newNote) : container.appendChild(newNote);
     }
-} 
+};
 
 export default NoteUI;
