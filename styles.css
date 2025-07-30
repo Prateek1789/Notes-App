@@ -272,10 +272,10 @@ ul {
     z-index: -1;
 }
 
-.note-color-label:first-child:has(input:checked) { border: 2px solid var(--color-Ring-Blue); }
-.note-color-label:nth-child(2):has(input:checked) { border: 2px solid var(--color-Ring-Amber); }
-.note-color-label:nth-child(3):has(input:checked) { border: 2px solid var(--color-Ring-Red); }
-.note-color-label:last-child:has(input:checked) { border: 2px solid var(--color-Ring-Green); }
+.note-color-label:first-child:has(input:checked) { border: 2px solid var(--color-Ring-Red); }
+.note-color-label:nth-child(2):has(input:checked) { border: 2px solid var(--color-Ring-Green); }
+.note-color-label:nth-child(3):has(input:checked) { border: 2px solid var(--color-Ring-Blue); }
+.note-color-label:last-child:has(input:checked) { border: 2px solid var(--color-Ring-Amber); }
 
 .color-1 { background-color: var(--color-Note-Blue); }
 .color-2 { background-color: var(--color-Note-Amber); }
@@ -516,6 +516,7 @@ input[type="search"] {
     overflow: hidden;
     transition: 200ms ease;
     will-change: height;
+    z-index: 1;
 }
 
 .options-list.active {
@@ -536,7 +537,7 @@ input[type="search"] {
     align-items: center;
     position: relative;
     cursor: pointer;
-
+    z-index: 1;
     &:hover { background-color: var(--color-Sort-highlight); }
 }
 
@@ -554,6 +555,7 @@ input[type="search"] {
     position: absolute;
     transform: translate(-50%, -50%);
     z-index: -1;
+    opacity: 0;
 }
 
 .notes-area {
