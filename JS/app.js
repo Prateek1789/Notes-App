@@ -1,6 +1,4 @@
 import Manager from './Manager/NotesManager.js'
-import Storage from './Data/Storage.js';
-/* import Note from './DataModel/Note.js'; */
 import NoteUI from './UI/NoteUI.js'
 
 class NotesApp {
@@ -11,7 +9,8 @@ class NotesApp {
         this.inHome = true;
         this.inTrash = false;
         this.isEditing = false;
-        this.currentTagView = "all"
+        this.currentTagView = "all";
+        this.currentSortOrder = "newest";
         this.editingNote;
         this.domREF;
         this.timer;
@@ -35,17 +34,20 @@ class NotesApp {
             dialog: document.querySelector("dialog"),
             colorOptions: [...document.querySelectorAll(".color-option-radio")],
             tagViewOptions: [...document.querySelectorAll(".tag-view-radio")],
+            sortBtn: document.querySelector(".menu-btn"),
+            sortMenu: document.querySelector(".options-list"),
             btnHome: document.querySelector(".home-btn"),
             btnTrash: document.querySelector(".trash-btn")
         }
     }
 
     initAppEvents() {
-        /* Storage.clear(); */
         this.displayNotesForActiveTab();
 
         // Event Listener for tag view changes
         this.activateTagViewEvents();
+
+        this.activateSortEvents();
 
         // Event Listener for Search Bar
         this.activateSearchEvents();
@@ -79,6 +81,19 @@ class NotesApp {
 
             if (e.target.closest(".trash-btn")) this.switchTab(e);
 
+            if (e.target.closest(".menu-btn")) {
+                const isPressed = this.domREF.sortBtn.ariaPressed;
+                this.domREF.sortBtn.setAttribute('aria-pressed', `${isPressed === 'false' ? 'true' : 'false'}`);
+                this.domREF.sortBtn.classList.toggle("active");
+                this.domREF.sortMenu.classList.toggle("active");
+            }
+
+            if (!e.target.closest(".menu-btn") && this.domREF.sortBtn.classList.contains("active")) {
+                this.domREF.sortBtn.setAttribute('aria-pressed', 'false');
+                this.domREF.sortBtn.classList.remove("active");
+                this.domREF.sortMenu.classList.remove("active");
+            }
+
             if (e.target.closest(".btn-star")) this.bookmarkNotes(e);
 
             if (e.target.closest(".btn-edit")) this.enterEditMode(e);
@@ -110,6 +125,21 @@ class NotesApp {
             });
         });
     };
+
+    activateSortEvents() {
+        this.domREF.sortMenu.addEventListener("change", (e) => {
+            if (e.target.classList.contains("sort-opt-input")) {
+                this.currentSortOrder = e.target.value;
+                this.updateSortButton();
+                this.displayNotesForActiveTab();
+            }
+        });
+    };
+
+    updateSortButton() {
+        const text = this.currentSortOrder === "newest" ? "Newest First" : "Oldest First";
+        this.domREF.sortBtn.querySelector("span").lastChild.textContent = text;
+    }
 
     activateSearchEvents() {
         this.domREF.searchInput.addEventListener('focus', () => this.activateSearch());
@@ -196,7 +226,7 @@ class NotesApp {
 
         if (content) {
             const newNote = this.manager.create(noteTitle, noteContent, noteTags, noteColor);
-            this.ui.renderNote(newNote, this.noteArea);
+            this.ui.renderNote(newNote, this.noteArea, 'start');
             this.closeNoteModal(title, content, tags);
         }
     };
@@ -314,6 +344,18 @@ class NotesApp {
     };
 
     noteRenderer(notes) {
+        notes.sort((a, b) => {
+            const aKey = `${a.createdOn} ${a.createdAt}`;
+            const bKey = `${b.createdOn} ${b.createdAt}`;
+
+            if (this.currentSortOrder === "newest") {
+                return bKey.localeCompare(aKey);
+            }
+            else {
+                return aKey.localeCompare(bKey)
+            }
+        });
+
         this.noteArea.innerHTML = "";
         notes.forEach(note => this.ui.renderNote(note, this.noteArea));
     }
