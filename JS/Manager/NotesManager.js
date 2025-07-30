@@ -6,8 +6,6 @@ class NotesManager {
         const note = new Note('', title, content, tags, color);
         this.saveNote(note);
         return note;
-        /* this.notes.unshift(note);
-        this.save(this.notes, this.deletedNotes); */
     };
 
     update(id, title, content, tags) {
@@ -40,7 +38,7 @@ class NotesManager {
 
     saveNote(note) {
         const savedNotes = this.getAllNotes();
-        savedNotes.push(note);
+        savedNotes.unshift(note);
         NotesStorage.save(savedNotes);
     };
 
