@@ -1,5 +1,6 @@
 import Manager from './Manager/NotesManager.js'
 import NoteUI from './UI/NoteUI.js'
+import DateUtility from './Utils/DateUtility.js';
 
 class NotesApp {
     constructor() {
@@ -23,14 +24,16 @@ class NotesApp {
         this.domREF = this.getDOMReference();
         this.initAppEvents();
         this.tabName.textContent = "Dashboard";
+        this.domREF.globalDate.textContent = DateUtility.getCurrentDate().date;
     }
 
     getDOMReference() {
         return {
-            searchBar: document.querySelector('.search-container'),
-            searchInput: document.querySelector('#search'),
+            globalDate: document.querySelector(".global-date"),
+            searchBar: document.querySelector(".search-container"),
+            searchInput: document.querySelector("#search"),
             searchShortcut: document.querySelector(".search-shortcut"),
-            themeToggle: document.querySelector('.theme-toggle'),
+            themeToggle: document.querySelector(".theme-toggle"),
             dialog: document.querySelector("dialog"),
             colorOptions: [...document.querySelectorAll(".color-option-radio")],
             sortBar: document.querySelector(".sort-bar"),
