@@ -9,7 +9,7 @@ class NotesApp {
         this.inHome = true;
         this.inTrash = false;
         this.isEditing = false;
-        this.currentTagView = "all";
+        this.currentView = "all";
         this.currentSortOrder = "newest";
         this.editingNote;
         this.domREF;
@@ -33,7 +33,7 @@ class NotesApp {
             themeToggle: document.querySelector('.theme-toggle'),
             dialog: document.querySelector("dialog"),
             colorOptions: [...document.querySelectorAll(".color-option-radio")],
-            tagViewOptions: [...document.querySelectorAll(".tag-view-radio")],
+            sortBar: document.querySelector(".sort-bar"),
             sortBtn: document.querySelector(".menu-btn"),
             sortMenu: document.querySelector(".options-list"),
             btnHome: document.querySelector(".home-btn"),
@@ -44,11 +44,8 @@ class NotesApp {
     initAppEvents() {
         this.displayNotesForActiveTab();
 
-        // Event Listener for tag view changes
-        this.activateTagViewEvents();
-
-        // Event listener for sort menu
-        this.activateSortEvents();
+        // Event Listener for Change Events in Sort Bar 
+        this.activateSortBarEvents();
 
         // Event Listener for Search Bar
         this.activateSearchEvents();
@@ -115,21 +112,20 @@ class NotesApp {
         });
     };
 
-    activateTagViewEvents() {
-        this.domREF.tagViewOptions.forEach(input => {
-            input.addEventListener("change", (e) => {
-                if (e.target.checked) {
-                    this.currentTagView = e.target.value;
-                    this.displayNotesForActiveTab();
-                }
-            });
-        });
-    };
+    activateSortBarEvents() {
+        this.domREF.sortBar.addEventListener("change", (e) => {
+            const target = e.target.closest("input");
+            
+            if (!target) return;
 
-    activateSortEvents() {
-        this.domREF.sortMenu.addEventListener("change", (e) => {
-            if (e.target.classList.contains("sort-opt-input")) {
-                this.currentSortOrder = e.target.value;
+            const action = e.target.dataset.action;
+            
+            if (action === 'tag-view' && target.checked) {
+                this.currentView = target.value;
+                this.displayNotesForActiveTab();
+            }
+            else if (action === 'sort') {
+                this.currentSortOrder = target.value;
                 this.updateSortButton();
                 this.displayNotesForActiveTab();
             }
@@ -139,7 +135,7 @@ class NotesApp {
     updateSortButton() {
         const text = this.currentSortOrder === "newest" ? "Newest First" : "Oldest First";
         this.domREF.sortBtn.querySelector("span").lastChild.textContent = text;
-    }
+    };
 
     activateSearchEvents() {
         this.domREF.searchInput.addEventListener('focus', () => this.activateSearch());
@@ -313,7 +309,7 @@ class NotesApp {
     };
 
     getNotesbyTags() {
-        switch (this.currentTagView) {
+        switch (this.currentView) {
             case "bookmarks":
                 return this.manager.getStarredNotes();
             case "work":
@@ -363,6 +359,6 @@ class NotesApp {
         this.noteArea.innerHTML = '';
         this.noteArea.appendChild(fragment);
     }
-}
+};
 
 const App = new NotesApp();
