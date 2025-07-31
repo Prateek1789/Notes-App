@@ -12,7 +12,7 @@
 <body>
     <div class="app-container" id="root">
         <aside class="sidebar flex flex-col justify-start items-center">
-            <span class="logo">iNote</span>
+            <span class="logo">iNotes</span>
 
             <div class="sidebar-functions flex flex-col items-center">
                 <button type="button" data-action="add-note" class="btn-add-note" aria-pressed="false">
@@ -80,7 +80,7 @@
                                         <path d="M280-160v-441q0-33 24-56t57-23h439q33 0 56.5 23.5T880-600v320L680-80H360q-33 0-56.5-23.5T280-160ZM81-710q-6-33 13-59.5t52-32.5l434-77q33-6 59.5 13t32.5 52l10 54H360q-66 0-113 47t-47 113v382q-16-9-27.5-24T158-276L81-710Zm719 390H640v160l160-160Z"/>
                                     </svg>
                                     All Notes
-                                    <input type="radio" name="note_tag" id="all-notes" value="all" class="tag-view-radio" checked>
+                                    <input type="radio" name="view" data-action="tag-view" id="all-notes" value="all" class="tag-view-radio" checked>
                                 </label>
                             </li>
                             <li class="sort-option">
@@ -89,7 +89,7 @@
                                         <path d="M18 2H6c-1.1 0-2 .9-2 2v17c0 .36.19.69.5.87s.69.18 1 0l6.5-3.72 6.5 3.72c.15.09.33.13.5.13s.35-.04.5-.13c.31-.18.5-.51.5-.87V4c0-1.1-.9-2-2-2m-3.6 11.2L12 11.6l-2.4 1.6.8-2.8-2-1.8 2.52-.2L12 6l1.08 2.4 2.52.2-2 1.8z"></path>
                                     </svg>
                                     Bookmarks
-                                    <input type="radio" name="note_tag" id="bookmarks" value="bookmarks" class="tag-view-radio">
+                                    <input type="radio" name="view" data-action="tag-view" id="bookmarks" value="bookmarks" class="tag-view-radio">
                                 </label>
                             </li>
                             <li class="sort-option">
@@ -98,7 +98,7 @@
                                         <path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v2.82l1.04.49a20.98 20.98 0 0 0 17.92 0l1.04-.49V8c0-1.1-.9-2-2-2M9 4h6v2H9z"></path><path d="M12 15.32c-3.35 0-6.69-.73-9.81-2.2L2 13.03V20c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-6.97l-.19.09a23 23 0 0 1-9.81 2.2"></path>
                                     </svg>
                                     Work
-                                    <input type="radio" name="note_tag" id="work" value="work" class="tag-view-radio">
+                                    <input type="radio" name="view" data-action="tag-view" id="work" value="work" class="tag-view-radio">
                                 </label>
                             </li>
                             <li class="sort-option">
@@ -107,7 +107,7 @@
                                         <path d="M12 2a5 5 0 1 0 0 10 5 5 0 1 0 0-10M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1"></path>
                                     </svg>
                                     Personal
-                                    <input type="radio" name="note_tag" id="personal" value="personal" class="tag-view-radio">
+                                    <input type="radio" name="view" data-action="tag-view" id="personal" value="personal" class="tag-view-radio">
                                 </label>
                             </li>
                         </ul>
@@ -128,13 +128,13 @@
                                 <li class="dropdown-option">
                                     <label for="newest-first" class="option-label label-first">
                                         Newest First
-                                        <input type="radio" class="sort-opt-input" name="sort-option" id="newest-first" value="newest" checked>
+                                        <input type="radio" class="sort-opt-input" name="sort" data-action="sort" id="newest-first" value="newest" checked>
                                     </label>
                                 </li>
                                 <li class="dropdown-option">
                                     <label for="oldest-first" class="option-label">
                                         Oldest First
-                                        <input type="radio" class="sort-opt-input" name="sort-option" id="oldest-first" value="oldest">
+                                        <input type="radio" class="sort-opt-input" name="sort" data-action="sort" id="oldest-first" value="oldest">
                                     </label>
                                 </li>
                             </ul>
