@@ -1,6 +1,6 @@
 # Noto - A simple Notes App made with HTML, CSS and JS  
 
-![Design preview for Noto notes app](./assets/Noto-Dark.png)    
+![Design preview for Noto notes app](./assets/Noto-dark.png)    
 
 # App Features
 
