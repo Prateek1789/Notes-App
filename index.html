@@ -15,7 +15,7 @@
             <span class="logo">iNote</span>
 
             <div class="sidebar-functions flex flex-col items-center">
-                <button type="button" class="btn-add-note" aria-pressed="false">
+                <button type="button" data-action="add-note" class="btn-add-note" aria-pressed="false">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z"/></svg>
                 </button>
                 <div class="note-color-option flex flex-col items-center justify-between">
@@ -32,10 +32,10 @@
                         <input type="radio" name="note_color" id="color-orange" class="color-option-radio">
                     </label>
                 </div>
-                <button type="button" class="home-btn" aria-pressed="false">
+                <button type="button" data-action="open-dashboard" class="home-btn" aria-pressed="false">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
                 </button>
-                <button type="button" class="trash-btn" aria-pressed="false">
+                <button type="button" data-action="open-trash" class="trash-btn" aria-pressed="false">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#eaeaea"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                 </button>
             </div>
@@ -63,7 +63,7 @@
                         </div>
                     </li>
                     <li class="header-list-item h-list-item-3">
-                        <button class="theme-toggle flex items-center justify-between" aria-label="Toggle Dark/Light Mode" aria-pressed="false">
+                        <button class="theme-toggle flex items-center justify-between" data-action="toggle-theme" aria-label="Toggle Dark/Light Mode" aria-pressed="false">
                             <img src="./assets/dark_mode.svg" alt="Dark Mode Icon" aria-hidden="true" class="moon">
                             <img src="./assets/light_mode.svg" alt="Light Mode Icon" aria-hidden="true" class="sun">
                             <div class="toggle-ball" aria-hidden="true"></div>
@@ -113,7 +113,7 @@
                         </ul>
                         
                         <div class="dropdown-menu" id="dropdownMenu">
-                            <button class="menu-btn flex items-center justify-between" data-value="name-asc" aria-pressed="false">
+                            <button class="menu-btn flex items-center justify-between" data-action="open-sort-menu" data-value="name-asc" aria-pressed="false">
                                 <span class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" >
                                         <path d="m6,11c1.86,0,3.41-1.28,3.86-3h12.14v-2h-12.14c-.45-1.72-2-3-3.86-3-2.21,0-4,1.79-4,4s1.79,4,4,4Zm0-6c1.1,0,2,.9,2,2s-.9,2-2,2-2-.9-2-2,.9-2,2-2Z"></path><path d="m18,21c2.21,0,4-1.79,4-4s-1.79-4-4-4c-1.86,0-3.41,1.28-3.86,3H2v2h12.14c.45,1.72,2,3,3.86,3Zm0-6c1.1,0,2,.9,2,2s-.9,2-2,2-2-.9-2-2,.9-2,2-2Z"></path>
@@ -164,10 +164,10 @@
                         <textarea name="note_form_content" id="note-form-text" autofocus="on" autocomplete="on" placeholder="Once upon a time..."></textarea>
                     </div>
                     <div class="form-buttons">
-                        <button class="form-btn btn-cancel">
+                        <button class="form-btn btn-cancel" data-action="cancel-note">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
                         </button>
-                        <button type="submit" class="form-btn btn-save">
+                        <button type="submit" class="form-btn btn-save" data-action="confirm-note">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
                         </button>
                     </div>
