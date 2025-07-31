@@ -30,12 +30,11 @@
     --color-Dark-800: oklch(18.9% 0 0);
     --color-Dark-900: oklch(08.9% 0 0);
 
-    --color-Gray: hsl(204, 7%, 42%);
     --color-Gray-100: oklch(96.8% 0.003 264.542);
-    --color-Gray-200: oklch(90.8% 0.003 264.531);
+    --color-Gray-200: oklch(92.8% 0.003 264.531);
     --color-Gray-300: oklch(85.8% 0.003 258.338);
-    --color-Gray-400: oklch(80.2% 0.003 258.338);    /* Not used */
-    --color-Gray-500: oklch(55.6% 0.00 0);    /* Not used */
+    --color-Gray-400: oklch(80.2% 0.003 258.338); 
+    --color-Gray-500: oklch(55.6% 0.00 0);
     --color-Gray-600: oklch(40.8% 0 0);
 
     /* ---- Colors used in the app ---- */
@@ -789,58 +788,3 @@ dialog > form input { background-color: transparent; }
 .note.deleted .na-list-item-3 { display: block; }
 .note.deleted .btn-del svg:first-child { display: none; }
 .note.deleted .btn-del svg:last-child { display: block; }
-
-/* .note-action-btn:hover {
-    border-color: none;
-} */
-
-/*
-.itm-3 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-}
-
-
-.user {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-weight: 500
-    ;
-}
-
-.circle {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background-color: var(--color-Blue-200);
-    display: grid;
-    place-content: center;
-}
-
-.add-notebook-tab {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    transition: 240ms ease;
-}
-
-.add-notebook-btn {
-    width: 100%;
-    height: 2.5rem;
-    background-color: var(--color-BG-2);
-    color: var(--color-Text-1);
-    border-radius: 10px;
-    padding-inline: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid var(--color-Border);
-
-    &:hover {
-        background-color: var(--clr-accent-hover);
-    }
-}
-*/
