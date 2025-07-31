@@ -292,8 +292,7 @@ class NotesApp {
         this.timer = setTimeout(() => {
             const query = this.domREF.searchInput.value;
             const result = this.manager.geSearchParameters(query, tab);
-            this.noteArea.innerHTML = '';
-            result.forEach(note => this.ui.renderNote(note, this.noteArea));
+            this.noteRenderer(result);
         }, delay);
     };
 
@@ -356,8 +355,13 @@ class NotesApp {
             }
         });
 
-        this.noteArea.innerHTML = "";
-        notes.forEach(note => this.ui.renderNote(note, this.noteArea));
+        const fragment = document.createDocumentFragment();
+        notes.forEach(note => {
+            const noteElm = this.ui.createNoteElement(note);
+            fragment.appendChild(noteElm);
+        });
+        this.noteArea.innerHTML = '';
+        this.noteArea.appendChild(fragment);
     }
 }
 
