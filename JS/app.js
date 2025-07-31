@@ -47,6 +47,7 @@ class NotesApp {
         // Event Listener for tag view changes
         this.activateTagViewEvents();
 
+        // Event listener for sort menu
         this.activateSortEvents();
 
         // Event Listener for Search Bar
@@ -60,47 +61,46 @@ class NotesApp {
     };
 
     activateClickEvents() {
-        document.addEventListener("click", (e) => {
-            if (e.target.closest(".theme-toggle")) this.switchTheme(this.domREF.themeToggle);
-
-            if (e.target.closest(".btn-add-note") && !this.inTrash) this.showNoteModal();
-
-            if (e.target.closest(".btn-cancel")) {
+        const actionMap = {
+            'add-note': () => { if (!this.inTrash) this.showNoteModal(); },
+            'open-dashboard': (e) => this.switchTab(e),
+            'open-trash': (e) => this.switchTab(e),
+            'cancel-note': (e) => {
                 e.preventDefault();
                 this.closeNoteModal(...this.getNoteModalInputs());
-            };
-
-            if (e.target.closest(".btn-save")) {
+            },
+            'confirm-note': (e) => {
                 e.preventDefault();
-                if (!this.isEditing) this.createNewNote(...this.getNoteModalInputs());
-                
-                if (this.isEditing) this.updateNote(...this.getNoteModalInputs());
-            };
-
-            if (e.target.closest(".home-btn")) this.switchTab(e);
-
-            if (e.target.closest(".trash-btn")) this.switchTab(e);
-
-            if (e.target.closest(".menu-btn")) {
+                !this.editingNote ? this.createNewNote(...this.getNoteModalInputs()) : 
+                                    this.updateNote(...this.getNoteModalInputs()); 
+            },
+            'toggle-theme': () => this.switchTheme(this.domREF.themeToggle),            
+            'open-sort-menu': () => {
                 const isPressed = this.domREF.sortBtn.ariaPressed;
                 this.domREF.sortBtn.setAttribute('aria-pressed', `${isPressed === 'false' ? 'true' : 'false'}`);
                 this.domREF.sortBtn.classList.toggle("active");
                 this.domREF.sortMenu.classList.toggle("active");
-            }
+            },
+            'star-note': (e) => this.bookmarkNotes(e),
+            'edit-note': (e) => this.enterEditMode(e),
+            'delete-note': (e) => this.deleteNote(e),
+            'restore-note': (e) => this.restoreTrashedNotes(e)
+        };
 
-            if (!e.target.closest(".menu-btn") && this.domREF.sortBtn.classList.contains("active")) {
+        document.addEventListener("click", (e) => {
+            const targetElement = e.target.closest('[data-action]');
+
+            if (targetElement) {
+                const actionName = targetElement.dataset.action;
+                const action = actionMap[actionName];
+                if (typeof action === 'function') action(e);
+            }
+        
+            if (!e.target.closest('[data-action]') && this.domREF.sortBtn.classList.contains("active")) {
                 this.domREF.sortBtn.setAttribute('aria-pressed', 'false');
                 this.domREF.sortBtn.classList.remove("active");
                 this.domREF.sortMenu.classList.remove("active");
             }
-
-            if (e.target.closest(".btn-star")) this.bookmarkNotes(e);
-
-            if (e.target.closest(".btn-edit")) this.enterEditMode(e);
-
-            if (e.target.closest(".btn-del")) this.deleteNote(e);
-
-            if (e.target.closest(".btn-restore")) this.restoreTrashedNotes(e);
         });
     };
 
