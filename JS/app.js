@@ -340,14 +340,14 @@ class NotesApp {
 
     noteRenderer(notes) {
         notes.sort((a, b) => {
-            const aKey = `${a.createdOn} ${a.createdAt}`;
-            const bKey = `${b.createdOn} ${b.createdAt}`;
+            const dateA = new Date(`${a.createdOn} ${a.createdAt}`);
+            const dateB = new Date(`${b.createdOn} ${b.createdAt}`);
 
             if (this.currentSortOrder === "newest") {
-                return bKey.localeCompare(aKey);
+                return dateB - dateA; // Newest First (default)
             }
             else {
-                return aKey.localeCompare(bKey)
+                return dateA - dateB; // Oldest First
             }
         });
 
