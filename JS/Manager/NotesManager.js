@@ -102,6 +102,10 @@ class NotesManager {
                                     note.content?.toLowerCase().includes(query) || 
                                     note.tags?.toLowerCase().includes(query));
     };
+
+    clearAllNotes() {
+        NotesStorage.clear();
+    }
 };
 
 export default NotesManager;

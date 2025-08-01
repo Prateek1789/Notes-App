@@ -74,6 +74,7 @@ class NotesApp {
                 !this.editingNote ? this.createNewNote(...this.getNoteModalInputs()) : 
                                     this.updateNote(...this.getNoteModalInputs()); 
             },
+            'delete-all-notes': () => this.clearAllNotes(),
             'toggle-theme': () => this.switchTheme(this.domREF.themeToggle),            
             'open-sort-menu': () => {
                 const isPressed = this.domREF.sortBtn.ariaPressed;
@@ -295,9 +296,10 @@ class NotesApp {
         }, delay);
     };
 
-    /* clearAllNotes() {
-
-    } */
+    clearAllNotes() {
+        this.manager.clearAllNotes();
+        this.displayNotesForActiveTab();
+    }
 
     updateActiveTabButton() {
         if (this.inHome && !this.domREF.btnHome.classList.contains("btn-active")) {
