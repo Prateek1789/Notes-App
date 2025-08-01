@@ -111,7 +111,8 @@
     }
 
     .home-btn,
-    .trash-btn {
+    .trash-btn,
+    .delete-all-btn {
         background-color: var(--color-Gray-100);
 
         svg { fill: var(--color-Dark-800); }
@@ -210,6 +211,7 @@ ul {
 }
 
 .sidebar-functions {
+    height: 100%;
     gap: 1rem;
     background-color: rgba(184, 184, 184, 0);
     backdrop-filter: blur(5px);
@@ -219,31 +221,39 @@ ul {
 
 .btn-add-note,
 .home-btn,
-.trash-btn {
+.trash-btn,
+.delete-all-btn {
     width: 3.125rem;
     height: 3.125rem;
     border-radius: 50%;
-    background-color: var(--color-Accent);
     transition: 240ms ease;
+}
+
+.btn-add-note {
+    background-color: var(--color-Accent);
 }
 
 .btn-add-note svg,
 .home-btn svg,
-.trash-btn svg {
+.trash-btn svg,
+.delete-all-btn svg {
     fill: var(--color-Gray-100);
 }
 
 .home-btn,
-.trash-btn {
+.trash-btn,
+.delete-all-btn {
     background-color: var(--color-Dark-800);
-
     &:hover { background-color: var(--color-Accent); }
+}
+
+.delete-all-btn {
+    margin-block-start: auto;
 }
 
 .home-btn.btn-active,
 .trash-btn.btn-active  {
     background-color: var(--color-Accent);
-
     svg { fill: var(--color-Gray-100); }
 }
 
