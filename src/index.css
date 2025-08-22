@@ -1,11 +1,26 @@
+@import "tailwindcss";
+
 :root {
+  /* --- App Colors --- */ 
+  --color-White: oklch(99% 0.002 264.542);
+  --color-Gray-100: oklch(96.8% 0.006 264.542);
+  --color-Gray-200: oklch(92.8% 0.006 264.542);
+  --color-Gray-300: oklch(85.8% 0.006 264.542);
+  --color-Gray-400: oklch(80.2% 0.006 264.542); 
+  --color-Gray-500: oklch(55.6% 0.006 264.542);
+  --color-Gray-600: oklch(48.8% 0.006 264.542);
+  --color-Gray-700: oklch(28.9% 0.006 264.542);
+  --color-Gray-800: oklch(22.9% 0.006 264.542);
+  --color-Gray-900: oklch(08.9% 0.006 264.542);
+
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--color-Gray-900);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,13 +28,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@theme {
+  --color-input: var(--color-Gray-700);
 }
-a:hover {
-  color: #535bf2;
+
+a {
+  transition: 240ms ease;
 }
 
 body {
@@ -30,28 +44,20 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.login-btn {
+  @apply  h-10 max-w-md
+          md:h-12
+          flex
+          justify-center 
+          items-center 
+          rounded-lg
+        bg-gray-100 
+        text-black 
+          font-semibold 
+          cursor-pointer
+        lg:bg-gray-200
+        lg:hover:bg-gray-50;
+        transition: 240ms ease;
 }
 
 @media (prefers-color-scheme: light) {
