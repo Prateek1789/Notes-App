@@ -1,6 +1,24 @@
 import { useState, useEffect } from "react";
 import { emailValidator, passwordValidator } from "../utils/FormValidator";
 
+export const useUsernameValidation = (username, attempt = false) => {
+    const [validationState, setValidationState] = useState('idle');
+    const [error, setError] = useState('');
+    useEffect(() => {
+        if (attempt && !username) {
+            setValidationState('invalid');
+            setError('Username is required');
+            return;
+        };
+        
+        setValidationState('idle');
+        setError('');
+
+    }, [attempt]);
+
+    return [validationState, error];
+}
+
 export const useEmailValidation = (email, attempt = false, debounce = 800) => {
     const [validationState, setValisationState] = useState('idle');
     const [error, setError] = useState('');
