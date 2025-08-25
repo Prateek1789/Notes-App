@@ -20,27 +20,27 @@ export const useUsernameValidation = (username, attempt = false) => {
 }
 
 export const useEmailValidation = (email, attempt = false, debounce = 800) => {
-    const [validationState, setValisationState] = useState('idle');
+    const [validationState, setValidationState] = useState('idle');
     const [error, setError] = useState('');
 
     useEffect(() => {
         if (attempt && !email) {
-            setValisationState('invalid');
+            setValidationState('invalid');
             setError('Email is required');
             return;
         }
         if (!email) {
-            setValisationState('idle');
+            setValidationState('idle');
             setError('');
             return;
         }
         
-        setValisationState('pending');
+        setValidationState('pending');
         setError('');
 
         const timer = setTimeout(() => {
             const validationCheck = emailValidator.validateEmail(email);
-            setValisationState(validationCheck.isValid ? 'valid' : 'invalid');
+            setValidationState(validationCheck.isValid ? 'valid' : 'invalid');
             setError(validationCheck.message);
         }, debounce);
 
@@ -51,27 +51,27 @@ export const useEmailValidation = (email, attempt = false, debounce = 800) => {
 }
 
 export const usePasswordValidation = (password, attempt = false, debounce = 800) => {
-    const [validationState, setValisationState] = useState('idle');
+    const [validationState, setValidationState] = useState('idle');
     const [error, setError] = useState('');
 
     useEffect(() => {
         if (attempt && !password) {
-            setValisationState('invalid');
+            setValidationState('invalid');
             setError('Password is required');
             return;
         }
         if (!password) {
-            setValisationState('idle');
+            setValidationState('idle');
             setError('');
             return;
         }
 
-        setValisationState('pending');
+        setValidationState('pending');
         setError('');
 
         const timer = setTimeout(() => {
             const validationCheck = passwordValidator.validatePassword(password);
-            setValisationState(validationCheck.isValid ? 'valid' : 'invalid');
+            setValidationState(validationCheck.isValid ? 'valid' : 'invalid');
             setError(validationCheck.message);
         }, debounce);
 
@@ -82,32 +82,32 @@ export const usePasswordValidation = (password, attempt = false, debounce = 800)
 }
 
 export const useConfirmPassword = (password, confirmPassword, attempt = false, debounce = 800) => {
-    const [validationState, setValisationState] = useState('idle');
+    const [validationState, setValidationState] = useState('idle');
     const [error, setError] = useState('');
 
     useEffect(() => {
         if (attempt && !confirmPassword) {
-            setValisationState('invalid');
+            setValidationState('invalid');
             setError('Please confirm password');
             return;
         }
         if (!confirmPassword) {
-            setValisationState('idle');
+            setValidationState('idle');
             setError('');
             return;
         }
         if (!password) {
-            setValisationState('invalid');
+            setValidationState('invalid');
             setError('Please enter password first');
             return;
         }
 
-        setValisationState('pending');
+        setValidationState('pending');
         setError('');
 
         const timer = setTimeout(() => {
             const test = password === confirmPassword;
-            setValisationState(test ? 'valid' : 'invalid');
+            setValidationState(test ? 'valid' : 'invalid');
             setError(!test ? 'Passwords do not match' : '');
         }, debounce);
 
