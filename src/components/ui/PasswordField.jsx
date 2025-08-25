@@ -17,15 +17,15 @@ const PasswordInput = forwardRef(({ label = 'Password', state, error, showToggle
     };
 
     return (
-        <label htmlFor={props.id} className="h-23 w-full max-w-md flex flex-col gap-1 text-sm relative">
+        <label htmlFor={props.id} className="min-h-23 w-full max-w-md flex flex-col gap-1 text-sm relative">
             {label}
             <input type={showPassword ? "text" : "password"}
                    ref={ref} 
-                   className={`h-10 md:h-12 px-2 rounded-lg border focus:ring-2 focus:outline-2 ${getStyles()}`}
+                   className={`h-12 md:h-12 px-2 rounded-lg border focus:ring-2 focus:outline-2 ${getStyles()}`}
                    {...props} />
             {showToggle && (
             <button type="button" 
-                    className="absolute bottom-10 right-4 md:bottom-9 cursor-pointer"
+                    className="absolute bottom-9 right-4 md:bottom-9 cursor-pointer"
                     aria-label="Toggle Password Visibility"
                     aria-pressed={showPassword}
                     onClick={togglePasswordVisibility}>
