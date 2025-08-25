@@ -1,21 +1,32 @@
 import { useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
+import useLogin from "../hooks/useLogin"
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const userNameRef = useRef();
-    const passwordRef = useRef();
+    const username = useRef('');
+    const password = useRef('');
+    const [subAttempt, setSubAttempt] = useState(false);
+    const [errors, success] = useLogin(username.current, password.current, subAttempt);
+
+    const handleUsername = (e) => {
+        username.current = e.target.value;
+        if (subAttempt) setSubAttempt(false);
+    }
+
+    const handlePassword = (e) => {
+        password.current = e.target.value;
+        if (subAttempt) setSubAttempt(false);
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const userName = userNameRef.current.value;
-        const password = passwordRef.current.value;
-
-        console.log({userName, password});
+        setSubAttempt(true);
+        if (success) navigate('/dashboard');
     }
 
     return (
@@ -33,14 +44,18 @@ const LoginPage = () => {
                                 name='user_name'
                                 label='Username'
                                 placeholder='e.g John Doe' 
-                                ref={userNameRef}
+                                state={errors.username ? 'invalid' : 'idle'}
+                                error={errors.username}
+                                onChange={handleUsername}
                                 autoComplete='username'
                                 required/>
 
                     <Password   id='user-password'
                                 name='user_password'
                                 placeholder='Your password'
-                                ref={passwordRef}
+                                state={errors.password ? 'invalid' : 'idle'}
+                                error={errors.password}
+                                onChange={handlePassword}
                                 autoComplete='current-password'
                                 required />            
                 </fieldset>
