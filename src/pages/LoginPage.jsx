@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import useLogin from "../hooks/useLogin"
@@ -11,7 +11,7 @@ const LoginPage = () => {
     const username = useRef('');
     const password = useRef('');
     const [subAttempt, setSubAttempt] = useState(false);
-    const [errors, success] = useLogin(username.current, password.current, subAttempt);
+    const [uniqueError, commonError, success] = useLogin(username.current, password.current, subAttempt);
 
     const handleUsername = (e) => {
         username.current = e.target.value;
@@ -26,8 +26,11 @@ const LoginPage = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         setSubAttempt(true);
-        if (success) navigate('/dashboard');
     }
+
+    useEffect(() => {
+        if (success) navigate('/dashboard');
+    }, [success, navigate]);
 
     return (
         <main className="h-full w-full flex items-center justify-center">
@@ -44,8 +47,8 @@ const LoginPage = () => {
                                 name='user_name'
                                 label='Username'
                                 placeholder='e.g John Doe' 
-                                state={errors.username ? 'invalid' : 'idle'}
-                                error={errors.username}
+                                state={uniqueError.username || commonError ? 'invalid' : 'idle'}
+                                error={uniqueError.username}
                                 onChange={handleUsername}
                                 autoComplete='username'
                                 required/>
@@ -53,8 +56,8 @@ const LoginPage = () => {
                     <Password   id='user-password'
                                 name='user_password'
                                 placeholder='Your password'
-                                state={errors.password ? 'invalid' : 'idle'}
-                                error={errors.password}
+                                state={uniqueError.password || commonError ? 'invalid' : 'idle'}
+                                error={uniqueError.password || commonError}
                                 onChange={handlePassword}
                                 autoComplete='current-password'
                                 required />            
