@@ -2,45 +2,54 @@ import { useState, useEffect } from "react";
 import { getAllUser } from "../utils/Storage"
 
 const useLogin = (username, password, attempt) => {
-    const [errors, setErrors] = useState({username: '', password: ''});
+    const [commonError, setCommonError] = useState('');
+    const [uniqueError, setUniqueError] = useState({username: '', password: ''});
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         if (!attempt) {
-            setErrors({username: '', password: ''});
+            setUniqueError({username: '', password: ''});
+            setCommonError('');
             setSuccess(false);
             return;
         }
-
-        if (attempt && !username && !password) {
-            setErrors({username: 'Username is required', password: 'Password is required'});
+        if (!username && !password) {
+            setCommonError('Username and Password are required');
+            setUniqueError({username: '', password: ''});
+            setSuccess(false);
+            return;
+        }
+        if (!username) {
+            setUniqueError(prev => ({...prev, username: 'Username is required'}));
+            setCommonError('');
+            setSuccess(false);
+            return;
+        }
+        if (!password) {
+            setUniqueError(prev => ({...prev, password: 'Password is required'}));
+            setCommonError('');
             setSuccess(false);
             return;
         }
 
         const allUsers = getAllUser();
-        const usernameMatch = allUsers.find(user => user.username === username);
-        const passwordMatch = allUsers.find(user => user.password === password);
-        const userFound = usernameMatch && passwordMatch;
+        const userFound = allUsers.find(user => user.username === username && user.password === password);
 
-        if (usernameMatch && !passwordMatch) {
-            setErrors(prev => ({...prev, password: 'Incorrect password'}));
-            setSuccess(false);
-            return;
-        }
-        if (passwordMatch && !usernameMatch) {
-            setErrors(prev => ({...prev, username: 'Incorrect username'}));
+        if (!userFound) {
+            setCommonError('Incorrect Username or Password');
+            setUniqueError({username: '', password: ''});
             setSuccess(false);
             return;
         }
         if (userFound) {
-            setErrors({username: '', password: ''});
+            setCommonError('');
+            setUniqueError({username: '', password: ''});
             setSuccess(true);
             return;
         }
     }, [attempt, success]);
 
-    return [errors, success];
+    return [uniqueError, commonError, success];
 };
 
 export default useLogin
