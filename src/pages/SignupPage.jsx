@@ -79,6 +79,7 @@ const SignupPage = () => {
                             name='user_name'
                             label='Username'
                             placeholder='e.g John Doe'
+                            value={username}
                             error={usernameError}
                             state={usernameState}
                             onChange={handleUsername}
@@ -90,6 +91,7 @@ const SignupPage = () => {
                             name='user_email'
                             label='Email'
                             placeholder='e.g johndoe4575@gmail.com'
+                            value={email}
                             error={emailError}
                             state={emailState}
                             onChange={handleEmail}
@@ -100,6 +102,7 @@ const SignupPage = () => {
                 <Password   id='user-password'
                             name='user_password'
                             placeholder='Your password'
+                            value={password}
                             error={passwordError}
                             state={passwordState}
                             onChange={handlePassword}
@@ -111,6 +114,7 @@ const SignupPage = () => {
                             name='confirm_password'
                             label='Confirm Password'
                             placeholder='re-enter password'
+                            value={confirmPassword}
                             error={confirmPasswordError}
                             state={confirmPasswordState}
                             onChange={handleConfirmPassword}
