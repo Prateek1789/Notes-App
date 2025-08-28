@@ -13,13 +13,8 @@ const LoginPage = () => {
     const [subAttempt, setSubAttempt] = useState(false);
     const [uniqueError, commonError, success] = useLogin(username.current, password.current, subAttempt);
 
-    const handleUsername = (e) => {
-        username.current = e.target.value;
-        if (subAttempt) setSubAttempt(false);
-    }
-
-    const handlePassword = (e) => {
-        password.current = e.target.value;
+    const handleInput = (e, field) => {
+        field.current = e.target.value;
         if (subAttempt) setSubAttempt(false);
     }
 
@@ -46,10 +41,10 @@ const LoginPage = () => {
                     <InputField id='user-name'
                                 name='user_name'
                                 label='Username'
-                                placeholder='e.g John Doe' 
+                                placeholder='e.g John Doe'
                                 state={uniqueError.username || commonError ? 'invalid' : 'idle'}
                                 error={uniqueError.username}
-                                onChange={handleUsername}
+                                onChange={(e) => handleInput(e, username)}
                                 autoComplete='username'
                                 required/>
 
@@ -58,7 +53,7 @@ const LoginPage = () => {
                                 placeholder='Your password'
                                 state={uniqueError.password || commonError ? 'invalid' : 'idle'}
                                 error={uniqueError.password || commonError}
-                                onChange={handlePassword}
+                                onChange={(e) => handleInput(e, password)}
                                 autoComplete='current-password'
                                 required />            
                 </fieldset>
