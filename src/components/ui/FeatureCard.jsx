@@ -11,7 +11,7 @@ const FeatureCard = ({heading, info, icon}) => {
     };
 
     return (
-        <div className="card w-85 min-h-80 border border-[var(--color-Gray-700)] rounded-xl flex flex-col justify-center items-center gap-8 lg:w-80 xl:min-h-90">
+        <div className="card w-85 min-h-80 bg-[#090909] border border-[var(--color-Gray-700)] rounded-xl flex flex-col justify-center items-center gap-8 lg:w-80 xl:w-85 xl:min-h-100">
             {getIcon()}
             <h3 className="font-semibold">{heading}</h3>
             <p className="text-sm max-w-[32ch]">{info}</p>
