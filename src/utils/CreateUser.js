@@ -1,6 +1,6 @@
 import { getAllUser, saveUser, saveUserSession } from "./Storage";
 
-const CreateUser = (username, email, password) => {
+const CreateUser = ({ username, email, password }) => {
     return new Promise((resolve, reject) => {
 
         setTimeout(() => {
