@@ -49,7 +49,7 @@ const SignupPage = () => {
         if (check) {
             setIsLoading(true);
             try {
-                const result = await CreateUser(formData.username, formData.email, formData.password);
+                const result = await CreateUser(formData);
                 console.log(result.message);
                 navigate('/dashboard');
             }
