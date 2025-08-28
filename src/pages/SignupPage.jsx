@@ -1,7 +1,11 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-
-import { useUsernameValidation, useEmailValidation, usePasswordValidation, useConfirmPassword } from "../hooks/useFormAuth"
+import { 
+    useUsernameValidation, 
+    useEmailValidation, 
+    usePasswordValidation, 
+    useConfirmPassword 
+} from "../hooks/useFormAuth"
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
@@ -10,48 +14,42 @@ import CreateUser from "../utils/CreateUser"
 const SignupPage = () => {
     const navigate = useNavigate();
     const delay = 1200;
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+
     const [submitAttempt, setSubmitAttempt] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     
-    const [usernameState, usernameError] = useUsernameValidation(username, submitAttempt);
-    const [emailState, emailError] = useEmailValidation(email, submitAttempt, delay);
-    const [passwordState, passwordError] = usePasswordValidation(password, submitAttempt, delay);
-    const [confirmPasswordState, confirmPasswordError] = useConfirmPassword(password, confirmPassword, submitAttempt, delay);
+    const [usernameState, usernameError] = useUsernameValidation(formData.username, submitAttempt);
+    const [emailState, emailError] = useEmailValidation(formData.email, submitAttempt, delay);
+    const [passwordState, passwordError] = usePasswordValidation(formData.password, submitAttempt, delay);
+    const [confirmPasswordState, confirmPasswordError] = useConfirmPassword(formData.password, formData.confirmPassword, submitAttempt, delay);
 
-    const handleUsername = (e) => {
-        setUsername(e.target.value);
+
+    const handleFormData = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({...prev, [name]: value}));
         if (submitAttempt) setSubmitAttempt(false);
     }
-
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-        if (submitAttempt) setSubmitAttempt(false);
-    };
-
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-        if (submitAttempt) setSubmitAttempt(false);
-    };
-
-    const handleConfirmPassword = (e) => {
-        setConfirmPassword(e.target.value);
-        if (submitAttempt) setSubmitAttempt(false);
-    };   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitAttempt(true);
 
-        const check = username && emailState === 'valid' && passwordState === 'valid' && confirmPasswordState === 'valid';
+        const check = formData.username && 
+                      emailState === 'valid' && 
+                      passwordState === 'valid' && 
+                      confirmPasswordState === 'valid';
 
         if (check) {
             setIsLoading(true);
             try {
-                const result = await CreateUser(username, email, password);
+                const result = await CreateUser(formData.username, formData.email, formData.password);
                 console.log(result.message);
                 navigate('/dashboard');
             }
@@ -76,48 +74,48 @@ const SignupPage = () => {
                 <legend className="sr-only">User Details</legend>
 
                 <InputField id='user-name'
-                            name='user_name'
+                            name='username'
                             label='Username'
                             placeholder='e.g John Doe'
-                            value={username}
+                            value={formData.username}
                             error={usernameError}
                             state={usernameState}
-                            onChange={handleUsername}
+                            onChange={handleFormData}
                             autoComplete="username"
                             disabled={isLoading}
                             required/>
 
                 <InputField id='user-email'
-                            name='user_email'
+                            name='email'
                             label='Email'
                             placeholder='e.g johndoe4575@gmail.com'
-                            value={email}
+                            value={formData.email}
                             error={emailError}
                             state={emailState}
-                            onChange={handleEmail}
+                            onChange={handleFormData}
                             autoComplete="email"
                             disabled={isLoading}
                             required/>            
 
                 <Password   id='user-password'
-                            name='user_password'
+                            name='password'
                             placeholder='Your password'
-                            value={password}
+                            value={formData.password}
                             error={passwordError}
                             state={passwordState}
-                            onChange={handlePassword}
+                            onChange={handleFormData}
                             autoComplete='new-password'
                             disabled={isLoading}
                             required /> 
 
                 <Password   id='confirm-passwprd'
-                            name='confirm_password'
+                            name='confirmPassword'
                             label='Confirm Password'
                             placeholder='re-enter password'
-                            value={confirmPassword}
+                            value={formData.confirmPassword}
                             error={confirmPasswordError}
                             state={confirmPasswordState}
-                            onChange={handleConfirmPassword}
+                            onChange={handleFormData}
                             autoComplete='new-password'
                             showToggle={false}
                             disabled={isLoading}
