@@ -1,26 +1,23 @@
 @import "tailwindcss";
 
+@theme {
+  --color-Dark-900: oklch(08.9% 0.006 264.542);
+
+  --color-navbar: var(--color-white/20);
+  --color-text: var(--color-neutral-950);
+  --color-background: var(--color-neutral-100);
+  --color-hero-gradient: radial-gradient(circle at 50% 100%, var(--color-neutral-100), 90%, var(--color-white));
+  --color-border-line: var(--color-neutral-300);
+  --color-card: var(--color-white);
+}
+
 :root {
-  /* --- App Colors --- */ 
-  --color-White: oklch(99% 0.002 264.542);
-  --color-Gray-100: oklch(96.8% 0.006 264.542);
-  --color-Gray-200: oklch(92.8% 0.006 264.542);
-  --color-Gray-300: oklch(85.8% 0.006 264.542);
-  --color-Gray-400: oklch(80.2% 0.006 264.542); 
-  --color-Gray-500: oklch(55.6% 0.006 264.542);
-  --color-Gray-600: oklch(48.8% 0.006 264.542);
-  --color-Gray-700: oklch(28.9% 0.006 264.542);
-  --color-Gray-800: oklch(22.9% 0.006 264.542);
-  --color-Gray-900: oklch(08.9% 0.006 264.542);
-
-
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: var(--color-Gray-900);
+  background-color: var(--color-background);
+  color: var(--color-text);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,8 +25,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@theme {
-  --color-input: var(--color-Gray-700);
+.dark {
+  --color-navbar: var(--color-black/20);
+  --color-text: var(--color-neutral-200);
+  --color-background: var(--color-Dark-900);
+  --color-hero-gradient: radial-gradient(circle at 50% 100%, var(--color-Dark-900), 70%, var(--color-neutral-900));
+  --color-border-line: var(--color-neutral-800);
+  --color-card: var(--color-neutral-950);
 }
 
 a {
@@ -42,33 +44,4 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-.login-btn {
-  @apply  h-10 max-w-md
-          md:h-12
-          flex
-          justify-center 
-          items-center 
-          rounded-lg
-        bg-gray-100 
-        text-black 
-          font-semibold 
-          cursor-pointer
-        lg:bg-gray-200
-        lg:hover:bg-gray-50;
-        transition: 240ms ease;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
