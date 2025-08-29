@@ -12,14 +12,10 @@ const CallToAction = () => {
             </p>
             <div className="flex gap-4 mt-8 md:gap-8">
             <Link to={'/login'}>
-                <Button type='button' name='Log In' width={'w-30 md:w-50'} height='h-10 md:h-12'/>
+                <Button name='Log In' width='w-30 md:w-50' height='h-10 md:h-12' dark={true}/>
             </Link>
             <Link to={'/register'}>
-                <Button type='button' 
-                        name='Sign Up' 
-                        width={'w-30 md:w-50'} 
-                        height='h-10 md:h-12'
-                        className='w-30 md:w-50 h-10 md:h-12 bg-transparent border border-[var(--color-Gray-500)] rounded-lg cursor-pointer hover:border-[var(--color-Gray-300)] transition-colors duration-300'/>
+                <Button name='Sign Up' width='w-30 md:w-50' height='h-10 md:h-12' dark={false}/>
             </Link>
             </div>
         </section>
