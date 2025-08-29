@@ -4,8 +4,8 @@ import Button from '../ui/Button'
 
 const HeroSection = () => {
     return (
-        <section className="hero min-h-screen w-screen flex items-center justify-center lg:bg-radial-[at_50%_170%] lg:from-black from-40% lg:to-[var(--color-Gray-800)] xl:pb-30">
-            <article className="w-[calc(100vw_-_2rem)] max-w-[80rem] h-screen flex flex-col justify-center gap-10 md:px-4 md:gap-12 xl:justify-end">
+        <section className="hero min-h-[90vh] w-screen flex items-center justify-center lg:bg-radial-[at_50%_170%] lg:from-black from-40% lg:to-[var(--color-Gray-800)] xl:pb-30 md:items-end">
+            <article className="w-[calc(100vw_-_2rem)] max-w-[80rem] h-screen md:h-[70vh] xl:h-[105vh] flex flex-col justify-center gap-10 md:px-4 md:gap-12 xl:justify-end">
                 <h1 className="text-5xl md:text-[8vw] xl:text-8xl max-w-[15ch] font-medium">✍🏻 Note-Taking, Reimagined</h1>
                 <p className='text-lg md:text-lg xl:text-lg max-w-[55ch]'>
                     Simple, fast, and beautiful ✨. Noto transforms the way you capture and organize your ideas. Focus on what matters - we'll handle the rest
