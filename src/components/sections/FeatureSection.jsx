@@ -20,7 +20,7 @@ const features = [
 
 const FeatureSection = () => {
     return (
-        <section className="feature w-screen h-auto min-h-[70vh] lg:min-h-[60vh] xl:min-h-[90vh] flex flex-col justify-center items-center text-center gap-6 py-8 px-4 md:gap-8">
+        <section className="feature w-screen h-auto min-h-[70vh] lg:min-h-[60vh] xl:min-h-[70vh] flex flex-col justify-center items-center text-center gap-6 py-8 px-4 md:gap-8">
             <h2 className="text-4xl md:text-[5vw] xl:text-7xl max-w-[15ch] font-medium md:max-w-[35ch]">
                 Crafted for Developers like You
             </h2>
