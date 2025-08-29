@@ -8,7 +8,7 @@ const PasswordInput = forwardRef(({ label = 'Password', state, error, showToggle
         switch(state) {
             case 'valid': return 'border-green-500 focus:ring-green-500 focus:outline-green-500'
             case 'invalid': return 'border-red-500 focus:ring-red-500 focus:outline-red-500';
-            default: return 'border-input focus:ring-blue-600 focus:outline-blue-600';
+            default: return 'border-border-line focus:ring-blue-600 focus:outline-blue-600';
         }
     };
 
