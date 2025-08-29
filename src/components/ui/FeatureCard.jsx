@@ -1,8 +1,5 @@
 import { ShieldCheck, NotebookPen, Code } from "lucide-react";
 
-
-// bg-neutral-950 border border-neutral-800
-
 const FeatureCard = ({heading, info, icon}) => {
     const getIcon = () => {
         switch(icon) {
