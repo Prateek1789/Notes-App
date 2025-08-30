@@ -1,4 +1,4 @@
-import { Menu, Sun } from "lucide-react"
+import { Link } from "react-router-dom"
 import ThemeToggle from "../../ui/ThemeToggle"
 import Button from "../../ui/Button"
 
@@ -9,8 +9,16 @@ const NavBar = () => {
                 <span className="logo text-xl xl:text-4xl font-bold">Noto</span>
                 <ul className="flex items-center justify-center gap-4">
                     <li><ThemeToggle /></li>
-                    <li><Button name={'Log In'} height="h-8" width='w-20' dark={true}/></li>
-                    <li><Button name={'Sign Up'} height="h-8" width='w-20' /></li>
+                    <li>
+                        <Link to={'/login'}>
+                            <Button name={'Log In'} height="h-8" width='w-20' dark={true}/>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={'/register'}>
+                            <Button name={'Sign Up'} height="h-8" width='w-20' />
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         </header>
