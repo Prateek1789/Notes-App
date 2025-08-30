@@ -3,6 +3,15 @@ import { useState, useEffect } from "react";
 const NOTE_KEY = 'note';
 const USER_KEY = 'user';
 const SESSION_KEY = 'currentUser';
+const THEME_KEY = 'theme';
+
+export const saveTheme = (theme) => {
+    localStorage.setItem(THEME_KEY, theme);
+}
+
+export const getTheme = () => {
+    return localStorage.getItem(THEME_KEY) || '';
+}
 
 export const getAllUser = () => {
     return JSON.parse(localStorage.getItem(USER_KEY) || '[]');
