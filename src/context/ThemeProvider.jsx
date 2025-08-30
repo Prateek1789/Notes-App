@@ -4,17 +4,18 @@ import { getTheme, saveTheme } from '../utils/Storage';
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(getTheme());
+    const [theme, setTheme] = useState(() => {
+        const savedTheme = getTheme();
+        if (saveTheme) return savedTheme;
+
+        if (window.matchMedia('(prefers-color-scheme: dark)')) return 'dark';
+
+        return 'light';
+    });
 
     useEffect(() => {
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-            saveTheme(theme);
-        }
-        else {
-            document.documentElement.classList.remove('dark');
-            saveTheme(theme);
-        }
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        saveTheme(theme);
     }, [theme]);
 
     return (
@@ -22,4 +23,4 @@ export const ThemeProvider = ({ children }) => {
             { children }
         </ThemeContext.Provider>
     )
-} 
+};
