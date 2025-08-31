@@ -1,12 +1,14 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import useLogin from "../hooks/useLogin"
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
+import { ThemeContext } from "../context/ThemeProvider"
 
 const LoginPage = () => {
+    const { theme } = useContext(ThemeContext);
     const navigate = useNavigate();
     const username = useRef('');
     const password = useRef('');
@@ -61,7 +63,8 @@ const LoginPage = () => {
                 <Button type='submit' 
                         name='Log In' 
                         width='w-full'
-                        onClick={onSubmit}/>
+                        onClick={onSubmit}
+                        dark={theme === 'dark' ? false : true} />
 
                 <p className="text-sm mt-4 text-[var(--color-Gray-400)]">Don't have an account?  
                     <Link to='/register' className="text-blue-500 lg:hover:text-blue-400 font-semibold"> Sign up</Link>
