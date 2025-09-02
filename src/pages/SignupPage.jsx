@@ -1,14 +1,14 @@
-import { useState, useContext } from "react"
+import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useUsernameValidation, useEmailValidation, usePasswordValidation, useConfirmPassword } from "../hooks/useFormAuth"
-import { ThemeContext } from "../context/ThemeProvider"
+import { THEME_STATE, useTheme } from "../context/ThemeProvider"
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
 import CreateUser from "../utils/CreateUser"
 
 const SignupPage = () => {
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useTheme();
     const navigate = useNavigate();
     const delay = 1200;
 
@@ -123,7 +123,7 @@ const SignupPage = () => {
                     name='Create Account' 
                     width='w-full'
                     onClick={handleSubmit}
-                    dark={theme === 'dark' ? false : true} />
+                    dark={theme === THEME_STATE.DARK ? false : true} />
 
             <p className="text-sm mt-4 text-[var(--color-Gray-400)]">Already have an account?
                 <Link to='/login' className="text-blue-500 lg:hover:text-blue-400 font-semibold"> Log in</Link> 
