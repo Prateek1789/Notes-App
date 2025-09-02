@@ -1,13 +1,12 @@
-import { useContext } from "react"
 import { Search } from "lucide-react"
-import { ThemeContext } from "../../context/ThemeProvider"
+import { THEME_STATE, useTheme } from "../../context/ThemeProvider"
 
 const SearchBar = () => {
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useTheme();
 
     return (
         <label htmlFor="search-bar" 
-               className={`w-full h-10 pl-2 ${theme === 'dark' ? 'bg-neutral-800 border-neutral-800' : 'bg-white border-border-line'} border flex items-center gap-2 rounded-lg has-focus:outline-2 has-focus:outline-blue-600`}>
+               className={`w-full h-10 pl-2 ${theme === THEME_STATE.DARK ? 'bg-neutral-800 border-neutral-800' : 'bg-white border-border-line'} border flex items-center gap-2 rounded-lg has-focus:outline-2 has-focus:outline-blue-600`}>
             <Search className="text-neutral-500"/>
             <input type="search" 
                    name="search" 
