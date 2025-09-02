@@ -1,11 +1,11 @@
 import { useState, useContext } from "react"
 import { PanelLeft, ChevronRight, CircleUser } from "lucide-react"
-import { ThemeContext } from "../../../context/ThemeProvider"
+import { THEME_STATE, useTheme } from "../../../context/ThemeProvider"
 import { DashboardContext } from "../../../context/DashboardContext"
 import ThemeToggle from "../../ui/ThemeToggle"
 
 const Header = () => {
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useTheme();
     const { isSidebarActive, setSidebarActive } = useContext(DashboardContext);
 
     return (
@@ -14,11 +14,11 @@ const Header = () => {
                 <div className="flex items-center gap-2 lg:gap-4">
                     <PanelLeft className="size-5 lg:size-6 cursor-pointer"
                                onClick={() => setSidebarActive(!isSidebarActive)} />
-                    <span className={`${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>Dashboard</span>
+                    <span className={`${theme === THEME_STATE.DARK ? 'text-neutral-400' : 'text-neutral-600'}`}>Dashboard</span>
                     <ChevronRight size={18} />
-                    <span className={`${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>Homework</span>
+                    <span className={`${theme === THEME_STATE.DARK ? 'text-neutral-400' : 'text-neutral-600'}`}>Homework</span>
                     <ChevronRight size={18} />
-                    <span className={`${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>Geography</span>
+                    <span className={`${theme === THEME_STATE.DARK ? 'text-neutral-400' : 'text-neutral-600'}`}>Geography</span>
                 </div>
                 <ul className="flex items-center gap-4">
                     <li><ThemeToggle /></li>

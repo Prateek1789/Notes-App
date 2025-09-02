@@ -1,15 +1,15 @@
 import { useState, useContext } from "react"
-import { ThemeContext } from "../../../context/ThemeProvider"
+import { THEME_STATE, useTheme } from "../../../context/ThemeProvider"
 import { DashboardContext } from "../../../context/DashboardContext"
 import SearchBar from "../../ui/SearchBar"
 import { Zap, Plus, NotebookTabs, Notebook } from "lucide-react"
 
 const SideBar = () => {
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useTheme();
     const { isSidebarActive, notebooks } = useContext(DashboardContext);
 
     return (
-        <aside className={`${isSidebarActive ? 'w-65  p-4' : 'w-0 p-0'} h-full [grid-area:_sidebar] border-r border-border-line ${theme === 'dark' ? 'bg-sidebar' : 'bg-neutral-50'} flex overflow-x-hidden [transition:width_240ms_ease]`}>
+        <aside className={`${isSidebarActive ? 'w-65  p-4' : 'w-0 p-0'} h-full [grid-area:_sidebar] border-r border-border-line ${theme === THEME_STATE.DARK ? 'bg-sidebar' : 'bg-neutral-50'} flex overflow-x-hidden [transition:width_240ms_ease]`}>
             <div className="w-full h-full flex flex-col gap-2">
                 <span className="logo w-full h-10 text-4xl flex items-center gap-2 font-semibold">
                     Noto
@@ -20,15 +20,15 @@ const SideBar = () => {
                         <Zap size={20}/>
                         <h3 className="text-lg font-semibold">Quick Actions</h3>
                     </span>
-                    <ul className={`flex flex-col px-2 gap-3 ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
+                    <ul className={`flex flex-col px-2 gap-3 ${theme === THEME_STATE.DARK ? 'text-neutral-400' : 'text-neutral-600'}`}>
                         <li className="">
-                            <button type="button" className={`flex items-center gap-2 cursor-pointer ${theme === 'dark' ? 'hover:text-neutral-200' : 'hover:text-neutral-900'} transition-colors duration-200`}>
+                            <button type="button" className={`flex items-center gap-2 cursor-pointer ${theme === THEME_STATE.DARK ? 'hover:text-neutral-200' : 'hover:text-neutral-900'} transition-colors duration-200`}>
                                 <Plus size={18} />
                                 Create Note
                             </button>
                         </li>
                         <li className="">
-                            <button type="button" className={`flex items-center gap-2 cursor-pointer ${theme === 'dark' ? 'hover:text-neutral-200' : 'hover:text-neutral-900'} transition-colors duration-200`}>
+                            <button type="button" className={`flex items-center gap-2 cursor-pointer ${theme === THEME_STATE.DARK ? 'hover:text-neutral-200' : 'hover:text-neutral-900'} transition-colors duration-200`}>
                                 <Plus size={18} />
                                 Create Notebook
                             </button>
@@ -44,7 +44,7 @@ const SideBar = () => {
                         {notebooks.map((notebook, idx) => {
                             return (<li key={idx}>
                                     <label htmlFor={`notebook-${idx}`} 
-                                            className={`h-10 w-full px-2 flex items-center gap-2 rounded-lg relative ${theme === 'dark' ? 'hover:bg-neutral-900' : 'hover:bg-white'} ${theme === 'dark' ? 'has-checked:bg-neutral-800' : 'has-checked:bg-neutral-200'} cursor-pointer`}>
+                                            className={`h-10 w-full px-2 flex items-center gap-2 rounded-lg relative ${theme === THEME_STATE.DARK ? 'hover:bg-neutral-900 has-checked:bg-neutral-800' : 'hover:bg-white has-checked:bg-neutral-200'} cursor-pointer`}>
                                         <Notebook size={16} />
                                         {notebook} 
                                         <input type="radio" 
