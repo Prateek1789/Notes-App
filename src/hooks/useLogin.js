@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { getAllUser } from "../utils/Storage"
+import { getAppData } from "../utils/Storage"
 
 const useLogin = (username, password, attempt) => {
     const delay = 500;
     const [commonError, setCommonError] = useState('');
     const [uniqueError, setUniqueError] = useState({username: '', password: ''});
     const [success, setSuccess] = useState(false);
+    const [activeUser, setActiveUser] = useState({});
 
     useEffect(() => {
         if (!attempt) {
@@ -34,27 +35,28 @@ const useLogin = (username, password, attempt) => {
         }
 
         const timer = setTimeout(() => {
-            const allUsers = getAllUser();
-            const userFound = allUsers.find(user => user.username === username && user.password === password);
+            const appData = getAppData();
+            const user = appData.users.find(user => user.username === username && user.password === password);
 
-            if (!userFound) {
+            if (!user) {
                 setCommonError('Incorrect Username or Password');
                 setUniqueError({username: '', password: ''});
                 setSuccess(false);
                 return;
             }
-            if (userFound) {
+            if (user) {
                 setCommonError('');
                 setUniqueError({username: '', password: ''});
+                setActiveUser(user);
                 setSuccess(true);
                 return;
             }
         }, delay);
 
         return () => clearTimeout(timer);
-    }, [attempt, success]);
+    }, [attempt]);
 
-    return [uniqueError, commonError, success];
+    return [uniqueError, commonError, success, activeUser];
 };
 
 export default useLogin
