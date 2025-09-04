@@ -1,19 +1,21 @@
 import { useState, useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { THEME_STATE, useTheme } from "../context/ThemeProvider"
+import { useAuth } from "../context/AuthContext"
 
 import useLogin from "../hooks/useLogin"
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
-import { THEME_STATE, useTheme } from "../context/ThemeProvider"
 
 const LoginPage = () => {
     const { theme } = useTheme();
+    const { login } = useAuth();
     const navigate = useNavigate();
     const username = useRef('');
     const password = useRef('');
     const [subAttempt, setSubAttempt] = useState(false);
-    const [uniqueError, commonError, success] = useLogin(username.current, password.current, subAttempt);
+    const [uniqueError, commonError, success, user] = useLogin(username.current, password.current, subAttempt);
 
     const handleInput = (e, field) => {
         field.current = e.target.value;
@@ -26,7 +28,10 @@ const LoginPage = () => {
     }
 
     useEffect(() => {
-        if (success) navigate('/dashboard');
+        if (success) {
+            login(user);
+            navigate('/dashboard');
+        };
     }, [success, navigate]);
 
     return (
