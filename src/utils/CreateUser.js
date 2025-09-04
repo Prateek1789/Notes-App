@@ -1,41 +1,33 @@
-import { getAllUser, saveUser, saveUserSession } from "./Storage";
+import { getAppData } from "./Storage";
 
 const CreateUser = ({ username, email, password }) => {
     return new Promise((resolve, reject) => {
 
         setTimeout(() => {
             try {
-                const existingUsers = getAllUser();
-                const userExists = existingUsers.some(user => user.email === email || user.username === username);
+                const appData = getAppData();
+                const userExists = appData.users.some(user => user.email === email || user.username === username);
 
                 if (userExists) {
-                    reject(new Error('User with this username or email already exists'));
+                    reject(new Error('A user with this username or email already exists'));
                     return;
-                }
+                };
 
                 const newUser = {
-                    userID: Date.now().toString(),
-                    username,
+                    id: Date.now().toString(),
                     email,
+                    username,
                     password,
                     createdOn: new Date().toISOString(),
-                    isActive: true
+                    isActive: true,
+                    quickNotes: [],
+                    notebooks: []
                 };
-                const updatedUsers = [newUser, ...existingUsers];
-                saveUser(updatedUsers);
-
-                const userSession = {
-                    id: newUser.userID,
-                    name: newUser.username,
-                    email: newUser.email,
-                    isLoggedIn: newUser.isActive
-                };
-                saveUserSession(userSession);
 
                 resolve({
                     success: true,
                     message: 'Account created successfully!',
-                    user: userSession
+                    newUser
                 });
             }
             catch (error) {
