@@ -2,6 +2,8 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useUsernameValidation, useEmailValidation, usePasswordValidation, useConfirmPassword } from "../hooks/useFormAuth"
 import { THEME_STATE, useTheme } from "../context/ThemeProvider"
+import { useAuth } from "../context/AuthContext"
+
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
@@ -9,6 +11,7 @@ import CreateUser from "../utils/CreateUser"
 
 const SignupPage = () => {
     const { theme } = useTheme();
+    const { register } = useAuth();
     const navigate = useNavigate();
     const delay = 1200;
 
@@ -48,6 +51,7 @@ const SignupPage = () => {
             try {
                 const result = await CreateUser(formData);
                 console.log(result.message);
+                register(result.newUser);
                 navigate('/dashboard');
             }
             catch (error) {
