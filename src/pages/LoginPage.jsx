@@ -30,7 +30,7 @@ const LoginPage = () => {
     useEffect(() => {
         if (success) {
             login(user);
-            navigate('/dashboard');
+            navigate('/dashboard', { replace: true });
         };
     }, [success, navigate]);
 
