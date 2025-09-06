@@ -36,21 +36,22 @@ const useLogin = (username, password, attempt) => {
 
         const timer = setTimeout(() => {
             const appData = getAppData();
-            const user = appData.users.find(user => user.username === username && user.password === password);
+            const userFound = Object.values(appData.users).find(u => u.username === username && u.password === password);
 
-            if (!user) {
+            if (!userFound) {
                 setCommonError('Incorrect Username or Password');
                 setUniqueError({username: '', password: ''});
                 setSuccess(false);
                 return;
             }
-            if (user) {
+
+            if (userFound){
                 setCommonError('');
                 setUniqueError({username: '', password: ''});
-                setActiveUser(user);
+                setActiveUser(userFound);
                 setSuccess(true);
                 return;
-            }
+            };
         }, delay);
 
         return () => clearTimeout(timer);
