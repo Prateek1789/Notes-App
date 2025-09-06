@@ -6,12 +6,12 @@ const CreateUser = ({ username, email, password }) => {
         setTimeout(() => {
             try {
                 const appData = getAppData();
-                const userExists = appData.users.some(user => user.email === email || user.username === username);
+                const userExists = Object.values(appData.users).some(u => u.username === username || u.email === email);
 
                 if (userExists) {
                     reject(new Error('A user with this username or email already exists'));
                     return;
-                };
+                }
 
                 const newUser = {
                     id: Date.now().toString(),
