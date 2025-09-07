@@ -6,13 +6,17 @@ const NotoDashboard = () => {
     const { theme } = useTheme();
 
     return (
-        <main className="w-full h-full flex flex-col items-center justify-center gap-8 [grid-area:_main]">
-            <h1 className="text-4xl">Noto Dashboard</h1>
-            <Link to='/'>
-                <Button type="button" name="Got to Home" dark={theme === THEME_STATE.DARK ? false : true} />
-            </Link>
-        </main>
-    )
+        <section className="w-full h-full [grid-area:_main] gird grid-cols-1 grid-rows-2">
+            <section className="quick-notes w-full h-1/2 flex flex-col p-4 gap-4">
+                <span className="text-2xl">{/* Quick Notes */}</span>
+                <div className="w-full h-full flex items-center justify-center text-2xl border-border-line rounded-xl">Quick Notes</div>
+            </section>
+            <section className="notebook w-full h-1/2 flex flex-col p-4 gap-4">
+                <span className="text-2xl">{/* Notebooks */}</span>
+                <div className="w-full h-full flex items-center justify-center text-2xl border-border-line rounded-xl">Notebooks</div>
+            </section>
+        </section>
+    );
 }
 
 export default NotoDashboard
