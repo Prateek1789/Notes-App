@@ -2,8 +2,14 @@
 
 @theme {
   --color-Dark-900: oklch(08.9% 0.006 264.542);
+  --color-backdrop: var(--color-neutral-700/20);
 
   --color-navbar: var(--color-white/20);
+  --color-sidebar: oklch(98.5% 0.000 0.000);
+  --color-sidebar-btn: var(--color-neutral-200);
+  --color-SBL-text: var(--color-neutral-600);
+  --color-SBL-hover: var(--color-neutral-100);
+  --color-button-text-1: var(--color-neutral-900);
   --color-text: var(--color-neutral-950);
   --color-background: var(--color-neutral-100);
   --color-hero-gradient: radial-gradient(circle at 50% 100%, var(--color-neutral-100), 90%, var(--color-white));
@@ -26,6 +32,11 @@
 }
 
 .dark {
+  --color-sidebar: oklch(16% 0.000 0.000);
+  --color-sidebar-btn: var(--color-neutral-800);
+  --color-button-text-1: var(--color-neutral-200);
+  --color-SBL-text: var(--color-neutral-400);
+  --color-SBL-hover: var(--color-neutral-900);
   --color-navbar: var(--color-black/20);
   --color-text: var(--color-neutral-200);
   --color-background: var(--color-Dark-900);
