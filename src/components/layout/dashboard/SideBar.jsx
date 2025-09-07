@@ -1,5 +1,4 @@
 import { useState, useContext } from "react"
-import { THEME_STATE, useTheme } from "../../../context/ThemeProvider"
 import { useAuth } from "../../../context/AuthContext"
 import { useNotebooks } from "../../../context/NotebookContext"
 import { DashboardContext } from "../../../context/DashboardContext"
@@ -8,9 +7,8 @@ import { Zap, Plus, NotebookTabs, Notebook, LogOut, Settings } from "lucide-reac
 
 const SideBar = () => {
     const [userMenu, setUserMenu] = useState(false);
-    const { theme } = useTheme();
     const { isSidebarActive, setNotebookModalState } = useContext(DashboardContext);
-    const { notebooks, setActiveNotebook } = useNotebooks();
+    const { notebooks, activeNotebook, setActiveNotebook } = useNotebooks();
     const { activeUser, logout } = useAuth();
 
     return (
@@ -25,17 +23,17 @@ const SideBar = () => {
                         <Zap size={20}/>
                         <h3 className="text-lg font-semibold">Quick Actions</h3>
                     </span>
-                    <ul className={`flex flex-col ${theme === THEME_STATE.DARK ? 'text-neutral-400' : 'text-neutral-600'}`}>
+                    <ul className="flex flex-col text-SBL-text">
                         <li className="w-full">
                             <button type="button" 
-                                    className={`w-full h-10 rounded-lg px-2 flex items-center gap-2 cursor-pointer ${theme === THEME_STATE.DARK ? 'hover:text-neutral-200 hover:bg-neutral-800' : 'hover:text-neutral-900 hover:bg-neutral-200'} transition-colors duration-200`}>
+                                    className="w-full h-10 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
                                 <Plus size={16} />
                                 Create Note
                             </button>
                         </li>
                         <li className="w-full">
                             <button type="button" 
-                                    className={`w-full h-10 rounded-lg px-2 flex items-center gap-2 cursor-pointer ${theme === THEME_STATE.DARK ? 'hover:text-neutral-200 hover:bg-neutral-800' : 'hover:text-neutral-900 hover:bg-neutral-200'} transition-colors duration-200`}
+                                    className="w-full h-10 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
                                     onClick={() => setNotebookModalState(true)}>
                                 <Plus size={16} />
                                 Create Notebook
@@ -52,39 +50,42 @@ const SideBar = () => {
                         {notebooks.map((notebook, idx) => {
                             return (<li key={idx}>
                                     <label htmlFor={`NB-${notebook.id}`} 
-                                            className={`h-10 w-full px-2 flex items-center gap-2 rounded-lg relative ${theme === THEME_STATE.DARK ? 'text-neutral-400 hover:bg-neutral-900 has-checked:bg-neutral-800 has-checked:text-text' : 'text-neutral-600 hover:bg-neutral-100 has-checked:bg-neutral-200 has-checked:text-text'} cursor-pointer`}
-                                            onClick={() => setActiveNotebook(notebook)}>
+                                           className="h-10 w-full px-2 flex items-center gap-2 rounded-lg relative text-SBL-text has-checked:bg-sidebar-btn has-checked:text-text hover:bg-SBL-hover cursor-pointer">
                                         <Notebook size={16} />
                                         {notebook.title} 
                                         <input type="radio"
                                                name="notebook" 
                                                id={`NB-${notebook.id}`} 
-                                               className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-1/2 hidden" 
-                                               /* checked={activeNotebook === notebook.title ? true : false} *//>
+                                               className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-1/2 hidden"
+                                               onChange={() => setActiveNotebook(notebook)} 
+                                               checked={activeNotebook?.title === notebook.title} />
                                         </label>
                                     </li>);
                         })}
                     </ul>
                 </div>
-                <div className={`w-full p-2 flex items-center gap-2 rounded-xl mt-auto cursor-pointer bg-neutral-900 ${userMenu ? 'bg-neutral-800' : ''} ${theme === THEME_STATE.DARK ? 'hover:bg-neutral-800' : 'hover:bg-neutral-300'} transition-colors relative`}
-                     onClick={() => setUserMenu(!userMenu)}>
-                    <div className="w-6 h-6 rounded-full bg-blue-500 text-white text-sm grid place-content-center">
-                        {activeUser.username[0]}
-                    </div>
-                    <p>{activeUser.username}</p>
-                    <div className={`user-menu w-full h-auto p-1.5 ${!userMenu ? 'hidden' : 'flex' } flex-col absolute left-0 -top-[205%] ${theme === THEME_STATE.DARK ? 'bg-neutral-800' : 'bg-neutral-50'} border border-border-line rounded-xl`}>
+                <div className={`w-full flex flex-col items-center gap-2 rounded-lg mt-auto`}>
+                    <div className={`w-full h-auto p-1.5 ${!userMenu ? 'hidden' : 'flex bg-SBL-hover' } flex-col border border-border-line rounded-lg`}>
                         <button type="button" 
-                                className={`h-8 flex items-center gap-2 rounded-lg px-2 ${theme === THEME_STATE.DARK ? 'hover:bg-neutral-700' : 'hover:bg-neutral-200'} cursor-pointer`}>
+                                className="h-8 flex items-center gap-2 rounded-md px-2 hover:bg-sidebar-btn cursor-pointer">
                             <Settings size={16}/>
                             Settings
                         </button>
                         <button type="button" 
-                                className={`h-8 flex items-center gap-2 rounded-lg px-2 ${theme === THEME_STATE.DARK ? 'hover:bg-neutral-700' : 'hover:bg-neutral-200'} cursor-pointer`}
+                                className="h-8 flex items-center gap-2 rounded-md px-2 hover:bg-sidebar-btn cursor-pointer"
                                 onClick={logout}>
                             <LogOut size={16}/>
                             Log out
                         </button>
                     </div>
+                    <button type="button"
+                            className={`h-10 w-full px-2 flex items-center gap-2 rounded-lg cursor-pointer hover:bg-sidebar-btn ${userMenu && 'bg-sidebar-btn'} transition-colors`}
+                            onClick={() => setUserMenu(!userMenu)}>
+                        <span className="w-6 h-6 rounded-full bg-blue-500 text-white text-sm grid place-content-center">
+                            {activeUser.username[0]}
+                        </span>
+                        {activeUser.username}
+                    </button>
                 </div>
             </div>
         </aside>
