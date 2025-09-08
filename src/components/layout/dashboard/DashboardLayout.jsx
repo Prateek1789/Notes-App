@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import SideBar from "./SideBar";
 import Header from "./Header";
 import NotebookModal from "../../ui/NotebookModal";
+import SearchModal from "../../ui/SearchModal";
 import './layout.css'
 
 const DashboardLayout = () => {
@@ -14,6 +15,7 @@ const DashboardLayout = () => {
                 <Outlet />
             </main>
             <NotebookModal />
+            <SearchModal />
         </div>
     );
 };
