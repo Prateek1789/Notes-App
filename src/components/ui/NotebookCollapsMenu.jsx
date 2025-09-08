@@ -1,0 +1,43 @@
+import { useState } from "react";
+import { NotebookTabs, Notebook } from "lucide-react";
+import { useNotebooks } from "../../context/NotebookContext";
+
+const NotebookCollapseMenu = () => {
+    const { notebooks, activeNotebook, setActiveNotebook } = useNotebooks();
+    const [menuState, setMenuState] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuState(prev => !prev);
+    };
+
+    return (
+        <div className={`w-full min-h-12 grid ${menuState ? 'grid-rows-[3rem_auto] bg-SBL-hover' : 'grid-rows-1'} [grid-template-areas:'head'_'main'] rounded-lg  overflow-hidden transition-[height]`}>
+            <button type="button"
+                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors [grid-area:head]"
+                    onClick={toggleMenu}>
+                <NotebookTabs size={18}/>
+                Notebooks
+            </button>
+            <ul className={`w-full h-full p-1 [grid-area:main] ${!menuState && 'hidden'}`}>
+                {notebooks.map((notebook, idx) => {
+                    return (
+                        <li key={idx}>
+                            <label htmlFor={`NB-${notebook.id}`} 
+                                   className="h-10 w-full px-2 flex items-center gap-2 rounded-lg relative text-sm text-SBL-text has-checked:bg-sidebar-btn has-checked:text-text hover:bg-sidebar-btn cursor-pointer">
+                                <Notebook size={14} />
+                                {notebook.title} 
+                                <input  type="radio"
+                                        name="notebook" 
+                                        id={`NB-${notebook.id}`} 
+                                        className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-1/2 hidden"
+                                        onChange={() => setActiveNotebook(notebook)} 
+                                        checked={activeNotebook?.title === notebook.title} />
+                            </label>
+                        </li>);
+                })}
+            </ul>
+        </div>
+    );
+};
+
+export default NotebookCollapseMenu
