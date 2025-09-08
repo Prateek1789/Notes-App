@@ -7,10 +7,10 @@ import './layout.css'
 const DashboardLayout = () => {
 
     return (
-        <div className="container min-w-screen min-h-screen max-w-screen">
+        <div className="container min-w-screen max-w-screen min-h-screen max-h-screen relative">
             <SideBar />
             <Header />
-            <main className="w-full h-full [grid-area:_main] gird grid-cols-1 grid-rows-2">
+            <main className="w-full h-full flex items-center justify-center">
                 <Outlet />
             </main>
             <NotebookModal />
