@@ -1,14 +1,13 @@
 import { useState } from "react"
 import { useAuth } from "../../../context/AuthContext"
 import { useDashboard } from "../../../context/DashboardContext"
-import SearchBar from "../../ui/SearchBar"
 import SidebarToggle from "../../ui/SidebarToggle"
 import NotebookCollapseMenu from "../../ui/NotebookCollapsMenu"
-import { Search, Trash2, Plus, LogOut, Settings } from "lucide-react"
+import { Search, Trash2, Plus, Feather, LogOut, Settings } from "lucide-react"
 
 const SideBar = () => {
     const [userMenu, setUserMenu] = useState(false);
-    const { sidebarState, setNotebookModalState } = useDashboard();
+    const { sidebarState, setNotebookModalState, setSearchModalState } = useDashboard();
     const { activeUser, logout } = useAuth();
 
     return (
@@ -19,10 +18,10 @@ const SideBar = () => {
             </div>
             <div className="actons w-65 h-[calc(100%_-_5rem_-3.5rem)] flex flex-col py-2 overflow-hidden">
                 <ul className="w-full h-auto rounded-lg px-2">
-                    {/* <SearchBar /> */}
                     <li className="">
                         <button type="button" 
-                                className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
+                                className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
+                                onClick={() => setSearchModalState(true)}>
                             <Search size={18} />
                             Search Notes
                         </button>
@@ -30,7 +29,7 @@ const SideBar = () => {
                     <li className="">
                         <button type="button" 
                                 className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
-                            <Plus size={18} />
+                            <Feather size={18} />
                             Quick Note
                         </button>
                     </li>
