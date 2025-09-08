@@ -1,28 +1,32 @@
-import { useEffect, useRef, useContext } from "react";
-import { X } from "lucide-react";
+import { useEffect, useRef } from "react"
+import { X } from "lucide-react"
 import InputField from "./InputField"
 import Button from "./Button"
-import { THEME_STATE, useTheme } from "../../context/ThemeProvider";
-import { DashboardContext } from "../../context/DashboardContext";
-import { useNotebooks } from "../../context/NotebookContext";
+import { THEME_STATE, useTheme } from "../../context/ThemeProvider"
+import { useDashboard } from "../../context/DashboardContext"
+import { useNotebooks } from "../../context/NotebookContext"
 
 const NotebookModal = () => {
     const modalRef = useRef();
     const nameInputRef = useRef();
     const { theme } = useTheme();
     const { createNotebook, setActiveNotebook } = useNotebooks();
-    const { notebookModalState, setNotebookModalState } = useContext(DashboardContext);
+    const { notebookModalState, setNotebookModalState } = useDashboard();
 
     const addNotebook = () => {
+        if (!nameInputRef.current.value) {
+            return;
+        };
+
         const notebook = {
             id: Date.now().toString(),
             title: nameInputRef.current.value,
             notes: []
-        }
+        };
         createNotebook(notebook);
         setActiveNotebook(notebook);
         setNotebookModalState(false);
-    }
+    };
 
     useEffect(() => {
         if (notebookModalState) {
