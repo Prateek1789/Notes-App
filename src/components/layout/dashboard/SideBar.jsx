@@ -7,8 +7,12 @@ import { Search, Trash2, Plus, Feather, LogOut, Settings } from "lucide-react"
 
 const SideBar = () => {
     const [userMenu, setUserMenu] = useState(false);
-    const { sidebarState, setNotebookModalState, setSearchModalState } = useDashboard();
+    const { sidebarState, toggleNotebookModal, toggleSearchMenu, toggleSettingMenu } = useDashboard();
     const { activeUser, logout } = useAuth();
+
+    const toggleUserMenu = () => {
+        setUserMenu(prev => !prev);
+    };
 
     return (
         <aside className={`h-full ${sidebarState ? 'w-65' : 'w-0 p-0'} absolute z-10 xl:static border-r border-border-line bg-sidebar flex flex-col overflow-x-hidden transition-[width]`}>
@@ -21,7 +25,7 @@ const SideBar = () => {
                     <li className="">
                         <button type="button" 
                                 className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
-                                onClick={() => setSearchModalState(true)}>
+                                onClick={toggleSearchMenu}>
                             <Search size={18} />
                             Search Notes
                         </button>
@@ -36,7 +40,7 @@ const SideBar = () => {
                     <li className="">
                         <button type="button" 
                                 className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
-                                onClick={() => setNotebookModalState(true)}>
+                                onClick={toggleNotebookModal}>
                             <Plus size={18} />
                             Add Notebook
                         </button>
@@ -57,7 +61,11 @@ const SideBar = () => {
             <div className="w-full h-auto p-2 relative">
                 <div className={`w-[calc(100%_-_1rem)] p-1.5 ${!userMenu ? 'hidden' : 'flex bg-SBL-hover' } absolute left-2 top-[-120%] flex-col border border-border-line rounded-lg`}>
                     <button type="button" 
-                            className="h-8 flex items-center gap-2 rounded-md px-2 hover:bg-sidebar-btn cursor-pointer">
+                            className="h-8 flex items-center gap-2 rounded-md px-2 hover:bg-sidebar-btn cursor-pointer"
+                            onClick={() => {
+                                toggleSettingMenu();
+                                toggleUserMenu();
+                            }}>
                         <Settings size={16}/>
                         Settings
                     </button>
@@ -70,7 +78,7 @@ const SideBar = () => {
                 </div>
                 <button type="button"
                         className={`h-12 w-full px-2 flex items-center gap-2 rounded-lg cursor-pointer hover:bg-sidebar-btn ${userMenu && 'bg-sidebar-btn'} transition-colors`}
-                        onClick={() => setUserMenu(!userMenu)}>
+                        onClick={toggleUserMenu}>
                     <span className="w-6 h-6 rounded-full bg-blue-500 text-white text-sm grid place-content-center">
                         {activeUser.username[0]}
                     </span>
