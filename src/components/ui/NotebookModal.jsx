@@ -11,7 +11,7 @@ const NotebookModal = () => {
     const nameInputRef = useRef();
     const { theme } = useTheme();
     const { createNotebook, setActiveNotebook } = useNotebooks();
-    const { notebookModalState, setNotebookModalState } = useDashboard();
+    const { notebookModalState, toggleNotebookModal } = useDashboard();
 
     const addNotebook = () => {
         if (!nameInputRef.current.value) {
@@ -25,7 +25,7 @@ const NotebookModal = () => {
         };
         createNotebook(notebook);
         setActiveNotebook(notebook);
-        setNotebookModalState(false);
+        toggleNotebookModal();
     };
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const NotebookModal = () => {
             </header>
             <button type="button"
                     className="absolute right-4 top-4 rounded-sm cursor-pointer"
-                    onClick={() => setNotebookModalState(false)}>
+                    onClick={toggleNotebookModal}>
                 <X size={20} />
             </button>
             <InputField label='Name' placeholder='My Notebook' ref={nameInputRef}/>
