@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { useAuth } from "../../../context/AuthContext"
 import { useDashboard } from "../../../context/DashboardContext"
 import SidebarToggle from "../../ui/SidebarToggle"
@@ -15,7 +16,7 @@ const SideBar = () => {
     };
 
     return (
-        <aside className={`h-full ${sidebarState ? 'w-65' : 'w-0 p-0'} absolute z-10 xl:static border-r border-border-line bg-sidebar flex flex-col overflow-x-hidden transition-[width]`}>
+        <aside className={`h-full ${sidebarState ? 'w-65' : 'w-0 p-0'} absolute z-20 xl:static border-r border-border-line bg-sidebar flex flex-col overflow-x-hidden !transition-[width]`}>
             <div className="w-full h-20 px-4 flex items-center justify-between border-b border-border-line">
                 <span className="text-3xl">Noto</span>
                 <SidebarToggle modifier={'block xl:hidden'} />
@@ -31,11 +32,13 @@ const SideBar = () => {
                         </button>
                     </li>
                     <li className="">
-                        <button type="button" 
-                                className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
-                            <Feather size={18} />
-                            Quick Note
-                        </button>
+                        <Link to={`/dashboard/notebook/${'quicknotes'}/note/${1}`}>
+                            <button type="button" 
+                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
+                                <Feather size={18} />
+                                Quick Note
+                            </button>
+                        </Link>
                     </li>
                     <li className="">
                         <button type="button" 
