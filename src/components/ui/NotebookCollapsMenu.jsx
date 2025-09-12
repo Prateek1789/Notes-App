@@ -1,14 +1,21 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { NotebookTabs, Notebook } from "lucide-react";
 import { useNotebooks } from "../../context/NotebookContext";
 
 const NotebookCollapseMenu = () => {
     const { notebooks, activeNotebook, setActiveNotebook } = useNotebooks();
     const [menuState, setMenuState] = useState(false);
+    const navigate = useNavigate();
+    const { notebookId } = useParams();
 
     const toggleMenu = () => {
         setMenuState(prev => !prev);
     };
+
+    const navigateTo = (id) => {
+        navigate(`/dashboard/notebook/${id}`);
+    }
 
     return (
         <div className={`w-full min-h-12 grid ${menuState ? 'grid-rows-[3rem_auto] bg-SBL-hover' : 'grid-rows-1'} [grid-template-areas:'head'_'main'] rounded-lg  overflow-hidden transition-[height]`}>
@@ -30,10 +37,13 @@ const NotebookCollapseMenu = () => {
                                         name="notebook" 
                                         id={`NB-${notebook.id}`} 
                                         className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-1/2 hidden"
-                                        onChange={() => setActiveNotebook(notebook)} 
-                                        checked={activeNotebook?.title === notebook.title} />
+                                        onChange={() => {
+                                            setActiveNotebook(notebook);
+                                            navigateTo(notebook.id);
+                                        }} 
+                                        checked={notebook.id == notebookId}/>
                             </label>
-                        </li>);
+                        </li>)
                 })}
             </ul>
         </div>
