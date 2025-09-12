@@ -1,8 +1,9 @@
-import { Outlet } from "react-router-dom";
-import SideBar from "./SideBar";
-import Header from "./Header";
-import NotebookModal from "../../ui/NotebookModal";
-import SearchModal from "../../ui/SearchModal";
+import { Outlet } from "react-router-dom"
+import SideBar from "./SideBar"
+import Header from "./Header"
+import NotebookModal from "../../ui/NotebookModal"
+import SearchModal from "../../ui/SearchModal"
+import SettingsModal from "../../ui/SettingsModal"
 import './layout.css'
 
 const DashboardLayout = () => {
@@ -16,6 +17,7 @@ const DashboardLayout = () => {
             </main>
             <NotebookModal />
             <SearchModal />
+            <SettingsModal />
         </div>
     );
 };
