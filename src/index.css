@@ -1,7 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --color-Dark-900: oklch(08.9% 0.006 264.542);
+  --color-Dark-900: oklch(14% 0.000 264.542);
   --color-backdrop: var(--color-neutral-700/20);
 
   --color-navbar: var(--color-white/20);
@@ -18,7 +19,7 @@
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -30,6 +31,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+html,
+body { overscroll-behavior-y: none; }
 
 .dark {
   --color-sidebar: oklch(16% 0.000 0.000);
@@ -43,10 +47,6 @@
   --color-hero-gradient: radial-gradient(circle at 50% 100%, var(--color-Dark-900), 70%, var(--color-neutral-900));
   --color-border-line: var(--color-neutral-800);
   --color-card: var(--color-neutral-950);
-}
-
-a {
-  transition: 240ms ease;
 }
 
 body {
