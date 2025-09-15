@@ -7,35 +7,31 @@ import { useAuth } from "../context/AuthContext"
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
-import CreateUser from "../utils/CreateUser"
 
 const SignupPage = () => {
     const { theme } = useTheme();
     const { register } = useAuth();
     const navigate = useNavigate();
-    const delay = 1200;
-
+    const delay = 1000;
     const [formData, setFormData] = useState({
-        username: '',
         email: '',
+        username: '',
         password: '',
         confirmPassword: ''
     });
-
+    const [authError, setAuthError] = useState('');
     const [submitAttempt, setSubmitAttempt] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    
     const [usernameState, usernameError] = useUsernameValidation(formData.username, submitAttempt);
     const [emailState, emailError] = useEmailValidation(formData.email, submitAttempt, delay);
     const [passwordState, passwordError] = usePasswordValidation(formData.password, submitAttempt, delay);
     const [confirmPasswordState, confirmPasswordError] = useConfirmPassword(formData.password, formData.confirmPassword, submitAttempt, delay);
 
-
     const handleFormData = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({...prev, [name]: value}));
         if (submitAttempt) setSubmitAttempt(false);
-    }
+        setAuthError('');
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,20 +43,14 @@ const SignupPage = () => {
                       confirmPasswordState === 'valid';
 
         if (check) {
-            setIsLoading(true);
             try {
-                const result = await CreateUser(formData);
-                console.log(result.message);
-                register(result.newUser);
-                navigate('/dashboard');
-            }
-            catch (error) {
-                console.log('Sign up failed: ', error.message);
-            }
-            finally {
-                setIsLoading(false);
-            }
-        };
+                await register(formData);
+                navigate("/dashboard");
+            } catch (error) {
+                setAuthError('User Already exists');
+                console.error('Sign up failed: ', error.message);
+            };
+        }
     };
 
     return (
@@ -83,7 +73,6 @@ const SignupPage = () => {
                             state={usernameState}
                             onChange={handleFormData}
                             autoComplete="username"
-                            disabled={isLoading}
                             required/>
 
                 <InputField id='user-email'
@@ -92,10 +81,9 @@ const SignupPage = () => {
                             placeholder='e.g johndoe4575@gmail.com'
                             value={formData.email}
                             error={emailError}
-                            state={emailState}
+                            state={authError ? 'invalid' : emailState}
                             onChange={handleFormData}
                             autoComplete="email"
-                            disabled={isLoading}
                             required/>            
 
                 <Password   id='user-password'
@@ -106,7 +94,6 @@ const SignupPage = () => {
                             state={passwordState}
                             onChange={handleFormData}
                             autoComplete='new-password'
-                            disabled={isLoading}
                             required /> 
 
                 <Password   id='confirm-passwprd'
@@ -114,12 +101,11 @@ const SignupPage = () => {
                             label='Confirm Password'
                             placeholder='re-enter password'
                             value={formData.confirmPassword}
-                            error={confirmPasswordError}
+                            error={confirmPasswordError || authError}
                             state={confirmPasswordState}
                             onChange={handleFormData}
                             autoComplete='new-password'
                             showToggle={false}
-                            disabled={isLoading}
                             required />           
             </fieldset>
 
@@ -127,7 +113,8 @@ const SignupPage = () => {
                     name='Create Account' 
                     width='w-full'
                     onClick={handleSubmit}
-                    dark={theme === THEME_STATE.DARK ? false : true} />
+                    dark={theme === THEME_STATE.DARK ? false : true} 
+                    disabled={!formData.username || !formData.email || !formData.password || !formData.confirmPassword} />
 
             <p className="text-sm mt-4 text-[var(--color-Gray-400)]">Already have an account?
                 <Link to='/login' className="text-blue-500 lg:hover:text-blue-400 font-semibold"> Log in</Link> 
