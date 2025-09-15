@@ -1,67 +1,80 @@
-import { useEffect, useContext, createContext, useReducer, act } from "react";
-import { saveAppData, getAppData } from "../utils/Storage";
+import { createContext, useContext, useReducer, useEffect } from "react";
+import { dbWorkerCall } from "@/lib/WorkerClient";
 
 const AuthContext = createContext();
 
-const initialState = { 
-    users: {},
-    activeUser: null
-};
-
-const actions = {
-    LOG_IN: 'LOG_IN',
-    LOG_OUT: 'LOG_OUT',
-    CREATE_USER: 'CREATE_USER',
-    DELETE_USER: 'DELETE_USER',
-    UPDATE_USER: 'UPDATE_USER'
-};
-
-const authReducer = (state, action) => {
-    switch(action.type) {
-        // Set active user ID and name upon login 
-        case actions.LOG_IN:
-            return { ...state, activeUser: { id: action.payload.id, username: action.payload.username } };
-        // Reset active user as NULL upon logout
-        case actions.LOG_OUT:
-            return { ...state, activeUser: null };
-        // Add new Users into users array and set active user 
-        case actions.CREATE_USER:
-            return { users: {[action.payload.id]: action.payload, ...state.users}, activeUser: { id: action.payload.id, username: action.payload.username } };
-        // Remove a specific User from users array
-        case actions.DELETE_USER:
-            const { [state.activeUser.id]: removed, ...users} = state.users;
-            return { users: users, activeUser: null };
-        // Update user
-        case actions.UPDATE_USER:
-            const key = Object.keys(action.payload)[0];
-            const userObject = {...state.users};
-
-            userObject[state.activeUser.id] = {
-                ...state.users[state.activeUser.id],
-                [key]: action.payload[key]
-            };
-
-            return { ...state, users: userObject };
-        // Error for any undefined action type
+function authReducer(state, action) {
+    switch (action.type) {
+        case "REGISTER":
+            return { ...state, user: action.payload, isLoggedIn: true };
+        case "LOGIN":
+            return { ...state, user: action.payload, isLoggedIn: true };
+        case "LOGOUT":
+            return { ...state, user: null, isLoggedIn: false };
         default:
-            throw new Error(`Unhandled action type: ${action.type}`);
-    }
+            return state;
+    };
 };
 
 export const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, getAppData() || initialState);
+    const [state, dispatch] = useReducer(authReducer, {
+        user: null,
+        isLoggedIn: false,
+    });
 
-    const login = (user) => dispatch({ type: actions.LOG_IN, payload: user });
-    const logout = () => dispatch({ type: actions.LOG_OUT});
-    const register = (user) => dispatch({ type: actions.CREATE_USER, payload: user });
-    const deleteUser = () => dispatch({ type: actions.DELETE_USER });
-    const updateUser = (data) => dispatch({ type: actions.UPDATE_USER, payload: data });
+    const fetchActiveUser = async () => {
+        const activeUser = await dbWorkerCall("getActiveUser");
+        if (activeUser) {
+            dispatch({ type: "LOGIN", payload: activeUser });
+        };
+    };
 
-    useEffect(() => saveAppData(state), [state]);
+    const register = async (formData) => {
+        const existing = await dbWorkerCall("findUserByEmail", { email: formData.email });
+        if (existing) throw new Error("A user by this Email already exists");
+
+        const newUser = {
+            id: crypto.randomUUID(),
+            email: formData.email,
+            username: formData.username,
+            password: formData.password,
+            dateCreated: new Date().toISOString(),
+        };
+
+        await dbWorkerCall("addUser", newUser);
+        await dbWorkerCall("setActiveUser", { userId: newUser.id });
+
+        dispatch({ type: "REGISTER", payload: newUser });
+        return { success: true, newUser };
+    };
+
+    const login = async (username, password) => {
+        const user = await dbWorkerCall("findUserByCredentials", { username, password });
+        if (!user) throw new Error("Invalid Credentials");
+
+        await dbWorkerCall("setActiveUser", { userId: user.id });
+        dispatch({ type: "LOGIN", payload: user });
+        return { success: true };
+    };
+
+    const logout = async () => {
+        await dbWorkerCall("clearActiveUser");
+        dispatch({ type: "LOGOUT" });
+    };
+
+    useEffect(() => {
+        fetchActiveUser();
+    }, []);
 
     return (
-        <AuthContext.Provider value={{ ...state, login, logout, register, deleteUser, updateUser }}>
-            { children }
+        <AuthContext.Provider value={{
+            user: state.user,
+            isLoggedIn: state.isLoggedIn,
+            register,
+            login,
+            logout,
+        }}>
+            {children}
         </AuthContext.Provider>
     );
 };
