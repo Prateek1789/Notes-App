@@ -1,38 +1,38 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { THEME_STATE, useTheme } from "../context/ThemeProvider"
 import { useAuth } from "../context/AuthContext"
 
-import useLogin from "../hooks/useLogin"
 import Button from "../components/ui/Button"
 import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
 
 const LoginPage = () => {
-    const { theme } = useTheme();
-    const { login } = useAuth();
-    const navigate = useNavigate();
     const username = useRef('');
     const password = useRef('');
-    const [subAttempt, setSubAttempt] = useState(false);
-    const [uniqueError, commonError, success, user] = useLogin(username.current, password.current, subAttempt);
+    const { login } = useAuth();
+    const { theme } = useTheme();
+    const navigate = useNavigate();
+    const [authError, setAuthError] = useState('');
+    const [isDisabled, setIsDisabled] = useState(true);
 
     const handleInput = (e, field) => {
         field.current = e.target.value;
-        if (subAttempt) setSubAttempt(false);
-    }
+        setAuthError('');
+        setIsDisabled(!username.current || !password.current);
+    };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        setSubAttempt(true);
-    }
 
-    useEffect(() => {
-        if (success) {
-            login(user);
+        try {
+            await login(username.current, password.current);
             navigate('/dashboard', { replace: true });
+        } catch (error) {
+            setAuthError('Invalid Credentials');
+            console.error('Login failed: ', error.message);
         };
-    }, [success, navigate]);
+    };
 
     return (
         <main className="h-full w-full flex items-center justify-center">
@@ -49,8 +49,7 @@ const LoginPage = () => {
                                 name='user_name'
                                 label='Username'
                                 placeholder='e.g John Doe'
-                                state={uniqueError.username || commonError ? 'invalid' : 'idle'}
-                                error={uniqueError.username}
+                                state={authError ? 'invalid' : 'idle'}
                                 onChange={(e) => handleInput(e, username)}
                                 autoComplete='username'
                                 required/>
@@ -58,8 +57,8 @@ const LoginPage = () => {
                     <Password   id='user-password'
                                 name='user_password'
                                 placeholder='Your password'
-                                state={uniqueError.password || commonError ? 'invalid' : 'idle'}
-                                error={uniqueError.password || commonError}
+                                state={authError ? 'invalid' : 'idle'}
+                                error={authError}
                                 onChange={(e) => handleInput(e, password)}
                                 autoComplete='current-password'
                                 required />            
@@ -69,7 +68,8 @@ const LoginPage = () => {
                         name='Log In' 
                         width='w-full'
                         onClick={onSubmit}
-                        dark={theme === THEME_STATE.DARK ? false : true} />
+                        dark={theme === THEME_STATE.DARK ? false : true} 
+                        disabled={isDisabled} />
 
                 <p className="text-sm mt-4 text-[var(--color-Gray-400)]">Don't have an account?  
                     <Link to='/register' className="text-blue-500 lg:hover:text-blue-400 font-semibold"> Sign up</Link>
