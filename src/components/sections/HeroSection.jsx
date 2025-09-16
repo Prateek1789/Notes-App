@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { THEME_STATE, useTheme } from '../../context/ThemeProvider'
-import HeroImageDark from '../../assets/Noto-Dark.png'
-import HeroImageLight from '../../assets/Noto-Light.png'
-import Button from '../ui/Button'
+import { useTheme } from '@/context/ThemeProvider'
+import HeroImageDark from '@/assets/Noto-Dark.png'
+import HeroImageLight from '@/assets/Noto-Light.png'
+import Button from '@/components/ui/Button'
 
 const HeroSection = () => {
-    const { theme } = useTheme();
-    const getHeroImage = () => theme === THEME_STATE.DARK ? HeroImageDark : HeroImageLight;
+    const { theme, themeState } = useTheme();
+    const getHeroImage = () => theme === themeState.DARK ? HeroImageDark : HeroImageLight;
 
     return (
         <section className="hero min-h-[90vh] w-screen flex items-center justify-center xl:pb-30 md:items-end lg:[background:var(--color-hero-gradient)]">
@@ -21,7 +21,7 @@ const HeroSection = () => {
                                 name='Get Started' 
                                 width={'w-40 md:w-60'} 
                                 height='h-10 md:h-12' 
-                                dark={theme === THEME_STATE.DARK ? false : true} />
+                                dark={theme === themeState.DARK ? false : true} />
                     </Link>
                 </div>
                 <div className='img-container w-full max-w-[90rem] max-h-[45vh] relative md:rounded-tl-2xl md:rounded-tr-2xl lg:rounded-tl-3xl lg:rounded-tr-3xl xl:rounded-tl-4xl xl:rounded-tr-4xl overflow-hidden mask-b-from-3.5 md:border md:border-border-line'>
