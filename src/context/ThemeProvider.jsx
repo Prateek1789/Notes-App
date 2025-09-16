@@ -1,36 +1,34 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import { getTheme, saveTheme } from '../utils/Storage'; 
 
-export const THEME_STATE = {
-    LIGHT: 'light',
-    DARK: 'dark',
-};
-
 const ThemeContext = createContext();
 
-export const useTheme = () => {
-    return useContext(ThemeContext);
-}
-
 export const ThemeProvider = ({ children }) => {
+    const themeState = {
+        LIGHT: 'light',
+        DARK: 'dark',
+    };
+
     const [theme, setTheme] = useState(() => {
 
         const savedTheme = getTheme();
         if (saveTheme) return savedTheme;
 
-        if (window.matchMedia('(prefers-color-scheme: dark)')) return THEME_STATE.DARK;
+        if (window.matchMedia('(prefers-color-scheme: dark)')) return themeState.DARK;
 
-        return THEME_STATE.LIGHT;
+        return themeState.LIGHT;
     });
 
     useEffect(() => {
-        document.documentElement.classList.toggle('dark', theme === THEME_STATE.DARK);
+        document.documentElement.classList.toggle('dark', theme === themeState.DARK);
         saveTheme(theme);
     }, [theme]);
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme, setTheme, themeState }}>
             { children }
         </ThemeContext.Provider>
-    )
+    );
 };
+
+export const useTheme = () => useContext(ThemeContext);
