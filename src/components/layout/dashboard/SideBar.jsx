@@ -4,12 +4,12 @@ import { useAuth } from "../../../context/AuthContext"
 import { useDashboard } from "../../../context/DashboardContext"
 import SidebarToggle from "../../ui/SidebarToggle"
 import NotebookCollapseMenu from "../../ui/NotebookCollapsMenu"
-import { Search, Trash2, Plus, Feather, LogOut, Settings } from "lucide-react"
+import { Search, Trash2, Plus, Feather, LogOut, Settings, ChevronsUpDown } from "lucide-react"
 
 const SideBar = () => {
     const [userMenu, setUserMenu] = useState(false);
     const { sidebarState, toggleNotebookModal, toggleSearchMenu, toggleSettingMenu } = useDashboard();
-    const { activeUser, logout } = useAuth();
+    const { user, logout } = useAuth();
 
     const toggleUserMenu = () => {
         setUserMenu(prev => !prev);
@@ -83,9 +83,10 @@ const SideBar = () => {
                         className={`h-12 w-full px-2 flex items-center gap-2 rounded-lg cursor-pointer hover:bg-sidebar-btn ${userMenu && 'bg-sidebar-btn'} transition-colors`}
                         onClick={toggleUserMenu}>
                     <span className="w-6 h-6 rounded-full bg-blue-500 text-white text-sm grid place-content-center">
-                        {activeUser.username[0]}
+                        {user.username[0]}
                     </span>
-                    {activeUser.username}
+                    {user.username}
+                    <ChevronsUpDown size={18} className="ml-auto" />
                 </button>
             </div>
         </aside>
