@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { THEME_STATE, useTheme } from "../context/ThemeProvider"
+import { useTheme } from "../context/ThemeProvider"
 import { useAuth } from "../context/AuthContext"
 
 import Button from "../components/ui/Button"
@@ -11,7 +11,7 @@ const LoginPage = () => {
     const username = useRef('');
     const password = useRef('');
     const { login } = useAuth();
-    const { theme } = useTheme();
+    const { theme, themeState } = useTheme();
     const navigate = useNavigate();
     const [authError, setAuthError] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
@@ -68,7 +68,7 @@ const LoginPage = () => {
                         name='Log In' 
                         width='w-full'
                         onClick={onSubmit}
-                        dark={theme === THEME_STATE.DARK ? false : true} 
+                        dark={theme === themeState.DARK ? false : true} 
                         disabled={isDisabled} />
 
                 <p className="text-sm mt-4 text-[var(--color-Gray-400)]">Don't have an account?  
