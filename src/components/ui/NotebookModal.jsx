@@ -1,41 +1,40 @@
-import { useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
+
 import { X } from "lucide-react"
 import InputField from "./InputField"
 import Button from "./Button"
-import { THEME_STATE, useTheme } from "../../context/ThemeProvider"
-import { useDashboard } from "../../context/DashboardContext"
-import { useNotebooks } from "../../context/NotebookContext"
+
+import { useTheme } from "@/context/ThemeProvider"
+import { useDashboard } from "@/context/DashboardContext"
+import { useNotebooks } from "@/context/NotebookContext"
 
 const NotebookModal = () => {
+    const { theme, themeState } = useTheme();
     const modalRef = useRef();
-    const nameInputRef = useRef();
-    const { theme } = useTheme();
-    const { createNotebook, setActiveNotebook } = useNotebooks();
+    const titleRef = useRef();
+    const [titleState, setTitleState] = useState('idle');
+    const { createNotebook } = useNotebooks();
     const { notebookModalState, toggleNotebookModal } = useDashboard();
 
-    const addNotebook = () => {
-        if (!nameInputRef.current.value) {
+    const addNotebook = async () => {
+        if (!titleRef.current.value) {
+            setTitleState('invalid');
             return;
         };
 
-        const notebook = {
-            id: Date.now().toString(),
-            title: nameInputRef.current.value,
-            notes: []
-        };
-        createNotebook(notebook);
-        setActiveNotebook(notebook);
+        await createNotebook(titleRef.current.value);
         toggleNotebookModal();
     };
 
     useEffect(() => {
         if (notebookModalState) {
             modalRef.current.showModal();
-            nameInputRef.current.focus();
+            titleRef.current.focus();
         }
         else {
             modalRef.current.close();
-            nameInputRef.current.blur();
+            titleRef.current.blur();
+            setTitleState('idle');
         }
     }, [notebookModalState]);
 
@@ -51,12 +50,16 @@ const NotebookModal = () => {
                     onClick={toggleNotebookModal}>
                 <X size={20} />
             </button>
-            <InputField label='Name' placeholder='My Notebook' ref={nameInputRef}/>
+            <InputField label='Name' 
+                        placeholder='My Notebook' 
+                        ref={titleRef} 
+                        state={titleState} 
+                        onChange={() => setTitleState('idle')}/>
             <footer className="-mt-2 flex gap-2">
                 <Button name={'Create'} 
                         width='w-40' 
                         height='h-12' 
-                        dark={theme === THEME_STATE.DARK ? false : true} 
+                        dark={theme === themeState.DARK ? false : true} 
                         onClick={addNotebook}/>
             </footer>
         </dialog>   
