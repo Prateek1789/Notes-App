@@ -1,27 +1,28 @@
+import { useParams } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { useNotebooks } from "../../context/NotebookContext";
+import { useNotebooks } from "@/context/NotebookContext";
 
 const Breadcrumb = () => {
-    const { activeNotebook } = useNotebooks();
+    const { notebooks } = useNotebooks();
+    const { notebookId } = useParams();
+    const activeNotebook = notebooks.find(nb => nb.id === notebookId)?.title;
     const activeNote = false;
+
+    const breadCrumbLink = (linkName) => {
+        return (
+            <>
+            <ChevronRight size={18} /><span className="text-SBL-text">{linkName}</span>
+            </>
+        );
+    };
 
     return (
         <div className="flex items-center gap-2">
             <span className="text-SBL-text">
                 Dashboard
             </span>
-            { activeNotebook && (<>
-                                    <ChevronRight size={18} />
-                                    <span className="text-SBL-text">
-                                        {activeNotebook.title}
-                                    </span>
-                                </>) }
-            { activeNote && (<>
-                                <ChevronRight size={18} />
-                                <span className="text-SBL-text">
-                                    Geography
-                                </span>
-                            </>) }
+            { activeNotebook && breadCrumbLink(activeNotebook) }
+            { activeNote && breadCrumbLink(activeNote) }
         </div>
     );
 };
