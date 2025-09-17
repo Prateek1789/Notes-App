@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { NotebookTabs, Notebook } from "lucide-react";
-import { useNotebooks } from "../../context/NotebookContext";
+import { NotebookTabs, Notebook, ChevronDown } from "lucide-react";
+import { useNotebooks } from "@/context/NotebookContext";
 
 const NotebookCollapseMenu = () => {
-    const { notebooks, activeNotebook, setActiveNotebook } = useNotebooks();
+    const { notebooks } = useNotebooks();
     const [menuState, setMenuState] = useState(false);
     const navigate = useNavigate();
     const { notebookId } = useParams();
@@ -14,18 +14,19 @@ const NotebookCollapseMenu = () => {
     };
 
     const navigateTo = (id) => {
-        navigate(`/dashboard/notebook/${id}`);
-    }
+        navigate(`/dashboard/notebooks/${id}`);
+    };
 
     return (
-        <div className={`w-full min-h-12 grid ${menuState ? 'grid-rows-[3rem_auto] bg-SBL-hover' : 'grid-rows-1'} [grid-template-areas:'head'_'main'] rounded-lg  overflow-hidden transition-[height]`}>
+        <div className={`w-full min-h-12 grid ${menuState ? 'grid-rows-[3rem_auto] bg-SBL-hover' : 'grid-rows-1'} [grid-template-areas:'head'_'main'] rounded-lg  overflow-hidden`}>
             <button type="button"
                     className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors [grid-area:head]"
                     onClick={toggleMenu}>
                 <NotebookTabs size={18}/>
                 Notebooks
+                <ChevronDown size={18} className={`ml-auto translate-y-0.5 ${menuState && 'rotate-180'} !transition`}/>
             </button>
-            <ul className={`w-full h-full p-1 [grid-area:main] ${!menuState && 'hidden'}`}>
+            <ul className={`w-full h-full [grid-area:main] ${!menuState ? 'hidden' : 'block p-1'}`}>
                 {notebooks.map((notebook, idx) => {
                     return (
                         <li key={idx}>
@@ -37,10 +38,7 @@ const NotebookCollapseMenu = () => {
                                         name="notebook" 
                                         id={`NB-${notebook.id}`} 
                                         className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-1/2 hidden"
-                                        onChange={() => {
-                                            setActiveNotebook(notebook);
-                                            navigateTo(notebook.id);
-                                        }} 
+                                        onChange={() => navigateTo(notebook.id)} 
                                         checked={notebook.id == notebookId}/>
                             </label>
                         </li>)
