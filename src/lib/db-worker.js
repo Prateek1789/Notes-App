@@ -3,7 +3,7 @@ import Dexie from "dexie";
 const db = new Dexie('notoDB');
 
 db.version(1).stores({
-    users: 'id, username, email, password, dateCreated',  // id = userId (primary key), username/email indexed
+    users: 'id, username, email, password, dateCreated',
     notebooks: '++id, userId, title, createdOn',
     notes: '++id, notebookId, userId, title, content, createdOn, updatedOn',
     trash: '++id, userId, type, refId, deletedOn',
@@ -65,6 +65,13 @@ self.onmessage = async (e) => {
             break;
         
         case "updateNotebook":
+            await db.notebooks.update(payload.id, {
+                ...payload.changes,
+            });
+            result = { success: true };
+            break;
+
+        case "replaceNotebook":
             await db.notebooks.put(payload);
             result = { success: true };
             break;
@@ -75,14 +82,40 @@ self.onmessage = async (e) => {
             break;
 
         // ================= NOTES =================
+        case 'addNote':
+            await db.notes.add(payload);
+            result = { success: true, user: payload };
+            break;
+        
+        case "getNotesByNotebook":
+            result = await db.notes.where("notebookId").equals(payload.notebookId).toArray();
+            break;
+
+        case "updateNote":
+            await db.notes.update(payload.id, {
+                ...payload.changes,
+                updatedOn: new Date().toISOString(),
+            });
+            result = { success: true };
+            break;
+        
+        case "replaceNote":
+            await db.notes.put(payload);
+            result = { success: true };
+            break;
+
+        case "deleteNote":
+            await db.notes.delete(payload.id);
+            result = { success: true };
+            break;
   
         default:
           throw new Error(`Unknown action: ${action}`);
-        }
+        };
   
         self.postMessage({ action, result });
     } catch (err) {
         self.postMessage({ action, error: err.message });
-    }
-  };
+    };
+};
 
