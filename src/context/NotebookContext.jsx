@@ -32,8 +32,13 @@ export const NotebookProvider = ({ children }) => {
         setNotebooks(prev => [notebook, ...prev]);
     };
 
-    const updateNotebook = async (notebook) => {
-        await dbWorkerCall('updateNotebook', notebook);
+    const updateNotebook = async ({ id, changes }) => {
+        await dbWorkerCall('updateNotebook', { id, changes });
+        setNotebooks(prev => prev.map(nb => nb.id === id ? { ...nb, ...changes } : nb));
+    };
+
+    const replaceNotebook = async (notebook) => {
+        await dbWorkerCall("replaceNotebook", notebook);
         setNotebooks(prev => prev.map(nb => nb.id === notebook.id ? notebook : nb));
     };
 
