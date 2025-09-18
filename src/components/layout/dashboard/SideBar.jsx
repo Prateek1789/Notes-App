@@ -32,7 +32,7 @@ const SideBar = () => {
                         </button>
                     </li>
                     <li className="">
-                        <Link to={`/dashboard/notebook/${'quicknotes'}/note/${1}`}>
+                        <Link to={`/dashboard/notebooks/${'quicknotes'}/New`}>
                             <button type="button" 
                                     className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
                                 <Feather size={18} />
