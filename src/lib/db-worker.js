@@ -4,10 +4,10 @@ const db = new Dexie('notoDB');
 
 db.version(1).stores({
     users: 'id, username, email, password, dateCreated',
-    notebooks: '++id, userId, title, createdOn',
-    notes: '++id, notebookId, userId, title, content, createdOn, updatedOn',
-    trash: '++id, userId, type, refId, deletedOn',
-    session: ''
+    notebooks: 'id, userId, title, createdOn, isTrashed',
+    notes: 'id, notebookId, userId, title, content, plainText, createdOn, updatedOn, isTrashed',
+    trash: 'id, userId, type, refId, deletedOn',
+    session: 'key'
 });
 
 self.onmessage = async (e) => {
