@@ -23,13 +23,14 @@ export const NoteProvider = ({ children }) => {
         };
     };
 
-    const createNote = async ({ title, content, notebookId }) => {
+    const createNote = async ({ notebookId, content }) => {
         const note = {
             id: crypto.randomUUID(),
             notebookId, 
             userId: activeNotebook.userId,
-            title,
-            content,
+            title: content.title,
+            content: content.json,
+            plainText: content.text,
             createdOn: new Date().toISOString(),
             updatedOn: new Date().toISOString(),
             isTrashed: false,
@@ -50,12 +51,12 @@ export const NoteProvider = ({ children }) => {
 
     const trashNote = async ({ id }) => {
         await dbWorkerCall("updateNote", { id, changes: { isTrashed: true } });
-        setNotes(prev => prev.map(n => n.id === id ? { ...n, ...changes } : n));
+        setNotes(prev => prev.map(n => n.id === id ? { ...n, isTrashed: true } : n));
     };
 
     const restoreNote = async ({ id }) => {
         await dbWorkerCall('updateNote', { id, changes: { isTrashed: false } });
-        setNotes(prev => prev.map(n => n.id === id ? { ...n, ...changes } : n));
+        setNotes(prev => prev.map(n => n.id === id ? { ...n, isTrashed: false } : n));
     };
 
     const deleteNote = async (id) => {
