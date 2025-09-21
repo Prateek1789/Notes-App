@@ -82,9 +82,13 @@ self.onmessage = async (e) => {
             break;
 
         // ================= NOTES =================
-        case 'addNote':
+        case "addNote":
             await db.notes.add(payload);
             result = { success: true, user: payload };
+            break;
+        
+        case "getUserNotes":
+            result = await db.notes.where("userId").equals(payload.userId).toArray();
             break;
         
         case "getNotesByNotebook":
