@@ -8,7 +8,7 @@ const NoteCard = ({ notebookId, id, title, createdOn, text }) => {
     const displayText = `${text.slice(0, 300)}...`;
 
     const openNote = () => {
-        navigate(`dashboard/notebooks/${notebookId}/${id}`);
+        navigate(`${id}`);
     };
 
     return (
