@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useNotebooks } from "@/context/NotebookContext";
+import { useNotes } from "@/context/NoteContext";
+import NoteCard from "@/components/ui/NoteCard";
 
 import { Trash2, Check, Pencil, Plus, X, ChevronLeft } from "lucide-react";
 
@@ -12,7 +14,9 @@ const Notebook = () => {
     const [isEditing, setEditing] = useState(false);
     const titleRef = useRef();
     const newDate = new Date().toLocaleDateString([], { dateStyle: 'long' });
-    
+    const { notes } = useNotes();
+    const notesByNotebook = notes.filter(n => n.notebookId === activeNotebook.id);
+
     const handleDelete = async () => {
         await deleteNotebook(activeNotebook.id);
         navigate('/dashboard', { replace: true });
@@ -31,8 +35,8 @@ const Notebook = () => {
         setEditing(prev => !prev);
     };
 
-    const addNote = () => {
-        navigate(`/dashboard/notebooks/${notebookId}/New`);
+    const composeNote = () => {
+        navigate(`newNote`);
     };
 
     return (
@@ -47,13 +51,13 @@ const Notebook = () => {
                     </button>
                     { !isEditing ?  <h2 className="md:text-2xl text-center">{activeNotebook?.title}</h2> :
                                     <span className="flex gap-2 items-center">
-                                        <input type="text" 
-                                          name="nb-title" 
-                                          id="nb-title"
-                                          ref={titleRef}
-                                          defaultValue={activeNotebook?.title}
-                                          autoFocus
-                                          className="h-7 w-50 md:h-8 md:min-w-60 px-2 border border-border-line rounded-lg focus:ring-2 focus:outline-2 focus:ring-blue-600 focus:outline-blue-600" />
+                                        <input  type="text" 
+                                                name="nb-title" 
+                                                id="nb-title"
+                                                ref={titleRef}
+                                                defaultValue={activeNotebook?.title}
+                                                autoFocus
+                                                className="h-7 w-50 md:h-8 md:min-w-60 px-2 border border-border-line rounded-lg focus:ring-2 focus:outline-2 focus:ring-blue-600 focus:outline-blue-600" />
                                         <button type="button"
                                                 className="w-7 h-7 lg:w-8 lg:h-8 grid place-content-center rounded-lg border border-red-300 hover:border-red-500 !transition-colors"
                                                 aria-label="Cancel editing notebook title"
@@ -66,7 +70,7 @@ const Notebook = () => {
                     <button type="button" 
                             className="w-7 h-7 lg:w-8 lg:h-8 border border-border-line hover:border-blue-500 rounded-lg grid place-content-center"
                             aria-label="Add Note"
-                            onClick={addNote}>
+                            onClick={composeNote}>
                         <Plus size={18} aria-hidden={true} />
                     </button>
                     <button type="button" 
@@ -87,11 +91,13 @@ const Notebook = () => {
             <div className="w-full h-full px-4 lg:px-6 overflow-scroll">
                 <div className="w-full min-h-120 xl:min-h-140 flex flex-col">
                     <p className="date h-10 text-sm border-b border-border-line">{newDate}</p>
-                    <div className="note-container w-full h-full pt-6">
-                        {/* <button type="button"
-                                className="w-50 h-50 rounded-lg border border-border-line border-dashed grid place-content-center hover:border-blue-500 !transition-colors">
-                            <Plus size={30} />
-                        </button> */}
+                    <div className="note-container w-full h-full flex flex-wrap gap-4 pt-6">
+                        {notesByNotebook.map(n => <NoteCard key={n.id}
+                                                            notebookId={activeNotebook.id}
+                                                            id={n.id}
+                                                            title={n.title}
+                                                            createdOn={n.createdOn}
+                                                            text={n.plainText} />)}
                     </div>
                 </div>
             </div>
