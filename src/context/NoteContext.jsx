@@ -1,32 +1,27 @@
-import { useState, useEffect, createContext, useContext, useReducer } from "react";
-import { useParams } from "react-router-dom";
-import { useNotebooks } from "./NotebookContext";
+import { useState, useEffect, createContext, useContext} from "react";
+import { useAuth } from "./AuthContext";
 import { dbWorkerCall } from "@/lib/WorkerClient";
 
 const NoteContext = createContext();
 
 export const NoteProvider = ({ children }) => {
+    const { user } = useAuth();
     const [notes, setNotes] = useState([]);
-    const { notebooks } = useNotebooks();
-    const { notebookId } = useParams();
-    const activeNotebook = notebooks?.find(nb => nb.id === notebookId);
 
-    const getNotes = async () => {
-        if (activeNotebook) {
-            const result = await dbWorkerCall("getNotesByNotebook", { notebookId: activeNotebook.id });
-            result.sort((a, b) => {
-                const dateA = new Date(a.createdOn);
-                const dateB = new Date(b.createdOn);
-                return dateB - dateA;
-            });
-            if (result) setNotes(result);
-        };
+    const getAllNotes = async () => {
+        const result = await dbWorkerCall("getUserNotes", { userId: user.id });
+        result.sort((a, b) => {
+            const dateA = new Date(a.createdOn);
+            const dateB = new Date(b.createdOn);
+            return dateB - dateA
+        });
+        if (result) setNotes(result);
     };
 
-    const createNote = async ({ notebookId, content }) => {
+    const createNote = async (content) => {
         const note = {
             id: crypto.randomUUID(),
-            notebookId, 
+            notebookId: activeNotebook.id,
             userId: activeNotebook.userId,
             title: content.title,
             content: content.json,
@@ -65,7 +60,7 @@ export const NoteProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        getNotes();
+        getAllNotes();
     }, []);
 
     return (
@@ -84,21 +79,3 @@ export const NoteProvider = ({ children }) => {
 };
 
 export const useNotes = () => useContext(NoteContext);
-
-
-// const ACTIONS = { OPEN_NOTE: 'OPEN', BOOKMARK_NOTE: 'BOOKMARK' };
-/* export const useNotes = () => {
-    // const [state, dispatch] = useReducer(noteReducer, );
-    const { state, dispatch } = useContext(NoteContext);
-
-    if (!state) throw new Error('Note context must be used withing its Provider');
-
-    const createNote = (note) => dispatch({ type: ACTIONS.CREATE_NOTE, payload: note });
-    const updateNote = (info) => dispatch({ type: ACTIONS.UPDATE_NOTE, payload: info });
-    const deleteNote = (note) => dispatch({ type: ACTIONS.DELETE_NOTE, payload: note });
-    const trashNote = (note) => dispatch({ type: ACTIONS.TRASH_NOTE, payload: note });
-    const restoreNote = (note) => dispatch({ type: ACTIONS.RESTORE_NOTE, payload: note });
-    const bookmarkNote = (note) => dispatch({ type: ACTIONS.BOOKMARK_NOTE, payload: note });
-
-    return { state, createNote, updateNote, deleteNote }
-}; */
