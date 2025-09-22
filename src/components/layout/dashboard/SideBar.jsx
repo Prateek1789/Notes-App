@@ -17,7 +17,7 @@ const SideBar = () => {
 
     return (
         <aside className={`h-full ${sidebarState ? 'w-65' : 'w-0 p-0'} absolute z-20 xl:static border-r border-border-line bg-sidebar flex flex-col overflow-x-hidden !transition-[width]`}>
-            <div className="w-full h-20 px-4 flex items-center justify-between border-b border-border-line">
+            <div className="w-full h-16 md:h-20 px-4 flex items-center justify-between border-b border-border-line">
                 <span className="text-3xl">Noto</span>
                 <SidebarToggle modifier={'block xl:hidden'} />
             </div>
