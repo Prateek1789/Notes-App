@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext} from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { useAuth } from "./AuthContext";
 import { dbWorkerCall } from "@/lib/WorkerClient";
 
@@ -7,6 +7,8 @@ const NoteContext = createContext();
 export const NoteProvider = ({ children }) => {
     const { user } = useAuth();
     const [notes, setNotes] = useState([]);
+    const [activeNotes, setActiveNotes] = useState([]);
+    const [trashedNotes, setTrashedNotes] = useState([]);
 
     const getAllNotes = async () => {
         const result = await dbWorkerCall("getUserNotes", { userId: user.id });
@@ -15,14 +17,14 @@ export const NoteProvider = ({ children }) => {
             const dateB = new Date(b.createdOn);
             return dateB - dateA
         });
-        if (result) setNotes(result);
+        setNotes(result);
     };
 
-    const createNote = async (content) => {
+    const createNote = async (notebookId, content) => {
         const note = {
             id: crypto.randomUUID(),
-            notebookId: activeNotebook.id,
-            userId: activeNotebook.userId,
+            notebookId,
+            userId: user.id,
             title: content.title,
             content: content.json,
             plainText: content.text,
@@ -44,12 +46,12 @@ export const NoteProvider = ({ children }) => {
         setNotes(prev => prev.map(n => n.id === note.id ? note : n));
     };
 
-    const trashNote = async ({ id }) => {
+    const trashNote = async (id) => {
         await dbWorkerCall("updateNote", { id, changes: { isTrashed: true } });
         setNotes(prev => prev.map(n => n.id === id ? { ...n, isTrashed: true } : n));
     };
 
-    const restoreNote = async ({ id }) => {
+    const restoreNote = async (id) => {
         await dbWorkerCall('updateNote', { id, changes: { isTrashed: false } });
         setNotes(prev => prev.map(n => n.id === id ? { ...n, isTrashed: false } : n));
     };
@@ -63,9 +65,15 @@ export const NoteProvider = ({ children }) => {
         getAllNotes();
     }, []);
 
+    useEffect(() => {
+        setActiveNotes(notes.filter(n => n.isTrashed !== true));
+        setTrashedNotes(notes.filter(n => n.isTrashed === true));
+    }, [notes]);
+
     return (
         <NoteContext.Provider value={{ 
-            notes,
+            activeNotes,
+            trashedNotes,
             createNote,
             updateNote,
             replaceNote,
