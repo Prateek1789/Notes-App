@@ -4,7 +4,7 @@ import { NotebookTabs, Notebook, ChevronDown } from "lucide-react";
 import { useNotebooks } from "@/context/NotebookContext";
 
 const NotebookCollapseMenu = () => {
-    const { notebooks } = useNotebooks();
+    const { activeNB } = useNotebooks();
     const [menuState, setMenuState] = useState(false);
     const navigate = useNavigate();
     const { notebookId } = useParams();
@@ -27,7 +27,7 @@ const NotebookCollapseMenu = () => {
                 <ChevronDown size={18} className={`ml-auto translate-y-0.5 ${menuState && 'rotate-180'} !transition`}/>
             </button>
             <ul className={`w-full h-full [grid-area:main] ${!menuState ? 'hidden' : 'block p-1'}`}>
-                {notebooks.map((notebook, idx) => {
+                {activeNB.map((notebook, idx) => {
                     return (
                         <li key={idx}>
                             <label htmlFor={`NB-${notebook.id}`} 
