@@ -6,7 +6,9 @@ const NotebookContext = createContext();
 
 export const NotebookProvider = ({ children }) => {
     const { user } = useAuth();
-    const [notebooks, setNotebooks] = useState([]);
+    const [allNotebooks, setAllNotebooks] = useState([]);
+    const [activeNB, setActiveNB] = useState([]);
+    const [trashedNB, setTrashedNB] = useState([]);
 
     const getNotebooks = async () => {
         const result = await dbWorkerCall("getNotebooks", { userId: user.id });
@@ -16,7 +18,7 @@ export const NotebookProvider = ({ children }) => {
 
             return dateB - dateA;
         });
-        setNotebooks(result);
+        setAllNotebooks(result);
     };
 
     const createNotebook = async (title) => {
@@ -29,33 +31,52 @@ export const NotebookProvider = ({ children }) => {
         };
 
         await dbWorkerCall('addNotebook', notebook);
-        setNotebooks(prev => [notebook, ...prev]);
+        setAllNotebooks(prev => [notebook, ...prev]);
     };
 
     const updateNotebook = async ({ id, changes }) => {
         await dbWorkerCall('updateNotebook', { id, changes });
-        setNotebooks(prev => prev.map(nb => nb.id === id ? { ...nb, ...changes } : nb));
+        setAllNotebooks(prev => prev.map(nb => nb.id === id ? { ...nb, ...changes } : nb));
     };
 
     const replaceNotebook = async (notebook) => {
         await dbWorkerCall("replaceNotebook", notebook);
-        setNotebooks(prev => prev.map(nb => nb.id === notebook.id ? notebook : nb));
+        setAllNotebooks(prev => prev.map(nb => nb.id === notebook.id ? notebook : nb));
+    };
+
+    const restoreNotebook = async (id) => {
+        await dbWorkerCall('updateNotebook', { id, changes: { isTrashed: false } });
+        setAllNotebooks(prev => prev.map(nb => nb.id === id ? { ...nb, isTrashed: false } : nb));
+    };
+
+    const trashNotebook = async (id) => {
+        await dbWorkerCall("updateNotebook", { id, changes: { isTrashed: true } });
+        setAllNotebooks(prev => prev.map(nb => nb.id === id ? { ...nb, isTrashed: true } : nb));
     };
 
     const deleteNotebook = async (id) => {
         await dbWorkerCall('deleteNotebook', { id });
-        setNotebooks(prev => prev.filter(nb => nb.id !== id));
+        setAllNotebooks(prev => prev.filter(nb => nb.id !== id));
     };
 
     useEffect(() => {
         getNotebooks();
     }, [user]);
 
+    useEffect(() => {
+        setActiveNB(allNotebooks.filter(nb => nb.isTrashed !== true ));
+        setTrashedNB(allNotebooks.filter(nb => nb.isTrashed === true));
+    }, [allNotebooks]);
+
     return (
         <NotebookContext.Provider value={{ 
-            notebooks, 
+            activeNB,
+            trashedNB, 
             createNotebook, 
-            updateNotebook, 
+            updateNotebook,
+            replaceNotebook,
+            trashNotebook,
+            restoreNotebook, 
             deleteNotebook, 
         }}>
             { children }
