@@ -7,18 +7,18 @@ import NoteCard from "@/components/ui/NoteCard";
 import { Trash2, Check, Pencil, Plus, X, ChevronLeft } from "lucide-react";
 
 const Notebook = () => {
-    const { notebooks, updateNotebook, deleteNotebook } = useNotebooks();
+    const { activeNB, updateNotebook, deleteNotebook } = useNotebooks();
     const { notebookId } = useParams();
     const navigate = useNavigate();
-    const activeNotebook = notebooks.find(nb => nb.id === notebookId);
+    const currentNotebook = activeNB.find(nb => nb.id === notebookId);
     const [isEditing, setEditing] = useState(false);
     const titleRef = useRef();
     const newDate = new Date().toLocaleDateString([], { dateStyle: 'long' });
-    const { notes } = useNotes();
-    const notesByNotebook = notes.filter(n => n.notebookId === activeNotebook.id);
+    const { activeNotes } = useNotes();
+    const notesByNotebook = activeNotes.filter(n => n.notebookId === currentNotebook.id);
 
     const handleDelete = async () => {
-        await deleteNotebook(activeNotebook.id);
+        await deleteNotebook(currentNotebook.id);
         navigate('/dashboard', { replace: true });
     };
 
@@ -28,7 +28,7 @@ const Notebook = () => {
 
     const handleUpdate = async () => {
         const update = {
-            id: activeNotebook.id,
+            id: currentNotebook.id,
             changes: { title: titleRef.current.value }
         };
         await updateNotebook(update);
@@ -36,7 +36,7 @@ const Notebook = () => {
     };
 
     const composeNote = () => {
-        navigate(`newNote`);
+        navigate(`NewNote`);
     };
 
     return (
@@ -49,13 +49,13 @@ const Notebook = () => {
                             onClick={() => navigate(-1)}>
                         <ChevronLeft size={18} aria-hidden={true} />
                     </button>
-                    { !isEditing ?  <h2 className="md:text-2xl text-center">{activeNotebook?.title}</h2> :
+                    { !isEditing ?  <h2 className="md:text-2xl text-center">{currentNotebook?.title}</h2> :
                                     <span className="flex gap-2 items-center">
                                         <input  type="text" 
                                                 name="nb-title" 
                                                 id="nb-title"
                                                 ref={titleRef}
-                                                defaultValue={activeNotebook?.title}
+                                                defaultValue={currentNotebook?.title}
                                                 autoFocus
                                                 className="h-7 w-50 md:h-8 md:min-w-60 px-2 border border-border-line rounded-lg focus:ring-2 focus:outline-2 focus:ring-blue-600 focus:outline-blue-600" />
                                         <button type="button"
@@ -92,12 +92,7 @@ const Notebook = () => {
                 <div className="w-full min-h-120 xl:min-h-140 flex flex-col">
                     <p className="date h-10 text-sm border-b border-border-line">{newDate}</p>
                     <div className="note-container w-full h-full flex flex-wrap gap-4 pt-6">
-                        {notesByNotebook.map(n => <NoteCard key={n.id}
-                                                            notebookId={activeNotebook.id}
-                                                            id={n.id}
-                                                            title={n.title}
-                                                            createdOn={n.createdOn}
-                                                            text={n.plainText} />)}
+                        {notesByNotebook.map(n => <NoteCard key={n.id} note={n} />)}
                     </div>
                 </div>
             </div>
