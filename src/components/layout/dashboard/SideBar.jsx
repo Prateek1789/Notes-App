@@ -4,7 +4,7 @@ import { useAuth } from "../../../context/AuthContext"
 import { useDashboard } from "../../../context/DashboardContext"
 import SidebarToggle from "../../ui/SidebarToggle"
 import NotebookCollapseMenu from "../../ui/NotebookCollapsMenu"
-import { Search, Trash2, Plus, Feather, LogOut, Settings, ChevronsUpDown } from "lucide-react"
+import { Search, LayoutPanelLeft, CirclePlus, Trash2, LogOut, Settings, ChevronsUpDown } from "lucide-react"
 
 const SideBar = () => {
     const [userMenu, setUserMenu] = useState(false);
@@ -32,11 +32,11 @@ const SideBar = () => {
                         </button>
                     </li>
                     <li className="">
-                        <Link to={`/dashboard/notebooks/${'quicknotes'}/New`}>
+                        <Link to={"/dashboard"}>
                             <button type="button" 
                                     className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
-                                <Feather size={18} />
-                                Quick Note
+                                <LayoutPanelLeft size={18} />
+                                Dashboard
                             </button>
                         </Link>
                     </li>
@@ -44,17 +44,18 @@ const SideBar = () => {
                         <button type="button" 
                                 className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
                                 onClick={toggleNotebookModal}>
-                            <Plus size={18} />
+                            <CirclePlus size={18} />
                             Add Notebook
                         </button>
                     </li>
                     <li className="">
-                        <button type="button" 
-                                className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
-                                onClick={() => {}}>
-                            <Trash2 size={18} />
-                            Trash
-                        </button>
+                        <Link to={"/dashboard/trash"}>
+                            <button type="button" 
+                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
+                                <Trash2 size={18} />
+                                Trash
+                            </button>
+                        </Link>
                     </li>
                     <li>
                         <NotebookCollapseMenu />
