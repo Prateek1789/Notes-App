@@ -14,3 +14,7 @@ header { grid-area: header; }
 aside { grid-area: sidebar; }
 
 main { grid-area: main; }
+
+@media (max-width: 47.9rem ) {
+    .container { grid-template-rows: 4rem calc(100vh - 4rem); }
+}
