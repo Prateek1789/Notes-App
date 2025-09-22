@@ -1,13 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { SquareArrowOutUpRight, Trash2 } from "lucide-react";
+import { useNotebooks } from "@/context/NotebookContext";
 
 const NotebookCard = ({ id, title, createdOn }) => {
+    const { deleteNotebook } = useNotebooks();
     const navigate = useNavigate();
     const date = new Date(createdOn).toLocaleDateString([], { dateStyle: 'medium' });
     const time = new Date(createdOn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'});
     
     const openNotebook = () => {
         navigate(`/dashboard/notebooks/${id}`);
+    };
+
+    const handleDelete = async () => {
+        await deleteNotebook(id);
     };
 
     return (
@@ -27,7 +33,8 @@ const NotebookCard = ({ id, title, createdOn }) => {
                 </button>
                 <button type="button"
                         className="w-10 h-10 bg-red-400 border border-red-500 hover:bg-red-500 flex items-center justify-center gap-2 rounded-lg !transition-colors"
-                        aria-label={`Delete ${title}`}>
+                        aria-label={`Delete ${title}`}
+                        onClick={handleDelete}>
                     <Trash2 size={18} color="white" aria-hidden={true} />
                 </button>
             </div>
