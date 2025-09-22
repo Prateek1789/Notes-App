@@ -5,7 +5,7 @@ const NotoDashboard = () => {
     const { activeNB } = useNotebooks();
 
     return (
-        <section className="w-full h-full [grid-area:_main] gird grid-cols-1 grid-rows-2">
+        <section className="w-full h-full gird grid-cols-1 grid-rows-2">
             <section className="quick-notes w-full h-1/2 flex flex-col p-4 gap-4">
                 <span className="text-2xl"></span>
                 <div className="w-full h-full flex items-center justify-center text-2xl border-border-line rounded-xl">Quick Notes</div>
