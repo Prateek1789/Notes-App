@@ -25,10 +25,11 @@ const NotebookCard = ({ nb }) => {
     };
 
     return (
-        <div data-nb-id={nb.id}
-             className="nb-card w-full max-w-92 h-50 p-4 flex flex-col justify-between bg-card dark:border  border-border-line rounded-xl shadow-xl">
+        <article aria-labelledby={`notebook-title`}
+                 data-nb-id={nb.id}
+                 className="nb-card w-full max-w-92 h-50 p-4 flex flex-col justify-between bg-card dark:border  border-border-line rounded-xl shadow-xl">
             <span className="flex flex-col gap-1">
-                <h4>{nb.title}</h4>
+                <h4 id="note-title">{nb.title}</h4>
                 <p className="text-xs text-SBL-text">{`${date} • ${time}`}</p>
             </span>
             <div className="flex items-center justify-between">
@@ -59,7 +60,7 @@ const NotebookCard = ({ nb }) => {
                 )}
                 </span>
             </div>
-        </div>
+        </article>
     )
 };
 NotebookCard.displayName = 'NotebookCard';
