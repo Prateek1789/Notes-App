@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useNotebooks } from "@/context/NotebookContext";
 import { useNotes } from "@/context/NoteContext";
@@ -13,9 +13,28 @@ const Notebook = () => {
     const currentNotebook = activeNB.find(nb => nb.id === notebookId);
     const [isEditing, setEditing] = useState(false);
     const titleRef = useRef();
-    const newDate = new Date().toLocaleDateString([], { dateStyle: 'long' });
     const { activeNotes } = useNotes();
-    const notesByNotebook = activeNotes.filter(n => n.notebookId === currentNotebook.id);
+
+    const notesByNotebook = useMemo(() => {
+        return activeNotes.filter(n => n.notebookId === currentNotebook.id);
+    }, [activeNotes, currentNotebook?.id]);
+    
+    const groupedNotes = useMemo(() => {
+        const groups = notesByNotebook.reduce((acc, note) => {
+            const dateKey = new Date(note.createdOn).toLocaleDateString([], { dateStyle: 'long' });
+            if (!acc[dateKey]) acc[dateKey] = [];
+
+            acc[dateKey].push(note);
+            return acc;
+        }, {});
+
+        if (Object.keys(groups).length === 0) {
+            const today = new Date().toLocaleDateString([], { dateStyle: 'long' })
+            groups[today] = [];
+        };
+
+        return groups;
+    }, [notesByNotebook]);
 
     const handleDelete = async () => {
         await deleteNotebook(currentNotebook.id);
@@ -88,13 +107,24 @@ const Notebook = () => {
                     </button>
                 </span>
             </nav>
-            <div className="w-full h-full px-4 lg:px-6 overflow-scroll">
-                <div className="w-full min-h-120 xl:min-h-140 flex flex-col">
-                    <p className="date h-10 text-sm border-b border-border-line">{newDate}</p>
-                    <div className="note-container w-full h-full flex flex-wrap gap-4 pt-6">
-                        {notesByNotebook.map(n => <NoteCard key={n.id} note={n} />)}
-                    </div>
-                </div>
+            <div className="w-full h-full px-4 lg:px-6 relative overflow-scroll">
+                {Object.entries(groupedNotes).map(([date, notes]) => {
+                    return (
+                        <div key={date} 
+                             className="note-group w-full h-auto lg:min-h-110 flex flex-col pb-10">
+                            <h3 className="date h-8 md:h-10 text-sm border-b border-border-line">{date}</h3>
+                            <div className="note-container w-full h-full flex flex-wrap gap-4 pt-4 md:pt-6">
+                                {notes.length === 0 ? (
+                                    <p className="absolute left-1/2 translate-x-[-50%] top-[50%] text-SBL-text text-center text-sm">
+                                            No notes yet. Click on "<span className="text-blue-500">+</span>" to add Note.
+                                    </p>
+                                ) : (
+                                    notes.map(n => <NoteCard key={n.id} note={n} />)
+                                )}
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );
