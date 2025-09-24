@@ -2,19 +2,20 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { NotebookTabs, Notebook, ChevronDown } from "lucide-react";
 import { useNotebooks } from "@/context/NotebookContext";
+import { useDashboard } from "@/context/DashboardContext";
 
 const NotebookCollapseMenu = () => {
+    const { isMobile, sidebarState, toggleSidebar } = useDashboard();
     const { activeNB } = useNotebooks();
-    const [menuState, setMenuState] = useState(false);
-    const navigate = useNavigate();
     const { notebookId } = useParams();
+    const navigate = useNavigate();
+    const [menuState, setMenuState] = useState(true);
 
-    const toggleMenu = () => {
-        setMenuState(prev => !prev);
-    };
-
+    const toggleMenu = () => setMenuState(prev => !prev);
+    
     const navigateTo = (id) => {
         navigate(`/dashboard/notebooks/${id}`);
+        if (isMobile && sidebarState) toggleSidebar();
     };
 
     return (
