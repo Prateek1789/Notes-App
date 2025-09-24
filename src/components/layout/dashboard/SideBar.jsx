@@ -8,7 +8,14 @@ import { Search, LayoutPanelLeft, CirclePlus, Trash2, LogOut, Settings, Chevrons
 
 const SideBar = () => {
     const [userMenu, setUserMenu] = useState(false);
-    const { sidebarState, toggleNotebookModal, toggleSearchMenu, toggleSettingMenu } = useDashboard();
+    const { 
+        isMobile, 
+        sidebarState, 
+        toggleSidebar, 
+        toggleSearchMenu,
+        toggleNotebookModal, 
+        toggleSettingMenu 
+    } = useDashboard();
     const { user, logout } = useAuth();
 
     const toggleUserMenu = () => {
@@ -34,7 +41,8 @@ const SideBar = () => {
                     <li className="">
                         <Link to={"/dashboard"}>
                             <button type="button" 
-                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
+                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
+                                    onClick={isMobile ? toggleSidebar : undefined}>
                                 <LayoutPanelLeft size={18} />
                                 Dashboard
                             </button>
@@ -49,16 +57,17 @@ const SideBar = () => {
                         </button>
                     </li>
                     <li className="">
+                        <NotebookCollapseMenu />
+                    </li>
+                    <li className="">
                         <Link to={"/dashboard/trash"}>
                             <button type="button" 
-                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors">
+                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
+                                    onClick={isMobile ? toggleSidebar : undefined}>
                                 <Trash2 size={18} />
                                 Trash
                             </button>
                         </Link>
-                    </li>
-                    <li>
-                        <NotebookCollapseMenu />
                     </li>
                 </ul>
             </div>
