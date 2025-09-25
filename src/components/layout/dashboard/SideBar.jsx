@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../../context/AuthContext"
 import { useDashboard } from "../../../context/DashboardContext"
 import SidebarToggle from "../../ui/SidebarToggle"
@@ -17,9 +17,15 @@ const SideBar = () => {
         toggleSettingMenu 
     } = useDashboard();
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     const toggleUserMenu = () => {
         setUserMenu(prev => !prev);
+    };
+
+    const handleNavigation = (path) => {
+        navigate(path);
+        if (isMobile) toggleSidebar();
     };
 
     return (
@@ -39,14 +45,12 @@ const SideBar = () => {
                         </button>
                     </li>
                     <li className="">
-                        <Link to={"/dashboard"}>
-                            <button type="button" 
-                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
-                                    onClick={isMobile ? toggleSidebar : undefined}>
-                                <LayoutPanelLeft size={18} />
-                                Dashboard
-                            </button>
-                        </Link>
+                        <button type="button" 
+                                className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
+                                onClick={() => handleNavigation("/dashboard")}>
+                            <LayoutPanelLeft size={18} />
+                            Dashboard
+                        </button>
                     </li>
                     <li className="">
                         <button type="button" 
@@ -60,14 +64,12 @@ const SideBar = () => {
                         <NotebookCollapseMenu />
                     </li>
                     <li className="">
-                        <Link to={"/dashboard/trash"}>
-                            <button type="button" 
-                                    className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
-                                    onClick={isMobile ? toggleSidebar : undefined}>
-                                <Trash2 size={18} />
-                                Trash
-                            </button>
-                        </Link>
+                        <button type="button" 
+                                className="w-full h-12 rounded-lg px-2 flex items-center gap-2 cursor-pointer hover:text-button-text-1 hover:bg-sidebar-btn transition-colors"
+                                onClick={() => handleNavigation("/dashboard/trash")}>
+                            <Trash2 size={18} />
+                            Trash
+                        </button>
                     </li>
                 </ul>
             </div>
