@@ -1,15 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useNotes } from "@/context/NoteContext";
 import { Trash2, SquareArrowOutUpRight, RefreshCcw } from "lucide-react";
 
 const NoteCard = ({ note }) => {
     const { trashNote, restoreNote, deleteNote } = useNotes();
     const navigate = useNavigate();
+    const { notebookId } = useParams();
     const date = new Date(note.createdOn).toLocaleDateString([], { dateStyle: 'medium' });
     const time = new Date(note.createdOn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const displayText = window.innerWidth < 768 ? `${note.plainText.slice(0, 150)}...` : `${note.plainText.slice(0, 300)}...`;
 
-    const openNote = () => navigate(`${note.id}`);
+    const openNote = () => notebookId ? navigate(`${note.id}`) : navigate(`notebooks/${note.notebookId}/${note.id}`);
     const handleTrashNote = async () => await trashNote(note.id);
     const handleRestore = async () => await restoreNote(note.id);
     const handleDelete = async () => await deleteNote(note.id);
@@ -35,13 +36,13 @@ const NoteCard = ({ note }) => {
                 )}
                 <span className="flex items-center gap-2 ml-auto">
                     <button type="button"
-                            className="w-8 h-8 bg-red-400 hover:bg-red-500 rounded-lg border border-red-500 grid place-content-center"
+                            className="w-10 h-10 bg-red-400 hover:bg-red-500 rounded-lg border border-red-500 grid place-content-center"
                             onClick={!note.isTrashed ? handleTrashNote : handleRestore}>
                         {!note.isTrashed ? <Trash2 size={18} color="white" /> : <RefreshCcw size={18} color="white" />}
                     </button>
                     {note.isTrashed && (
                         <button type="button"
-                                className="w-8 h-8 bg-red-400 hover:bg-red-500 rounded-lg border border-red-500 grid place-content-center"
+                                className="w-10 h-10 bg-red-400 hover:bg-red-500 rounded-lg border border-red-500 grid place-content-center"
                                 onClick={handleDelete}>
                             <Trash2 size={18} color="white" />
                         </button>
