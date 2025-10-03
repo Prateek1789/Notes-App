@@ -1,63 +1,22 @@
 import { useState, useEffect } from "react";
-import { getAppData } from "../utils/Storage"
+import { useAuth } from "@/context/AuthContext";
 
-const useLogin = (username, password, attempt) => {
+const useLogin = async (username, password, attempt) => {
     const delay = 500;
-    const [commonError, setCommonError] = useState('');
-    const [uniqueError, setUniqueError] = useState({username: '', password: ''});
     const [success, setSuccess] = useState(false);
-    const [activeUser, setActiveUser] = useState({});
+    const { login } = useAuth();
+
+    const userFound = await login(username, password);
 
     useEffect(() => {
         if (!attempt) {
-            setUniqueError({username: '', password: ''});
-            setCommonError('');
-            setSuccess(false);
-            return;
-        }
-        if (!username && !password) {
-            setCommonError('Username and Password are required');
-            setUniqueError({username: '', password: ''});
-            setSuccess(false);
-            return;
-        }
-        if (!username) {
-            setUniqueError(prev => ({...prev, username: 'Username is required'}));
-            setCommonError('');
-            setSuccess(false);
-            return;
-        }
-        if (!password) {
-            setUniqueError(prev => ({...prev, password: 'Password is required'}));
-            setCommonError('');
             setSuccess(false);
             return;
         }
 
-        const timer = setTimeout(() => {
-            const appData = getAppData();
-            const userFound = Object.values(appData.users).find(u => u.username === username && u.password === password);
-
-            if (!userFound) {
-                setCommonError('Incorrect Username or Password');
-                setUniqueError({username: '', password: ''});
-                setSuccess(false);
-                return;
-            }
-
-            if (userFound){
-                setCommonError('');
-                setUniqueError({username: '', password: ''});
-                setActiveUser(userFound);
-                setSuccess(true);
-                return;
-            };
-        }, delay);
-
-        return () => clearTimeout(timer);
     }, [attempt]);
 
-    return [uniqueError, commonError, success, activeUser];
+    return [success];
 };
 
 export default useLogin
