@@ -9,7 +9,7 @@ import InputField from "../components/ui/InputField"
 import Password from "../components/ui/PasswordField"
 
 const SignupPage = () => {
-    const { theme, themeState } = useTheme();
+    const { theme } = useTheme();
     const { register } = useAuth();
     const navigate = useNavigate();
     const delay = 1000;
@@ -113,7 +113,7 @@ const SignupPage = () => {
                     name='Create Account' 
                     width='w-full'
                     onClick={handleSubmit}
-                    dark={theme === themeState.DARK ? false : true} 
+                    dark={theme === "dark" ? false : true} 
                     disabled={!formData.username || !formData.email || !formData.password || !formData.confirmPassword} />
 
             <p className="text-sm mt-4 text-[var(--color-Gray-400)]">Already have an account?
