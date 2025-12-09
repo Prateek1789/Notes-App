@@ -5,7 +5,7 @@ import HeroImageLight from '@/assets/Noto-Light.png'
 import Button from '@/components/ui/Button'
 
 const HeroSection = () => {
-    const { theme, themeState } = useTheme();
+    const { theme } = useTheme();
     const getHeroImage = () => theme === themeState.DARK ? HeroImageDark : HeroImageLight;
 
     return (
@@ -21,7 +21,7 @@ const HeroSection = () => {
                                 name='Get Started' 
                                 width={'w-40 md:w-60'} 
                                 height='h-10 md:h-12' 
-                                dark={theme === themeState.DARK ? false : true} />
+                                dark={theme === "dark" ? false : true} />
                     </Link>
                 </div>
                 <div className='img-container w-full max-w-[90rem] max-h-[45vh] relative md:rounded-tl-2xl md:rounded-tr-2xl lg:rounded-tl-3xl lg:rounded-tr-3xl xl:rounded-tl-4xl xl:rounded-tr-4xl overflow-hidden mask-b-from-3.5 md:border md:border-border-line'>
