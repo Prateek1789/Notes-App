@@ -11,7 +11,7 @@ const LoginPage = () => {
     const username = useRef('');
     const password = useRef('');
     const { login } = useAuth();
-    const { theme, themeState } = useTheme();
+    const { theme } = useTheme();
     const navigate = useNavigate();
     const [authError, setAuthError] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
@@ -68,7 +68,7 @@ const LoginPage = () => {
                         name='Log In' 
                         width='w-full'
                         onClick={onSubmit}
-                        dark={theme === themeState.DARK ? false : true} 
+                        dark={theme === "dark" ? false : true} 
                         disabled={isDisabled} />
 
                 <p className="text-sm mt-4 text-[var(--color-Gray-400)]">Don't have an account?  
