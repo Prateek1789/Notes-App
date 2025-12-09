@@ -4,24 +4,26 @@ import { getTheme, saveTheme } from '../utils/Storage';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-    const dark = "dark";
-    const light = "light";
     const savedTheme = getTheme();
     const [theme, setTheme] = useState(savedTheme);
 
+    const applyTheme = () => {
+        const isDark = theme === "system" 
+            ? window.matchMedia('(prefers-color-scheme: dark)').matches 
+            : theme === "dark";
+        document.documentElement.classList.toggle('dark', isDark);
+    };
+
     useEffect(() => {
-        document.documentElement.classList.toggle('dark', theme === dark);
+        applyTheme();
         saveTheme(theme);
-    }, [theme]);
 
-    useEffect(() => {
+        if (theme !== "system") return;
+
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        const handler = (e) => e.matches ? setTheme(dark) : setTheme(light);
-
-        mediaQuery.addEventListener('change', handler);
-        return () => mediaQuery.removeEventListener('change', handler);
-    }, []);
+        mediaQuery.addEventListener('change', applyTheme);
+        return () => mediaQuery.removeEventListener('change', applyTheme);
+    }, [theme]);
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>
