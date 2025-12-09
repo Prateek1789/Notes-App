@@ -9,7 +9,7 @@ import { useDashboard } from "@/context/DashboardContext"
 import { useNotebooks } from "@/context/NotebookContext"
 
 const NotebookModal = () => {
-    const { theme, themeState } = useTheme();
+    const { theme } = useTheme();
     const modalRef = useRef();
     const titleRef = useRef();
     const [titleState, setTitleState] = useState('idle');
@@ -59,7 +59,7 @@ const NotebookModal = () => {
                 <Button name={'Create'} 
                         width='w-40' 
                         height='h-12' 
-                        dark={theme === themeState.DARK ? false : true} 
+                        dark={theme === "dark" ? false : true} 
                         onClick={addNotebook}/>
             </footer>
         </dialog>   
