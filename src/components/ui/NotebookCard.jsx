@@ -27,7 +27,7 @@ const NotebookCard = ({ nb }) => {
     return (
         <article aria-labelledby={`notebook-title`}
                  data-nb-id={nb.id}
-                 className="nb-card w-full md:w-[calc((100%/2)-0.5rem)] lg:w-[calc((100%/4)-0.5rem)] h-35 md:h-40 p-4 flex flex-col justify-between bg-card dark:border  border-border-line rounded-xl shadow-xl">
+                 className="nb-card w-full md:w-[calc((100%/2)-0.5rem)] lg:w-[calc((100%/3)-0.5rem)] xl:w-[calc((100%/4)-0.5rem)] h-35 md:h-40 p-4 flex flex-col justify-between bg-card dark:border  border-border-line rounded-xl shadow-xl">
             <span className="flex flex-col gap-1">
                 <h4 id="note-title">{nb.title}</h4>
                 <p className="text-xs text-SBL-text">{`${date} • ${time}`}</p>
