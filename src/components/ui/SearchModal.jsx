@@ -20,8 +20,6 @@ const SearchModal = () => {
         setQuery(searchBarRef.current.value);
     };
 
-    const openNote = () => notebookId ? navigate(`${note.id}`) : navigate(`/notebooks/${note.notebookId}/${note.id}`);
-
     const handleKeydown = (e) => {
         if (!searchMenuState) {
             return;
@@ -82,23 +80,25 @@ const SearchModal = () => {
                            onChange={handleQuery} />
             </header>
             <section className="h-full w-full px-2 pt-1 pb-2 flex flex-col items-center rounded-xl overflow-scroll">
-                {result.map((item, idx) => {
-                    return (
-                        <Link key={idx} 
-                              className="h-12 w-full px-3 flex items-center gap-3 rounded-xl cursor-pointer hover:bg-sidebar-btn focus:bg-sidebar-btn focus:outline-2 focus:ring-blue-600 focus:outline-blue-600"
-                              ref={el => linkRefs.current[idx] = el}
-                              to={notebookId ? `${item.id}` : `dashboard/notebooks/${item.notebookId}/${item.id}`}
-                              onClick={toggleSearchMenu}>
-                            <Zap size={16} color="oklch(62.3% 0.214 259.815)" />
-                            {item.plainText?.length > 70 ? `${item.plainText?.slice(0, 40).trim()}...` : item.plainText}
-                        </Link>
-                    )
-                })}
+                {!result.length > 0 ? <p className="text-sm md:text-base text-SBL-text m-auto">No Notes found.</p> : 
+                                      result.map((item, idx) => {
+                                          return (
+                                              <Link key={idx} 
+                                                    className="h-12 w-full px-3 flex items-center gap-3 rounded-xl cursor-pointer hover:bg-sidebar-btn focus:bg-sidebar-btn focus:outline-2 focus:ring-blue-600 focus:outline-blue-600"
+                                                    ref={el => linkRefs.current[idx] = el}
+                                                    to={notebookId ? `${item.id}` : `dashboard/notebooks/${item.notebookId}/${item.id}`}
+                                                    onClick={toggleSearchMenu}>
+                                                    <Zap size={16} color="oklch(62.3% 0.214 259.815)" />
+                                                    {item.plainText?.length > 70 ? `${item.plainText?.slice(0, 40).trim()}...` : item.plainText}
+                                              </Link>
+                                          )
+                                      })
+                }
             </section>
             <button type="button"
-                        className="absolute right-[0.75rem] bottom-[0.75rem] rounded-full cursor-pointer"
-                        onClick={toggleSearchMenu}>
-                    <X size={20} />
+                    className="absolute right-[0.75rem] bottom-[0.75rem] rounded-full cursor-pointer"
+                    onClick={toggleSearchMenu}>
+                <X size={20} />
             </button>
         </dialog>
     );
