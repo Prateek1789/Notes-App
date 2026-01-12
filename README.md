@@ -1,12 +1,19 @@
-# React + Vite
+# Noto - A simple Notes App made with HTML, CSS and JS  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Design preview for Noto notes app](./src/assets/Noto-dark.png)    
 
-Currently, two official plugins are available:
+# Live Preview  
+[Noto - Notes App](https://prateek1789.github.io/Notes-App/) 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# App Features
 
-## Expanding the ESLint configuration
+Noto is a part of my practice projects to sharpen my knowledge. Noto features:-
+- Basic CRUD opertaions   
+- Soft delete and Hard delete   
+- Bookmark/Star notes   
+- View notes based on four main tags: All Notes, Bookmarks, Work, Personal  
+- Sort Notes based on two options: Newest first or Oldest First    
+- Tab aware Search for notes by Title, Content, Tags    
+- Dashboard tab/folder for all active notes and Trash tab/folder for notes that are trashed(Soft delete)    
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Noto, being a Frontend project, currently uses Browsers local storage to store notes and does not have an actual backend.
