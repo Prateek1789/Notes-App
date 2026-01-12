@@ -5,7 +5,7 @@ import { X, CircleUserRound, SunMoon, HardDrive } from "lucide-react"
 import InputField from "./InputField"
 
 const SettingsModal = () => {
-    const { activeUser } = useAuth();
+    const { user } = useAuth();
     const settingsRef = useRef();
     const [isEditing, setEditing] = useState(false);
     const { settingMenuState, toggleSettingMenu } = useDashboard();
@@ -58,7 +58,7 @@ const SettingsModal = () => {
                         <li className="py-4 border-b border-border-line">
                             <div className="flex flex-col gap-2">
                                 <span className="text-sm">Username</span>
-                                <span className="text-lg">{activeUser.username}</span>
+                                <span className="text-lg">{user.username}</span>
                             </div>
                         </li>
                         <li className="py-4 border-b border-border-line">
