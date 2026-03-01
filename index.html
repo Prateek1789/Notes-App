@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteFlow - Evolution</title>
+    <meta name="author" content="Prateek Panta">
+    <meta name="description" content="A landing page for my Notes App Monorepo which allows visitors to navigate between all three versions of NoteFLow">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <div class="logo-container">
+                <span class="logo-img">
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                         width="16" 
+                         height="16" 
+                         viewBox="0 0 24 24" 
+                         fill="none" 
+                         stroke="#ffffff" 
+                         stroke-width="2" 
+                         stroke-linecap="round" 
+                         stroke-linejoin="round" 
+                         class="lucide lucide-layers-icon lucide-layers"
+                         aria-hidden="true">
+                        <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/>
+                        <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>
+                    </svg>
+                </span>
+                <span class="logo-text">NoteFLow.repo</span>
+            </div>
+            <a href="https://github.com/Prateek1789/Notes-App" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                     width="16" 
+                     height="16" 
+                     viewBox="0 0 24 24" 
+                     fill="none" 
+                     stroke="" 
+                     stroke-width="2" 
+                     stroke-linecap="round" 
+                     stroke-linejoin="round" 
+                     class="lucide lucide-github-icon lucide-github"
+                     aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                View Monorepo
+            </a>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="info">
+                <h1 class="hero-heading">One App.<br/>Three Architectures.</h1>
+                <p class="hero-para">
+                    A progressive showcase of modern web development. Watch a simple notes application evolve from plain HTML/JS into a robust Next.js application, exploring the trade-offs and benefits of each stack along the way.
+                </p>
+                <div class="hero-sub-info">
+                    <div class="">
+                        <div class="dot dot-green" aria-hidden="true"></div>
+                        3 Versions
+                    </div>
+                    <div class="">
+                        <div class="dot dot-blue" aria-hidden="true"></div>
+                        1 Monorepo
+                    </div>
+                </div>
+            </div>
+            <div class="card-container">
+
+                <!-- Vanilla JS App card -->
+                <article class="app-version-card card-vanilla" aria-labelledby="card-heading-vanilla">
+                    <header class="card-header">
+                        <div class="card-img vanilla">
+                            <img src="./asset/javascript.svg" alt="javascript icon">
+                        </div>
+                        <h2 id="card-heading-vanilla" class="card-heading">
+                            Vanilla
+                            <span class="version">v0</span>
+                        </h2>
+                        <p class="card-para">
+                            The foundation. Built with pure HTML, CSS, and Vanilla JavaScript. No build steps, no frameworks.
+                        </p>
+                    </header>
+                    <footer class="card-footer">
+                        <div class="tech-stack">
+                            <h3>TECH STACK</h3>
+                            <div class="tag-container">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">Vanilla JS</span>
+                                <span class="tech-tag">Local Storage</span>
+                            </div>
+                        </div>
+                        <div class="card-link-container">
+                            <a href="./v0-Vanilla/" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="btn-primary"
+                               title="open live demo">
+                                View Demo
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     height="18"
+                                     width="18"  
+                                     viewBox="0 -960 960 960"
+                                     fill="#e3e3e3"
+                                     aria-hidden="true">
+                                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/>
+                                </svg>
+                            </a>
+                            <a href="./v0-Vanilla/" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="btn-ghost"
+                               title="Open github repository">
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     width="20" 
+                                     height="20" 
+                                     viewBox="0 0 24 24" 
+                                     fill="none" 
+                                     stroke="" 
+                                     stroke-width="2" 
+                                     stroke-linecap="round" 
+                                     stroke-linejoin="round" 
+                                     class="lucide lucide-github-icon lucide-github"
+                                     aria-hidden="true">
+                                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </footer>
+                </article>
+
+                <!-- React App Card -->
+                <article class="app-version-card" aria-labelledby="card-heading-react">
+                    <header class="card-header">
+                        <div class="card-img react">
+                            <img src="./asset/react.svg" alt="react icon" class="react-img">
+                        </div>
+                        <h2 id="card-heading-react" class="card-heading">
+                            React App
+                            <span class="version">v1</span>
+                        </h2>
+                        <p class="card-para">
+                            The modern single-page application. Client-side routing, rich text editing, and utility-first styling.
+                        </p>
+                    </header>
+                    <footer class="card-footer">
+                        <div class="tech-stack">
+                            <h3>TECH STACK</h3>
+                            <div class="tag-container">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Vite</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                                <span class="tech-tag">TipTap</span>
+                                <span class="tech-tag">React Router</span>
+                                <span class="tech-tag">Context API</span>
+                                <span class="tech-tag">IndexedDB</span>
+                                <span class="tech-tag">Dexie.js</span>
+                            </div>
+                        </div>
+                        <div class="card-link-container">
+                            <a href="http://" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="btn-primary"
+                               title="open live demo">
+                                View Demo
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     height="18"
+                                     width="18"  
+                                     viewBox="0 -960 960 960"
+                                     fill="#e3e3e3"
+                                     aria-hidden="true">
+                                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/Prateek1789/Notes-App/v1" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="btn-ghost"
+                               title="Open github repository">
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     width="20" 
+                                     height="20" 
+                                     viewBox="0 0 24 24" 
+                                     fill="none" 
+                                     stroke="" 
+                                     stroke-width="2" 
+                                     stroke-linecap="round" 
+                                     stroke-linejoin="round" 
+                                     class="lucide lucide-github-icon lucide-github"
+                                     aria-hidden="true">
+                                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </footer>
+                </article>
+
+                <!-- Next JS App -->
+                <article class="app-version-card" aria-labelledby="card-heading-next">
+                    <header class="card-header">
+                        <div class="card-img next">
+                            <img src="./asset/nextjs.svg" alt="nextjs icon">
+                        </div>
+                        <h2 id="card-heading-next" class="card-heading">
+                            Next App
+                            <span class="version">v2</span>
+                        </h2>
+                        <p class="card-para">
+                            The production-ready architecture. Server components, global state management, and optimized performance.
+                        </p>
+                    </header>
+                    <footer class="card-footer">
+                        <div class="tech-stack">
+                            <h3>TECH STACK</h3>
+                            <div class="tag-container">
+                                <span class="tech-tag">Next.jS 16</span>
+                                <span class="tech-tag">App Router</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                                <span class="tech-tag">TipTap</span>
+                                <span class="tech-tag">Zustand</span>
+                                <span class="tech-tag">Supabase</span>
+                            </div>
+                        </div>
+                        <div class="card-link-container">
+                            <a href="http://" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="btn-primary"
+                               title="open live demo">
+                                View Demo
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     height="18"
+                                     width="18"  
+                                     viewBox="0 -960 960 960"
+                                     fill="#e3e3e3"
+                                     aria-hidden="true">
+                                    <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/>
+                                </svg>
+                            </a>
+                            <a href="https://github.com/Prateek1789/Notes-App/v2" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="btn-ghost"
+                               title="Open github repository">
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     width="20" 
+                                     height="20" 
+                                     viewBox="0 0 24 24" 
+                                     fill="none" 
+                                     stroke="" 
+                                     stroke-width="2" 
+                                     stroke-linecap="round" 
+                                     stroke-linejoin="round" 
+                                     class="lucide lucide-github-icon lucide-github"
+                                     aria-hidden="true">
+                                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer class="main-footer">
+        <nav class="footer-nav">
+            <span class="copy-right">© 2026 NoteFlow App Monorepo Showcase.</span>
+            <ul class="footer-nav-list">
+                <li>
+                    <a href="https://github.com/Prateek1789/Notes-App" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="footer-nav-link">
+                        Documentation
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/Prateek1789/Notes-App" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="footer-nav-link">
+                        GitHub Repository
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+</body>
+</html>
