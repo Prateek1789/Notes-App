@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Navbar from "@/components/layout/NavBar";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -33,6 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetBrainsMono.variable} ${spaceGrotesk.variable} antialiased`}>
       <body>
+        <header className="w-full h-auto px-2 flex items-center justify-center top-2 left-0 fixed z-999">
+          <Navbar />
+        </header>
         {children}
       </body>
     </html>
