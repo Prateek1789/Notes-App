@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../ui/Button";
 
 const Navbar = () => {
@@ -25,13 +25,24 @@ const Navbar = () => {
     }
 	};
 
+	useEffect(() => {
+		const handleResize = (e: Event) => {
+			const target = e.target as Window;
+			setIsMobileMenuOpen(prev => target.innerWidth >= 768 ? false : prev);
+		};
+
+		window.addEventListener("resize", handleResize);
+
+		return () => window.removeEventListener("resize", handleResize);
+	});
+
 	return (
   	<nav className={`w-full ${isMobileMenuOpen && 'open'} p-2.5 px-2.5 bg-white/80 backdrop-blur-lg border border-neutral-200/70 rounded-4xl transition-all duration-300 ease-out overflow-hidden`}>
 			{/* Logo container */}
 			<div className="h-full p-2 px-2.5 flex items-center justify-center gap-2.5 border border-primary-ghost rounded-full [grid-area:logo]">
 				<span className="text-xl font-extrabold font-grotesk uppercase flex items-baseline-last justify-center gap-0.5">
 					NoteFlow
-					<span className="w-2 h-2 rounded-full bg-blue-400"></span>
+					<span className="w-2 h-2 rounded-full bg-primary"></span>
 				</span>
 			</div>
 
