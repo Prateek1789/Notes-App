@@ -1,4 +1,4 @@
-import Button from "../ui/Button";
+import ButtonLanding from "../ui/ButtonLanding";
 
 const Hero = () => {
     return (
@@ -17,26 +17,16 @@ const Hero = () => {
                     Experience the power of TipTap in a dashboard designed for clarity. Seamless organization for the modern developer.
                 </p>
                 <div className="flex flex-col items-center gap-6 lg:flex-row lg:gap-6">
-                    <Button className="pr-2 pl-6 shadow-xl"
-                            intent="primary"
-                            size="md">
-                        Start Writting Free
-                        <span className="h-full w-14 py-0.5 flex place-content-center rounded-full border border-blue-300/60 bg-blue-300/20">
-                            <span className="text-inheret group-hover/btn:translate-x-2.5 transition-transform duration-400">
-                                {"->"}
-                            </span>
-                        </span>
-                    </Button>
-                    <Button className="pr-2 pl-6"
-                            intent="ghost"
-                            size="md">
+                    <ButtonLanding className="pl-4 pr-2 shadow-xl"
+                                   intent="primary"
+                                   size="md">
+                        Start Writing Free
+                    </ButtonLanding>
+                    <ButtonLanding className="pl-4 pr-2"
+                                   intent="ghost"
+                                   size="md">
                         View Demo
-                        <span className="h-full w-14 py-0.5 flex place-content-center rounded-full border border-primary-ghost bg-white/85">
-                            <span className="text-inheret group-hover/btn:translate-x-2.5 transition-transform duration-400">
-                                {"->"}
-                            </span>
-                        </span>
-                    </Button>
+                    </ButtonLanding>
                 </div>
                 <div className="w-full h-[70vh] p-2.5 mt-8 bg-white rounded-4xl border border-neutral-100 shadow-xl shadow-neutral-200">
                     <div className="w-full h-full rounded-3xl bg-blue-200">
