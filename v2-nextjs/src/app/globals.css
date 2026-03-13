@@ -4,7 +4,7 @@
   --background: oklch(0.97 0 260);
   --foreground: oklch(0.2046 0 0);
   --primary: oklch(62.3% 0.214 259.815);
-  --primary-ghost: oklch(62.3% 0.214 259.815 / 24%);
+  --primary-ghost: oklch(80.9% 0.105 251.813 / 50%);
   --ping: oklch(62.7% 0.194 149.214);
   --ping-pulse: oklch(79.2% 0.209 151.711);
   --hero-gradient-primary: oklch(0.9802 0 260);
@@ -50,7 +50,7 @@
   }
 
   nav.open {
-    grid-template-rows: 2.5rem 1fr 3rem;
+    grid-template-rows: 2.5rem 1fr auto;
     gap: 2rem;
     justify-items: start;
   }
