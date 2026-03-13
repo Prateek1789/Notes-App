@@ -11,14 +11,14 @@ const button = cva(
   {
     variants: {
       intent: {
-        primary: 'bg-primary text-white hover:bg-primary/90 rounded-full shadow-primary/40',
-        ghost: 'bg-white/65 text-foreground border-primary-ghost rounded-full shadow-blue-950/40',
-				default: 'px-4 py-2 bg-neutral-950 text-neutral-300 rounded-lg',
+        primary: 'bg-primary text-white hover:bg-primary/90 shadow-primary/40',
+        ghost: 'bg-white/65 text-foreground border-primary-ghost shadow-blue-950/40',
+				default: 'px-4 py-2 bg-neutral-950 text-neutral-300',
       },
 			size: {
-				sm: 'py-2 px-4 text-sm font-medium gap-3',
-				md: 'py-2 px-4 text-lg font-medium gap-4',
-				lg: 'py-2 px-6 text-lg font-medium gap-4', 
+				sm: 'py-2 px-4 text-sm font-medium gap-3 rounded-lg',
+				md: 'py-2 px-4 text-lg font-medium gap-4 rounded-xl',
+				lg: 'py-2 px-6 text-lg font-medium gap-4 rounded-xl', 
 			},
     },
 		defaultVariants: {
