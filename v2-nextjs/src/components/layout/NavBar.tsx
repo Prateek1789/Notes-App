@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import Button from "../ui/Button";
+import ButtonLanding from "../ui/ButtonLanding";
 
 const Navbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,9 +19,9 @@ const Navbar = () => {
     
     if (element) {
       element.scrollIntoView({
-        behavior: 'smooth',
+    		behavior: 'smooth',
         block: 'start',
-    });
+    	});
     }
 	};
 
@@ -37,9 +37,9 @@ const Navbar = () => {
 	});
 
 	return (
-  	<nav className={`w-full ${isMobileMenuOpen && 'open'} p-2.5 px-2.5 bg-white/80 backdrop-blur-lg border border-neutral-200/70 rounded-4xl transition-all duration-300 ease-out overflow-hidden`}>
+  	<nav className={`w-full ${isMobileMenuOpen && 'open'} p-2 bg-white/80 backdrop-blur-lg border border-neutral-200/70 rounded-2xl transition-all duration-300 ease-out overflow-hidden`}>
 			{/* Logo container */}
-			<div className="h-full p-2 px-2.5 flex items-center justify-center gap-2.5 border border-primary-ghost rounded-full [grid-area:logo]">
+			<div className="h-full px-2.5 flex items-center justify-center gap-2.5 rounded-lg [grid-area:logo]">
 				<span className="text-xl font-extrabold font-grotesk uppercase flex items-baseline-last justify-center gap-0.5">
 					NoteFlow
 					<span className="w-2 h-2 rounded-full bg-primary"></span>
@@ -62,7 +62,7 @@ const Navbar = () => {
 			</div>
 			
 			{/* Hamburger menu button, only visible in screen sizes < 768px */} 
-			<button className="w-14 h-full px-4 rounded-full bg-primary flex flex-col items-center justify-center gap-2.5 md:hidden [grid-area:menu]"
+			<button className="w-12 h-full px-2.5 rounded-lg bg-primary flex flex-col items-center justify-center gap-2.75 md:hidden [grid-area:menu]"
 							onClick={() => setIsMobileMenuOpen(prev => !prev)}
 							aria-expanded={isMobileMenuOpen}
 							aria-label="Toggle Navigation Menu">
@@ -71,17 +71,12 @@ const Navbar = () => {
 			</button>
 			
 			{/* Login button */}
-			<div className="w-full h-auto overflow-hidden [grid-area:login]">
-				<Button className={`w-full h-full md:flex justify-between md:w-auto pl-5 pr-2`}
-								intent="primary"
-								size={isMobileMenuOpen ? "md" : 'sm'}>
+			<div className="w-full h-auto overflow-hidden [grid-area:login] ">
+				<ButtonLanding className="w-full pl-3 pr-1.75 py-1.75 justify-between"
+							   intent="primary"
+							   size="sm">
 					Login
-					<span className="h-full w-10 py-0.25 flex justify-center items-center rounded-full border border-blue-300/60 bg-blue-300/20">
-          	<span className="text-inheret group-hover/btn:translate-x-1.5 transition-transform duration-400">
-            	{"->"}
-          	</span>
-        	</span>
-				</Button>
+				</ButtonLanding>
 			</div>
   	</nav>
   )
