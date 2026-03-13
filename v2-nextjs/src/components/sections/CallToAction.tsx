@@ -1,4 +1,4 @@
-import Button from "../ui/Button";
+import ButtonLanding from "../ui/ButtonLanding";
 
 const CallToAction = () => {
   return (
@@ -11,26 +11,16 @@ const CallToAction = () => {
           Join thousands of developers who have switched to the most versatile note-taking app on the market.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-        	<Button className="pl-6 pr-2.5 py-2.5 shadow-xl"
-									intent="primary"
-									size="lg">
+          <ButtonLanding className="pl-5 pr-2.5 py-2.5 shadow-xl"
+                         intent="primary"
+                         size="lg">
             Get Started Free
-						<span className="h-full w-16 py-1.5 flex place-content-center rounded-full border border-blue-300/60 bg-blue-300/20">
-              <span className="text-inheret group-hover/btn:translate-x-2.5 transition-transform duration-400">
-                {"->"}
-              </span>
-            </span>
-          </Button>
-					<Button className="pl-6 pr-2.5 py-2.5"
-									intent="ghost"
-									size="lg">
+          </ButtonLanding>
+          <ButtonLanding className="pl-5 pr-2.5 py-2.5"
+                         intent="ghost"
+                         size="lg">
             Read the Manifesto
-						<span className="h-full w-16 py-1.5 flex place-content-center rounded-full border border-primary-ghost bg-white/85">
-              <span className="text-inheret group-hover/btn:translate-x-2.5 transition-transform duration-400">
-                {"->"}
-              </span>
-            </span>
-          </Button>
+          </ButtonLanding>
         </div>
     	</div>
   	</section>
