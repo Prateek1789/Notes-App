@@ -1,6 +1,15 @@
+"use client"
+
+import { useRouter } from "next/navigation";
 import ButtonLanding from "../ui/ButtonLanding";
 
 const CallToAction = () => {
+  const router = useRouter();
+
+  const handleNavigation = (href: string) => {
+    router.push(href);
+  };
+
   return (
     <section id="cta" className="h-auto md:h-[50vh] xl:h-[60vh]">
       <div className="container h-full mx-auto py-10 px-6 flex flex-col items-center justify-center text-center">
@@ -13,7 +22,8 @@ const CallToAction = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <ButtonLanding className="pl-5 pr-2.5 py-2.5 shadow-xl"
                          intent="primary"
-                         size="lg">
+                         size="lg"
+                         onClick={() => handleNavigation("/signup")}>
             Get Started Free
           </ButtonLanding>
           <ButtonLanding className="pl-5 pr-2.5 py-2.5"
