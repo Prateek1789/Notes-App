@@ -1,10 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import ButtonLanding from "../ui/ButtonLanding";
 
 const Navbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const router = useRouter();
 
 	const navLinks = [
     { name: 'Features', href: '#feature' },
@@ -23,6 +25,10 @@ const Navbar = () => {
         block: 'start',
     	});
     }
+	};
+
+	const handleNavigation = (href: string) => {
+		router.push(href);
 	};
 
 	useEffect(() => {
@@ -74,7 +80,8 @@ const Navbar = () => {
 			<div className="w-full h-auto overflow-hidden [grid-area:login] ">
 				<ButtonLanding className="w-full pl-3 pr-1.75 py-1.75 justify-between"
 							   intent="primary"
-							   size="sm">
+							   size="sm"
+								 onClick={() => handleNavigation("/login")}>
 					Login
 				</ButtonLanding>
 			</div>
