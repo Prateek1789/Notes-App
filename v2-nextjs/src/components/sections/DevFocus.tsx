@@ -10,7 +10,7 @@ const DevFocus = () => {
 	];
 
   return (
-		<section id="showcase"
+		<section id="developer"
              className="h-auto xl:h-[70vh] px-6 md:px-8 py-20 lg:py-30 bg-neutral-900 text-background flex items-center justify-center border border-foreground/1 xl:rounded-4xl shadow-2xl">
       <div className="w-full h-full grid grid-rows-2 grid-cols-1 lg:grid-rows-1 lg:grid-cols-2 gap-8">
 				<div className="h-full lg:h-auto w-full bg-neutral-800 rounded-2xl border border-background/5">
