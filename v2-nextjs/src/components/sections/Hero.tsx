@@ -1,6 +1,15 @@
+"use client"
+
+import { useRouter } from "next/navigation";
 import ButtonLanding from "../ui/ButtonLanding";
 
 const Hero = () => {
+    const router = useRouter();
+
+    const handleNavigation = (href: string) => {
+        router.push(href)
+    };
+
     return (
         <section id="hero" className="h-auto pt-30 xl:pt-38 bg-neutral-300">
             <header className="relative w-full h-full px-4 flex flex-col items-center justify-center gap-8 xl:gap-10">
@@ -19,12 +28,14 @@ const Hero = () => {
                 <div className="flex flex-col items-center gap-6 lg:flex-row lg:gap-6">
                     <ButtonLanding className="pl-4 pr-2 shadow-xl"
                                    intent="primary"
-                                   size="md">
+                                   size="md"
+                                   onClick={() => handleNavigation("./signup")}>
                         Start Writing Free
                     </ButtonLanding>
                     <ButtonLanding className="pl-4 pr-2"
                                    intent="ghost"
-                                   size="md">
+                                   size="md"
+                                   onClick={() => handleNavigation("/dashboard")}>
                         View Demo
                     </ButtonLanding>
                 </div>
