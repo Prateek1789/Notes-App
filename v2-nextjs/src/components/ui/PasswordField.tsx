@@ -33,27 +33,29 @@ const PasswordField = ({
   return (
 		<div className="relative min-h-23 w-full max-w-md flex flex-col gap-1">
     	<label htmlFor={props.id} className="text-sm">{label}</label>
-      <input type={showPassword ? "text" : "password"} 
-             name={props.name} 
-             id={props.id}
-						 className={cn(fieldCva({ state }), className)} 
-						 ref={ref}
-						 aria-invalid={state == "invalid" ? true : false}
-						 aria-describedby={`${props.id}-error`} 
-						 { ...props } />
-			{showToggle && (
-      <button type="button" 
-              className="absolute bottom-9 right-4 md:bottom-9 cursor-pointer"
-              aria-label="Toggle Password Visibility"
-              aria-pressed={showPassword}
-              onClick={togglePasswordVisibility}>
-        {showPassword ? (<Eye className="w-4 h-4" />) : (<EyeOff color="gray" className="w-4 h-4" />)}
-      </button>)}
+			<div className="relative w-full h-auto rounded-lg">
+      	<input type={showPassword ? "text" : "password"} 
+      	       name={props.name} 
+      	       id={props.id}
+							 className={cn(fieldCva({ state }), `${showToggle ? "pr-7.5" : ""}`, className)} 
+							 ref={ref}
+							 aria-invalid={state == "invalid" ? true : false}
+							 aria-describedby={`${props.id}-error`} 
+							 { ...props } />
+				{showToggle && (
+      	<button type="button" 
+      	        className="absolute top-1/2 -translate-y-1/2 right-2 cursor-pointer"
+      	        aria-label="Toggle Password Visibility"
+      	        aria-pressed={showPassword}
+      	        onClick={togglePasswordVisibility}>
+      	  {showPassword ? (<Eye className="w-4 h-4" />) : (<EyeOff color="gray" className="w-4 h-4" />)}
+      	</button>)}
+			</div>
 			{error && (
-				<span id={`${props.id}-error`} 
-							className="text-xs ml-auto text-red-500">
-					{error}
-				</span>
+			<span id={`${props.id}-error`} 
+						className="text-xs ml-auto text-red-500">
+				{error}
+			</span>
 			)}
 		</div>
   )
