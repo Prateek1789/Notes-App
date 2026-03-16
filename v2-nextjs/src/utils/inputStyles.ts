@@ -22,17 +22,17 @@ export const buttonCva = cva(
 );
   
 export const fieldCva = cva(
-	"h-12 md:h-12 px-2 rounded-lg border focus:ring-2 focus:outline-2 placeholder:text-sm",
+	"h-12 md:h-12 w-full px-2 rounded-lg border focus:ring-2 focus:outline-2 placeholder:text-sm",
 	{
-    variants: {
-		state: {
-			idle: "border-neutral-300 focus:border-primary focus:ring-primary focus:outline-primary",
-			valid: "border-green-500 focus:ring-green-500 focus:outline-green-500",
-			invalid: "border-red-500 focus:ring-red-500 focus:outline-red-500",
+    	variants: {
+			state: {
+				idle: "border-neutral-300 focus:border-primary focus:ring-primary focus:outline-primary",
+				valid: "border-green-500 focus:ring-green-500 focus:outline-green-500",
+				invalid: "border-red-500 focus:ring-red-500 focus:outline-red-500",
+			}
+    	},
+		defaultVariants: {
+			state: "idle",
 		}
-    },
-	defaultVariants: {
-		state: "idle",
-	}
-  }
+  	}
 );
