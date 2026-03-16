@@ -1,13 +1,13 @@
 import { cva } from "class-variance-authority";
 
 export const buttonCva = cva(
-    'group/btn flex items-center justify-center transition-all duration-240', 
+    'group/btn flex items-center justify-center transition-all duration-240 disabled:cursor-not-allowed', 
     {
         variants: {
             intent: {
-                primary: 'bg-primary text-white hover:bg-primary/90 shadow-primary/40',
+                primary: 'bg-primary text-white hover:bg-primary/90 shadow-primary/40 disabled:grayscale-50 disabled:shadow-none',
                 ghost: 'bg-white/65 text-foreground border-primary-ghost shadow-blue-950/40',
-                default: 'px-4 py-2 bg-neutral-950 text-neutral-300',
+                default: 'px-4 py-2 bg-neutral-950 text-neutral-300 disabled:bg-neutral-600 disabled:shadow-none',
             },
             size: {
                 sm: 'py-2 px-4 text-sm font-medium gap-3 rounded-lg',
@@ -26,7 +26,7 @@ export const fieldCva = cva(
 	{
     variants: {
 		state: {
-			idle: "border-neutral-300 focus:ring-primary focus:outline-primary",
+			idle: "border-neutral-300 focus:border-primary focus:ring-primary focus:outline-primary",
 			valid: "border-green-500 focus:ring-green-500 focus:outline-green-500",
 			invalid: "border-red-500 focus:ring-red-500 focus:outline-red-500",
 		}
