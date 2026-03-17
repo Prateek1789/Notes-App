@@ -1,5 +1,6 @@
 "use client"
 
+import { ChangeEvent } from "react";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -78,9 +79,8 @@ const LoginPage = () => {
 	};
 
 	/* Function to clear errors for specific field as the user types again */
-	const handleErrors = (e: React.ChangeEvent) => {
-		const target = e.target as HTMLInputElement;
-		const key = target.name as keyof LoginSchemaTypes;
+	const handleErrors = (e: ChangeEvent<HTMLInputElement>) => {
+		const key = e.target.name as keyof LoginSchemaTypes;
 		if (errors[key]) {
 			clearErrors(key);
 			return;
