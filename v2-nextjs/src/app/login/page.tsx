@@ -17,7 +17,6 @@ const LoginPage = () => {
 		handleSubmit,
 		clearErrors, 
 		setError,
-		watch, 
 		formState: { 
 			errors,
 			isSubmitting 
@@ -50,10 +49,6 @@ const LoginPage = () => {
 			}, 800);
 		})
 	};
-
-	const formFields = watch();
-	/* A boolean which disables the submit button untill both the fields have value */
-	const isFormFilled = formFields.user_email.trim().length > 0 && formFields.user_password.trim().length > 0;
 
 	/* A test function to test the functionality of the form and its validations */
 	const onSubmit: SubmitHandler<LoginSchemaTypes> = async (formData) => {
@@ -135,7 +130,7 @@ const LoginPage = () => {
                 className='w-full py-2.5 max-w-md rounded-lg shadow-xl mt-2'
 								intent="primary"
 								size="md"
-								disabled={!isFormFilled || isSubmitting}>
+								disabled={isSubmitting}>
 					Login
 				</Button>
       </form>
