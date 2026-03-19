@@ -3,17 +3,30 @@
 :root {
   --background: oklch(0.97 0 260);
   --foreground: oklch(0.2046 0 0);
-  --primary: oklch(62.3% 0.214 259.815);
-  --primary-ghost: oklch(80.9% 0.105 251.813 / 50%);
+  --primary: oklch(58.25% 0.245 262.881) /* oklch(62.3% 0.214 259.815) */;
+  --primary-ghost: oklch(70.9% 0.262 262.881);
   --ping: oklch(62.7% 0.194 149.214);
   --ping-pulse: oklch(79.2% 0.209 151.711);
   --hero-gradient-primary: oklch(0.9802 0 260);
   --hero-gradient-secondary: var(--background);
   --hero-gradient-dots: oklch(0.8541 0.0132 266.69);
 
+  /* colors for field states and focus states */
+  --field-idle: oklch(87% 0 0);
+  --field-focus: var(--primary);
+  --field-focus-2: oklch(80.9% 0.105 251.813);
+  --field-valid: oklch(72.3% 0.219 149.579);
+  --field-valid-focus: oklch(87.1% 0.15 154.449);
+  --field-invalid: oklch(63.7% 0.237 25.331);
+  --field-invalid-focus: oklch(80.8% 0.114 19.571);
+
+  --line-ghost: oklch(92.2% 0 0);
+
   font-synthesis: none;
   text-rendering: geometricPrecision;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   body {
@@ -75,6 +88,17 @@
   --color-primary-ghost: var(--primary-ghost);
   --color-ping: var(--ping);
   --color-ping-pulse: var(--ping-pulse);
+
+  /* Colors for field states: "idle" | "valid" | "invalid" */
+  --color-idle: var(--field-idle);
+  --color-focus: var(--field-focus);
+  --color-focus-ring: var(--field-focus-2);
+  --color-valid: var(--field-valid);
+  --color-valid-focus: var(--field-valid-focus);
+  --color-invalid: var(--field-invalid);
+  --color-invalid-focus: var(--field-invalid-focus);
+
+  --color-line-ghost: var(--line-ghost);
 }
 
 @theme {
@@ -127,11 +151,22 @@
   }
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --background: oklch(0.2046 0 0);
+    --background: oklch(14.5% 0 0) /* oklch(0.2046 0 0) */;
     --foreground: oklch(0.9461 0 0);
-    --hero-gradient-primary: oklch(0.2146 0 0);
+    --hero-gradient-primary: oklch(15.5% 0 0);
     --hero-gradient-secondary: var(--background);
+    --hero-gradient-dots: oklch(26% 0.0132 266);
+
+    --field-idle: oklch(37.1% 0 0 / 90%);
+    --field-focus: var(--primary);
+    --field-focus-2: oklch(88.2% 0.059 254.128 / 50%);
+    --field-valid: oklch(44.8% 0.119 151.328);
+    --field-valid-focus: oklch(79.2% 0.209 151.711 / 60%);
+    --field-invalid: oklch(44.4% 0.177 26.899);
+    --field-invalid-focus: oklch(70.4% 0.191 22.216 / 60%);
+
+    --line-ghost: oklch(24% 0 0);
   }
-} */
+}
