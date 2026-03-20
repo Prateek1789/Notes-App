@@ -46,14 +46,14 @@ const FeatureGrid = () => {
                     We stripped away the bloat to focus on the essential tools for clarity.
                 </p>
             </div>
-            <div className="w-full h-full md:w-[80%] xl:w-full mt-8 p-5 bg-white rounded-5xl border border-neutral-200/50 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-rows-[repeat(6),calc(100%/6)] lg:grid-rows-[repeat(3),calc(100%/3)] xl:grid-rows-[repeat(2),50%] gap-5">
+            <div className="w-full h-full md:w-[80%] xl:w-full mt-8 p-2.5 rounded-4xl border border-line grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-rows-[repeat(6),calc(100%/6)] lg:grid-rows-[repeat(3),calc(100%/3)] xl:grid-rows-[repeat(2),50%] gap-2.5">
                 {features.map(feature => {
                     return (
                         <div key={feature.id}
-                             className="w-full h-full p-5 grid grid-rows-subgrid row-span-3 bg-white rounded-3xl border border-neutral-200/50 shadow-lg shadow-neutral-200">
-                            <div className="h-10 w-10 rounded-xl border border-neutral-200/70"></div>
+                             className="w-full h-full p-5 grid grid-rows-subgrid row-span-3 bg-white dark:bg-neutral-900/70 rounded-3xl border border-line shadow-lg shadow-neutral-200 dark:shadow-transparent">
+                            <div className="h-10 w-10 rounded-xl border border-line"></div>
                             <h3 className="text-xl font-semibold">{feature.title}</h3>
-                            <p className="">{feature.summary}</p>
+                            <p className="dark:text-neutral-400">{feature.summary}</p>
                         </div>
                     )
                 })}
