@@ -5,13 +5,13 @@ export const buttonCva = cva(
     {
         variants: {
             intent: {
-                primary: 'bg-primary text-white hover:bg-primary/90 shadow-primary/40 disabled:grayscale-50 disabled:shadow-none',
-                ghost: 'bg-white/65 text-foreground border-primary-ghost shadow-blue-950/40',
-                default: 'px-4 py-2 bg-neutral-950 text-neutral-300 disabled:bg-neutral-600 disabled:shadow-none',
+                primary: 'bg-primary text-white hover:bg-primary/90 shadow-primary/40 dark:shadow-primary/30 disabled:grayscale-50 disabled:shadow-none',
+                ghost: 'bg-white dark:bg-neutral-900 border-primary-ghost/15 shadow-blue-950/40',
+                default: 'px-4 py-2 bg-neutral-900 dark:bg-neutral-200 text-neutral-300 dark:text-neutral-800 disabled:bg-neutral-600 disabled:shadow-none',
             },
             size: {
-                sm: 'py-2 px-4 text-sm font-medium gap-3 rounded-lg',
-                md: 'py-2 px-4 text-lg font-medium gap-4 rounded-xl',
+                sm: 'py-2 px-4 text-sm font-medium gap-3 rounded-md',
+                md: 'py-2 px-4 text-lg font-medium gap-4 rounded-lg',
                 lg: 'py-2 px-6 text-lg font-medium gap-4 rounded-xl', 
             },
         },
@@ -26,9 +26,9 @@ export const fieldCva = cva(
 	{
     	variants: {
 			state: {
-				idle: "border-neutral-300 focus:border-primary focus:ring-primary focus:outline-primary",
-				valid: "border-green-500 focus:ring-green-500 focus:outline-green-500",
-				invalid: "border-red-500 focus:ring-red-500 focus:outline-red-500",
+				idle: "border-idle focus:border-focus focus:ring-focus-ring focus:outline-focus-ring",
+				valid: "border-valid focus:ring-valid-focus focus:outline-valid-focus",
+				invalid: "border-invalid focus:ring-invalid-focus focus:outline-invalid-focus",
 			}
     	},
 		defaultVariants: {
