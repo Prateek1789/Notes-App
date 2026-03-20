@@ -28,7 +28,7 @@ const Footer = () => {
 
   return (
     <footer className="w-screen h-auto pb-4 px-4 xl:pb-8 flex justify-center">
-			<div className="h-full w-full max-w-7xl p-4 bg-white rounded-4xl border border-neutral-200/70">
+			<div className="h-full w-full max-w-7xl p-4 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200/70 dark:border-line">
 				<div className="w-full h-auto md:h-[40vh] xl:h-[50vh] px-2.5 grid grid-cols-1 grid-rows-[auto,1fr] md:grid-rows-1 md:grid-cols-2 gap-2 rounded-3xl">
 					<div className="w-full h-full flex flex-col items-start justify-center gap-4 rounded-3xl">
 						<div className="flex items-baseline-last justify-center gap-0.5">
@@ -47,7 +47,7 @@ const Footer = () => {
 							{footerLinkGroups.map(group => {
 								return (
 									<div key={group.heading}>
-										<h4 className="font-mono text-foreground/50 mb-4 uppercase">
+										<h4 className="font-mono text-foreground/50 dark:text-foreground/70 mb-4 uppercase">
 											{group.heading}
 										</h4>
 										<ul className="flex flex-col items-start justify-center gap-2">
