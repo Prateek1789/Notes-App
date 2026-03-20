@@ -43,7 +43,7 @@ const Navbar = () => {
 	});
 
 	return (
-  	<nav className={`w-full ${isMobileMenuOpen && 'open'} p-2 bg-white/80 backdrop-blur-lg border border-neutral-200/70 rounded-2xl transition-all duration-300 ease-out overflow-hidden`}>
+  	<nav className={`w-full ${isMobileMenuOpen && 'open'} p-2 bg-white/80 border border-neutral-200/70 dark:bg-neutral-900/80 dark:border-line backdrop-blur-lg rounded-xl transition-all duration-300 ease-out overflow-hidden`}>
 			{/* Logo container */}
 			<div className="h-full px-2.5 flex items-center justify-center gap-2.5 rounded-lg [grid-area:logo]">
 				<span className="text-xl font-extrabold font-grotesk uppercase flex items-baseline-last justify-center gap-0.5">
