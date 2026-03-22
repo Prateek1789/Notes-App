@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ButtonLanding from "../ui/ButtonLanding";
+import ThemeToggle from "../ui/ThemeToggle";
 
 const Navbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -43,7 +44,8 @@ const Navbar = () => {
 	});
 
 	return (
-  	<nav className={`w-full ${isMobileMenuOpen && 'open'} p-2 bg-white/80 border border-neutral-200/70 dark:bg-neutral-900/80 dark:border-line backdrop-blur-lg rounded-xl transition-all duration-300 ease-out overflow-hidden`}>
+  	<nav className={`w-full h-auto p-px bg-line mx-w-[90rem]`}>
+			<div className={`navigation-container w-full h-full ${isMobileMenuOpen && 'open'} bg-white dark:bg-neutral-900 transition-all duration-300 ease-out overflow-hidden`}>
 			{/* Logo container */}
 			<div className="h-full px-2.5 flex items-center justify-center gap-2.5 rounded-lg [grid-area:logo]">
 				<span className="text-xl font-extrabold font-grotesk uppercase flex items-baseline-last justify-center gap-0.5">
@@ -77,13 +79,15 @@ const Navbar = () => {
 			</button>
 			
 			{/* Login button */}
-			<div className="w-full h-auto overflow-hidden [grid-area:login] ">
+			<div className="w-full h-auto flex items-center gap-4 overflow-hidden [grid-area:login] ">
+				<ThemeToggle />
 				<ButtonLanding className="w-full pl-3 pr-1.75 py-1.75 justify-between"
 							   intent="primary"
 							   size="sm"
 								 onClick={() => handleNavigation("/login")}>
 					Login
 				</ButtonLanding>
+			</div>
 			</div>
   	</nav>
   )
