@@ -35,31 +35,34 @@ const FeatureGrid = () => {
 
     return (
         <section id="feature" 
-                 className="h-auto pt-30 px-4 flex flex-col items-center justify-center gap-8">
-            <div className="flex flex-col gap-4 items-center justify-center">
+                 className="h-auto flex flex-col items-center justify-center">
+            <div className="w-full h-auto px-4 md:px-8 pb-16 flex gap-4 items-baseline-last justify-between border-b border-b-line">
+                <h2 className="text-h2 font-medium max-w-[30ch]">
+                    Everything you need to capture, organize, and share your best ideas <span className="text-neutral-400">without the friction.</span>
+                </h2>
                 <span className="font-mono text-sm font-medium">
-                    <span className="py-0.5 text-xs px-1 bg-primary text-white rounded-sm">01</span>
-                    {" Features"}
+                    <span className="text-foreground">01 </span>
+                    <span className="text-neutral-500 tracking-wider">- FEATURES</span>
                 </span>
-                <h2 className="text-h2 font-medium">Everything you need.</h2>
-                <p className="max-w-[35ch] text-center">
-                    We stripped away the bloat to focus on the essential tools for clarity.
-                </p>
             </div>
-            <div className="w-full h-full md:w-[80%] xl:w-full mt-8 p-2.5 rounded-4xl border border-line grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-rows-[repeat(6),calc(100%/6)] lg:grid-rows-[repeat(3),calc(100%/3)] xl:grid-rows-[repeat(2),50%] gap-2.5">
-                {features.map(feature => {
-                    return (
-                        <div key={feature.id}
-                             className="w-full h-full p-5 grid grid-rows-subgrid row-span-3 bg-white dark:bg-neutral-900/70 rounded-3xl border border-line shadow-lg shadow-neutral-200 dark:shadow-transparent">
-                            <div className="h-10 w-10 rounded-xl border border-line"></div>
-                            <h3 className="text-xl font-semibold">{feature.title}</h3>
-                            <p className="dark:text-neutral-400">{feature.summary}</p>
-                        </div>
-                    )
-                })}
+            <div className="w-full h-auto px-4 md:px-8 pt-15 flex items-center justify-center">
+                <div className="w-full h-auto xl:h-[70vh] p-2.5 bg-transparent backdrop-blur-lg border border-line rounded-2xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-[repeat(6),calc(100%/6)] md:grid-rows-[repeat(3),calc(100%/3)] xl:grid-rows-[repeat(2),50%] gap-2.5">
+                    {features.map(feature => {
+                        return (
+                            <div key={feature.id}
+                                 className="w-full h-full min-h-50 p-5 grid grid-rows-subgrid row-span-3 bg-white dark:bg-neutral-900/70 border border-line shadow-2xl shadow-neutral-200 rounded-xl dark:shadow-transparent">
+                                <div className="h-10 w-10 rounded-xl border border-line"></div>
+                                <h3 className="text-xl font-semibold">{feature.title}</h3>
+                                <p className="dark:text-neutral-400">{feature.summary}</p>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         </section>
     )
 };
 
 export default FeatureGrid
+
+//  gap-2.5
