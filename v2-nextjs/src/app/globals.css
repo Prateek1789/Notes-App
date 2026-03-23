@@ -35,6 +35,27 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+.dark {
+  --background: oklch(14.5% 0 0) /* oklch(0.2046 0 0) */;
+  --foreground: oklch(0.9461 0 0);
+  --hero-gradient-primary: oklch(15.5% 0 0);
+  --hero-gradient-secondary: var(--background);
+  --hero-gradient-dots: oklch(26% 0.0132 266);
+
+  --field-idle: oklch(37.1% 0 0 / 90%);
+  --field-focus: var(--primary);
+  --field-focus-2: oklch(88.2% 0.059 254.128 / 50%);
+  --field-valid: oklch(44.8% 0.119 151.328);
+  --field-valid-focus: oklch(79.2% 0.209 151.711 / 60%);
+  --field-invalid: oklch(44.4% 0.177 26.899);
+  --field-invalid-focus: oklch(70.4% 0.191 22.216 / 60%);
+
+  --line: var(--line-dark);
+  --line-ghost: oklch(24% 0 0);
+
+  --branding-text: oklch(30% 0.002 260);
+}
+
 @layer base {
   body {
     min-height: 100vh;
@@ -189,28 +210,5 @@
     grid-template-areas: 
       "logo links login";
     place-content: space-between;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: oklch(14.5% 0 0) /* oklch(0.2046 0 0) */;
-    --foreground: oklch(0.9461 0 0);
-    --hero-gradient-primary: oklch(15.5% 0 0);
-    --hero-gradient-secondary: var(--background);
-    --hero-gradient-dots: oklch(26% 0.0132 266);
-
-    --field-idle: oklch(37.1% 0 0 / 90%);
-    --field-focus: var(--primary);
-    --field-focus-2: oklch(88.2% 0.059 254.128 / 50%);
-    --field-valid: oklch(44.8% 0.119 151.328);
-    --field-valid-focus: oklch(79.2% 0.209 151.711 / 60%);
-    --field-invalid: oklch(44.4% 0.177 26.899);
-    --field-invalid-focus: oklch(70.4% 0.191 22.216 / 60%);
-
-    --line: var(--line-dark);
-    --line-ghost: oklch(24% 0 0);
-
-    --branding-text: oklch(30% 0.002 260);
   }
 }
