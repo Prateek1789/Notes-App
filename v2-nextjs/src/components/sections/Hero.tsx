@@ -12,8 +12,8 @@ const Hero = () => {
 
     return (
         <section id="hero" className="h-auto pt-30 xl:pt-38 bg-neutral-300">
-            <header className="relative w-full h-full px-4 flex flex-col items-center justify-center gap-8 xl:gap-10">
-                <div className="h-9 w-32.5 bg-white dark:bg-neutral-900 rounded-full flex items-center justify-center gap-2">
+            <header className="relative w-full h-full px-6 md:px-8 flex flex-col items-center justify-center gap-8 xl:gap-10">
+                <div className="h-9 w-32.5 bg-white dark:bg-neutral-900 rounded-full shadow-md shadow-line flex items-center justify-center gap-2">
                     <span className="size-3.5 rounded-full relative flex items-center justify-center">
                         <span className="absolute inline-flex h-full w-full animate-ping-slow rounded-full bg-ping-pulse">
                         </span>
