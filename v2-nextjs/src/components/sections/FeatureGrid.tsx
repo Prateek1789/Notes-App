@@ -36,7 +36,7 @@ const FeatureGrid = () => {
     return (
         <section id="feature" 
                  className="w-full h-auto py-0 flex flex-col items-center justify-center bg-transparent gap-px">
-            <div className="w-full h-auto px-4 md:px-8 py-16 flex gap-4 items-baseline-last justify-between bg-background rounded-[6px]">
+            <div className="w-full h-auto px-4 md:px-8 py-16 flex gap-4 items-baseline-last justify-between bg-background [clip-path:var(--clip-bevel-sm)]">
                 <h2 className="text-h2 font-medium max-w-[30ch]">
                     Everything you need to capture, organize, and share your best ideas <span className="text-neutral-400">without the friction.</span>
                 </h2>
@@ -45,7 +45,7 @@ const FeatureGrid = () => {
                     <span className="text-neutral-500 tracking-wider">- FEATURES</span>
                 </span>
             </div>
-            <div className="w-full h-auto px-4 md:px-8 py-16 flex items-center justify-center bg-background rounded-[6px]">
+            <div className="w-full h-auto px-4 md:px-8 py-16 flex items-center justify-center bg-background [clip-path:var(--clip-bevel-sm)]">
                 <div className="w-full h-auto xl:h-[70vh] p-2.5 bg-transparent backdrop-blur-lg border border-line rounded-2xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-[repeat(6),calc(100%/6)] md:grid-rows-[repeat(3),calc(100%/3)] xl:grid-rows-[repeat(2),50%] gap-2.5">
                     {features.map(feature => {
                         return (
