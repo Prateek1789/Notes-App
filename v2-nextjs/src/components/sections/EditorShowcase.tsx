@@ -35,7 +35,8 @@ const EditorShowcase = () => {
         <div className="w-full h-auto flex flex-col lg:flex-row items-center justify-center gap-px [clip-path:var(--clip-bevel-sm)]">
           {editorFeatures.map((feature, idx) => {
             return (
-              <div className="w-full h-100 xl:h-140 px-4 py-4 flex flex-col items-start justify-between bg-background">
+              <div key={feature.title} 
+                   className="w-full h-100 xl:h-140 px-4 py-4 flex flex-col items-start justify-between bg-background">
                 <span className="font-mono">{`${idx < 10 && 0}${idx + 1}`}</span>
                 <div className="w-[70%] h-30 bg-white dark:bg-neutral-900 rounded-lg mx-auto flex items-center justify-center">
                   <span className="w-20 h-auto text-sm bg-neutral-100 dark:bg-neutral-800 shadow-xl shadow-neutral-100 dark:shadow-neutral-950 py-1 px-2 rounded-lg">
