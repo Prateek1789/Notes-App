@@ -27,7 +27,7 @@
   --line-ghost: oklch(92.2% 0 0);
 
   --clip-bevel-xs: polygon(0 4px, 4px 0%, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
-  --clip-bevel-sm: polygon(0 6px, 6px 0%, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px));
+  --clip-bevel-sm: polygon(0 4px, 4px 0%, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
 
   font-synthesis: none;
   text-rendering: geometricPrecision;
