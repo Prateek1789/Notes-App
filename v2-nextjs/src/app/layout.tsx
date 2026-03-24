@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/layout/NavBar";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import "./globals.css";
@@ -41,9 +40,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header className="w-full h-auto px-2 flex items-center justify-center top-2 left-0 fixed z-999">
-            <Navbar />
-          </header>
           {children}
         </ThemeProvider>
       </body>
