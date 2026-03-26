@@ -6,8 +6,8 @@ import { motion, MotionProps } from "motion/react";
 
 type Links = "Anchor" | "NextLink";
 
-const MotionNextLink = motion(Link);
-const MotionAnchorLink = motion("a");
+const MotionNextLink = motion.create(Link);
+const MotionAnchorLink = motion.create("a");
 
 const topVariant: Variants = {
   initial: { y: 0 },
