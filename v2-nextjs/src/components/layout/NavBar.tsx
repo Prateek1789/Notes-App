@@ -1,9 +1,13 @@
 "use client"
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+import Button from "../ui/Button";
 import ButtonLanding from "../ui/ButtonLanding";
-import ThemeToggle from "../ui/ThemeToggle";
+import FlipLink from "../ui/FlipLink";
+import NoteFlowLogo from "../icons/NoteFlowLogo";
 
 const Navbar = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -44,15 +48,13 @@ const Navbar = () => {
 	});
 
 	return (
-  	<nav className={`w-full h-auto p-px bg-line mx-w-[90rem]`}>
+  	<nav className={`w-full h-auto p-px bg-line mx-w-[90rem] overflow-x-hidden ${isMobileMenuOpen && 'shadow-2xl shadow-neutral-400 dark:shadow-neutral-900'}`}>
 			<div className={`navigation-container w-full h-full ${isMobileMenuOpen && 'open'} bg-white dark:bg-neutral-900 transition-all duration-300 ease-out overflow-hidden`}>
 			{/* Logo container */}
-			<div className="h-full px-2.5 flex items-center justify-center gap-2.5 rounded-lg [grid-area:logo]">
-				<span className="text-xl font-extrabold font-grotesk uppercase flex items-baseline-last justify-center gap-0.5">
-					NoteFlow
-					<span className="w-2 h-2 rounded-full bg-primary"></span>
-				</span>
-			</div>
+			<Link href={"/"}
+						className="flex items-center">
+				<NoteFlowLogo />
+			</Link>
 
 			{/* Nav links */}
 			<div className="w-full h-auto overflow-hidden [grid-area:links]">
@@ -60,9 +62,10 @@ const Navbar = () => {
 					{navLinks.map(link => {
 						return (
 							<li key={link.href}>
-								<a href={link.href} className="" onClick={(e) => handleNavClick(e, link.href)}>
-									{link.name}
-								</a>
+								<FlipLink 
+									text={link.name} 
+									href={link.href} 
+									onClick={(e) => handleNavClick(e, link.href)}/>
 							</li>
 						)
 					})}
@@ -70,22 +73,31 @@ const Navbar = () => {
 			</div>
 			
 			{/* Hamburger menu button, only visible in screen sizes < 768px */} 
-			<button className="w-12 h-full px-2.5 rounded-lg bg-primary flex flex-col items-center justify-center gap-2.75 md:hidden [grid-area:menu]"
-							onClick={() => setIsMobileMenuOpen(prev => !prev)}
-							aria-expanded={isMobileMenuOpen}
-							aria-label="Toggle Navigation Menu">
-				<div className="w-full h-0.5 bg-white"></div>
-				<div className="w-full h-0.5 bg-white"></div>
-			</button>
+			<Button
+				intent="primary"
+				size="md" 
+				className="relative h-full aspect-square p-0 gap-2.75 md:hidden [grid-area:menu]"
+				onClick={() => setIsMobileMenuOpen(prev => !prev)}
+				aria-expanded={isMobileMenuOpen}
+				aria-label="Toggle Navigation Menu">
+				<div className={`absolute w-5 h-0.5 -translate-y-1.75 ${isMobileMenuOpen && "translate-y-0"} rounded-full bg-white`} aria-hidden={true}></div>
+				<div className={`absolute w-5 h-0.5 translate-y-2 ${isMobileMenuOpen && "translate-y-0"} rounded-full bg-white`} aria-hidden={true}></div>
+			</Button>
 			
 			{/* Login button */}
-			<div className="w-full h-auto flex items-center gap-4 overflow-hidden [grid-area:login] ">
-				<ThemeToggle />
-				<ButtonLanding className="w-full pl-3 pr-1.75 py-1.75 justify-between"
-							   intent="primary"
-							   size="sm"
-								 onClick={() => handleNavigation("/login")}>
+			<div className="w-auto h-auto flex gap-2 overflow-hidden [grid-area:login]">
+				<ButtonLanding 
+					intent="ghost"
+					size="sm"
+					onClick={() => handleNavigation("/login")}>
 					Login
+				</ButtonLanding>
+
+				<ButtonLanding 
+					intent="primary"
+					size="sm"
+					onClick={() => handleNavigation("/signup")}>
+					Sign Up
 				</ButtonLanding>
 			</div>
 			</div>
