@@ -3,7 +3,7 @@ import Button from "./Button";
 
 type PrimaryButtonProps = {
 	size: "sm" | "md" | "lg",
-	intent: "primary" | "ghost" | "default",
+	intent: "primary" | "ghost",
 };
 
 const ButtonLanding = ({
@@ -15,27 +15,44 @@ const ButtonLanding = ({
 }: PrimaryButtonProps
  & React.ComponentProps<"button">) => {
 
-	const arrowWrapperSize = {
-		"sm": "w-10 h-full py-1 rounded-md",
-		"md": "w-12 h-full py-1.5 rounded-lg",
-		"lg": "w-14 h-full py-2 rounded-lg",
+	const buttonSize = {
+		sm: "py-1.5 pl-2.5 pr-1.5",
+		md: "py-1.75 pl-3 pr-1.75 ",
+		lg: "py-2 pl-4 pr-2",
 	};
 
-	const arrowSize = {
-		"sm": 16,
-		"md": 18,
-		"lg": 20,
+	const iconWrapperStyles = {
+		intent: {
+			primary: "border-blue-400",
+			ghost: "border-blue-100 dark:border-gray-700",
+		},
+		size: {
+			sm: "w-9 h-6 rounded-sm",
+			md: "w-12 h-8 rounded-md",
+			lg: "w-14 h-10 rounded-lg",
+		}
+	};
+
+	const iconSize = {
+		sm: 16,
+		md: 18,
+		lg: 20,
 	};
 
   return (
-    <Button className={className}
+    <Button 
+						className={`${className} ${buttonSize[size]}`}
             intent={intent}
             size={size}
             { ...props }>
       {children}
-      <span className={`${arrowWrapperSize[size]} flex justify-center border border-primary-ghost bg-inherit/80 bg-blend-lighten`}>
-        <ArrowRight size={arrowSize[size]} 
-					className="group-hover/btn:translate-x-2 duration-240" />
+      <span className={`relative bg-transparent overflow-hidden border ${iconWrapperStyles.size[size]} ${iconWrapperStyles.intent[intent]}`}>
+        <ArrowRight 
+					size={iconSize[size]} 
+					className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 group-hover/btn:translate-x-[120%] group-hover/btn:delay-0 delay-200 transition-transform duration-300" />
+        <ArrowRight 
+					size={iconSize[size]} 
+					className="absolute top-1/2 right-1/2 -translate-y-1/2 -translate-x-[200%] group-hover/btn:translate-x-1/2 group-hover/btn:delay-200 transition-transform duration-400" />
       </span>
     </Button>
   )
