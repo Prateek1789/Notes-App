@@ -1,5 +1,5 @@
-import { fieldCva } from "@/utils/inputStyles";
 import { cn } from "@/utils/cn";
+import { cva } from "class-variance-authority";
 
 type FieldStates = "idle" | "valid" | "invalid";
 
@@ -8,6 +8,22 @@ type InputFieldProps = {
   state?: FieldStates,
   error?: string,
 };
+
+const field = cva(
+	"h-12 md:h-12 w-full px-2 rounded-lg border focus:ring-2 focus:outline-2 placeholder:text-sm",
+	{
+    	variants: {
+			state: {
+				idle: "border-idle focus:border-focus focus:ring-focus-ring focus:outline-focus-ring",
+				valid: "border-valid focus:ring-valid-focus focus:outline-valid-focus",
+				invalid: "border-invalid focus:ring-invalid-focus focus:outline-invalid-focus",
+			}
+    	},
+		defaultVariants: {
+			state: "idle",
+		}
+  	}
+);
 
 const InputField = ({
 	type,
@@ -28,7 +44,7 @@ const InputField = ({
       <input type={type}
 						 placeholder={placeholder}
 						 id={props.id} 
-             className={cn(fieldCva({ state }), className)}
+             className={cn(field({ state }), className)}
              ref={ref}
 						 aria-invalid={state == "invalid" ? true : false}
 						 aria-describedby={`${props.id}-error`}
