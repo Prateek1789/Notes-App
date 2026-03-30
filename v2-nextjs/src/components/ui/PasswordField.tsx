@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { Eye, EyeOff } from "lucide-react";
 
