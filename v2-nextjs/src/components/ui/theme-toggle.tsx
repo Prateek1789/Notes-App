@@ -1,29 +1,57 @@
+"use client"
+
+import { useEffect, useState } from "react";
 import { MoonStar, Sun, Monitor } from "lucide-react";
 import { useTheme } from "next-themes";
 
+import {
+  FieldSet, 
+  FieldLegend, 
+  FieldLabel,
+} from "./field";
+import { RadioGroup, RadioGroupItem } from "./radio-group";
+
+const themes = [
+  { theme: 'light', icon: Sun }, 
+  { theme: 'system', icon: Monitor}, 
+  { theme: 'dark', icon: MoonStar},
+];
+
 const ThemeToggle = () => {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
-    <div className="h-auto w-auto bg-line p-px">
-      <div className="h-full w-auto flex items-center justify-center gap-px [clip-path:var(--clip-bevel-xs)]">
-        <button type="button"
-                className="w-8 h-8 flex items-center justify-center bg-white dark:bg-neutral-900 hover:bg-primary transition-colors"
-                onClick={() => setTheme("light")}>
-          <Sun size={14} />
-        </button>
-        <button type="button"
-                className="w-8 h-8 flex items-center justify-center bg-white dark:bg-neutral-900 hover:bg-primary transition-colors"
-                onClick={() => setTheme("system")}>
-          <Monitor size={14} />
-        </button>
-        <button type="button"
-                className="w-8 h-8 flex items-center justify-center bg-white dark:bg-neutral-900 hover:bg-primary transition-colors"
-                onClick={() => setTheme("dark")}>
-          <MoonStar size={14} />
-        </button>
-      </div>
-    </div>
+    <FieldSet className="w-auto h-auto rounded-full flex items-center">
+      <FieldLegend className="sr-only">Chose color theme preference</FieldLegend>
+      <RadioGroup
+        value={theme}
+        onValueChange={setTheme}
+        orientation="horizontal" 
+        className="w-auto h-auto p-px flex items-center gap-px bg-card border rounded-full">
+        {themes.map((th) => {
+          return (
+            <FieldLabel
+              key={th.theme}
+              htmlFor={`radio-${th.theme}`}
+              className="relative size-8 p-0 flex items-center justify-center has-data-checked:bg-border dark:has-data-checked:bg-border rounded-full">
+              <RadioGroupItem
+                value={th.theme} 
+                id={`radio-${th.theme}`} 
+                className="absolute sr-only" />
+              <span className="sr-only">Set theme preference: {th.theme}</span>
+              {<th.icon size={15} aria-hidden={true} className="shrink-0 inline-block"/>}
+            </FieldLabel>
+          )
+        })}
+      </RadioGroup>
+    </FieldSet>
   )
 };
 
