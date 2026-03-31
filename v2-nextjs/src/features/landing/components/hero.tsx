@@ -39,8 +39,8 @@ const Hero = () => {
             View Demo
           </ButtonHero>
         </div>
-        <div className="w-full h-[70vh] p-2 mt-8 bg-transparent backdrop-blur-xl rounded-2xl border border-line drop-shadow-2xl drop-shadow-neutral-300 dark:drop-shadow-neutral-800/70">
-          <div className="w-full h-full rounded-lg bg-white border border-line dark:bg-neutral-900">
+        <div className="w-full h-[70vh] p-2 mt-8 bg-transparent backdrop-blur-xl rounded-2xl border drop-shadow-2xl drop-shadow-neutral-300 dark:drop-shadow-neutral-800/70">
+          <div className="w-full h-full rounded-lg bg-card border">
           </div>
         </div>
       </header>
