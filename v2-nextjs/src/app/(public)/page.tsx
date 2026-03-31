@@ -1,9 +1,9 @@
-import Hero from "@/components/sections/Hero";
-import FeatureGrid from "@/components/sections/FeatureGrid";
-import EditorShowcase from "@/components/sections/EditorShowcase";
-import DevFocus from "@/components/sections/DevFocus";
-import CallToAction from "@/components/sections/CallToAction";
-import Footer from "@/components/sections/Footer";
+import Hero from "@/features/landing/components/hero";
+import FeatureGrid from "@/features/landing/components/feature-grid";
+import EditorShowcase from "@/features/landing/components/editor-showcase";
+import DevFocus from "@/features/landing/components/dev-focus";
+import CallToAction from "@/features/landing/components/call-to-action";
+import Footer from "@/features/landing/components/footer";
 
 export default function Home() {
   return (
