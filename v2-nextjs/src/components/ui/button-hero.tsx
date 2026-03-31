@@ -1,61 +1,81 @@
 import { ArrowRight } from "lucide-react";
-import Button from "./Button";
+import { Button } from "./button";
 
-type PrimaryButtonProps = {
-	size: "sm" | "md" | "lg",
-	intent: "primary" | "ghost",
+type HeroButtonProps = {
+	size: "xs" | "sm" | "lg" | "default" | "icon" | "icon-xs" | "icon-sm" | "icon-lg",
+	variant: "default" | "ghost" | "outline" | "secondary",
 };
 
-const ButtonLanding = ({
+type ButtonSize = {
+	[key: string]: string | number,
+};
+
+type HeroButtonIconWrapperProps = {
+	variant: {
+		[key: string]: string
+		default: string,
+		outline: string,
+		ghost: string,
+	},
+	size: {
+		[key: string]: string,
+		xs: string,
+		sm: string,
+		lg: string,
+	}
+};
+
+const ButtonHero = ({
 	size,
-	intent,
+	variant,
 	className,
 	children,
 	...props
-}: PrimaryButtonProps
+}: HeroButtonProps
  & React.ComponentProps<"button">) => {
 
-	const buttonSize = {
-		sm: "py-1.5 pl-2.5 pr-1.5",
-		md: "py-1.75 pl-3 pr-1.75 ",
-		lg: "py-2 pl-4 pr-2",
+	const buttonSize: ButtonSize = {
+		xs: "text-sm py-4.25 pr-1.25 font-base",
+		sm: "text-base py-6 pr-2 rounded-lg",
+		lg: "text-lg py-7 pr-2 pl-4",
 	};
 
-	const iconWrapperStyles = {
-		intent: {
-			primary: "border-blue-400",
-			ghost: "border-blue-100 dark:border-gray-700",
+	const iconWrapperStyles: HeroButtonIconWrapperProps = {
+		variant: {
+			default: "border-blue-400",
+			outline: "border-border dark:border-input",
+			ghost: "border-none"
 		},
 		size: {
-			sm: "w-9 h-6 rounded-sm",
-			md: "w-12 h-8 rounded-md",
-			lg: "w-14 h-10 rounded-lg",
+			xs: "w-8 h-6 rounded-sm",
+			sm: "w-10 h-8 rounded-sm",
+			lg: "w-12 h-10 rounded-md",
 		}
 	};
 
-	const iconSize = {
-		sm: 16,
-		md: 18,
+	const iconSize: ButtonSize = {
+		xs: 16,
+		sm: 18,
 		lg: 20,
 	};
 
   return (
     <Button 
-						className={`${className} ${buttonSize[size]}`}
-            intent={intent}
-            size={size}
-            { ...props }>
+			className={`${className} ${buttonSize[size]} gap-2`}
+      variant={variant}
+      size={size}
+      { ...props }>
       {children}
-      <span className={`relative bg-transparent overflow-hidden border ${iconWrapperStyles.size[size]} ${iconWrapperStyles.intent[intent]}`}>
+      <span className={`relative bg-transparent overflow-hidden border ${iconWrapperStyles.size[size]} ${iconWrapperStyles.variant[variant]}`}>
         <ArrowRight 
 					size={iconSize[size]} 
-					className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 group-hover/btn:translate-x-[120%] group-hover/btn:delay-0 delay-200 transition-transform duration-300" />
+					className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 group-hover/button:translate-x-[130%] group-hover/button:delay-0 delay-220 transition-transform duration-300" />
         <ArrowRight 
 					size={iconSize[size]} 
-					className="absolute top-1/2 right-1/2 -translate-y-1/2 -translate-x-[200%] group-hover/btn:translate-x-1/2 group-hover/btn:delay-200 transition-transform duration-400" />
+					className="absolute top-1/2 right-1/2 -translate-y-1/2 -translate-x-[200%] group-hover/button:translate-x-1/2 group-hover/button:delay-200 transition-transform duration-400" />
       </span>
     </Button>
   )
 };
 
-export default ButtonLanding
+export default ButtonHero
