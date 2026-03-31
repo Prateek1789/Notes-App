@@ -3,6 +3,7 @@
 import Link, { LinkProps } from "next/link";
 import { Transition, Variants } from "motion";
 import { motion, MotionProps } from "motion/react";
+import { cn } from "@/lib/utils";
 
 type Links = "Anchor" | "NextLink";
 
@@ -50,7 +51,7 @@ const FlipLink = ({
       whileHover="hovered"
       href={href} 
       aria-label={text}
-      className={`relative flex uppercase text-sm font-medium overflow-hidden whitespace-nowrap ${className}`}
+      className={cn("relative flex uppercase text-sm font-medium overflow-hidden whitespace-nowrap", className)}
       style={{ lineHeight: 0.98 }}
       { ...props }>
 
