@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import ButtonLanding from "../ui/ButtonLanding";
+import ButtonHero from "@/components/ui/button-hero";
 
 const CallToAction = () => {
   const router = useRouter();
@@ -20,17 +20,18 @@ const CallToAction = () => {
           Join thousands of developers who have switched to the most versatile note-taking app on the market.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <ButtonLanding className="pl-5 pr-2.5 py-2.5 shadow-xl"
-                         intent="primary"
-                         size="lg"
-                         onClick={() => handleNavigation("/signup")}>
+          <ButtonHero
+            className="shadow-xl" 
+            variant="default"
+            size="lg"
+            onClick={() => handleNavigation("/signup")}>
             Get Started Free
-          </ButtonLanding>
-          <ButtonLanding className="pl-5 pr-2.5 py-2.5"
-                         intent="ghost"
-                         size="lg">
+          </ButtonHero>
+          <ButtonHero 
+            variant="outline"
+            size="lg">
             Read the Manifesto
-          </ButtonLanding>
+          </ButtonHero>
         </div>
     	</div>
   	</section>
@@ -38,3 +39,6 @@ const CallToAction = () => {
 };
 
 export default CallToAction
+
+// pl-5 pr-2.5 py-2.5 shadow-xl
+// pl-5 pr-2.5 py-2.5
