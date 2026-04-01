@@ -4,12 +4,12 @@ import { ChangeEvent } from "react";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginSchemaTypes } from "@/schema/auth.validation";
+import { loginSchema, LoginSchemaTypes } from "@/features/auth/auth.schema";
 
-import InputField from "@/components/ui/InputField";
-import PasswordField from "@/components/ui/PasswordField";
-import Button from "@/components/ui/Button";
-import FooterBranding from "@/components/ui/FooterBranding";
+import InputField from "@/components/ui/input-field";
+import PasswordField from "@/components/ui/password-field";
+import { Button } from "@/components/ui/button";
+import FooterBranding from "@/components/ui/footer-branding";
 
 const LoginPage = () => {
 	const {
@@ -128,8 +128,8 @@ const LoginPage = () => {
 
         <Button type='submit'  
                 className='w-full py-2.5 max-w-md rounded-lg shadow-xl mt-2'
-								intent="primary"
-								size="md"
+								variant="default"
+								size="lg"
 								disabled={isSubmitting}>
 					Login
 				</Button>
