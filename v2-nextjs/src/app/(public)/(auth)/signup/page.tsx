@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useState, FocusEvent, ChangeEvent } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema, SignUpSchemaTypes } from "@/schema/auth.validation";
+import { signUpSchema, SignUpSchemaTypes } from "@/features/auth/auth.schema";
 
-import InputField from "@/components/ui/InputField";
-import PasswordField from "@/components/ui/PasswordField";
-import Button from "@/components/ui/Button";
-import FooterBranding from "@/components/ui/FooterBranding";
+import InputField from "@/components/ui/input-field";
+import PasswordField from "@/components/ui/password-field";
+import { Button } from "@/components/ui/button";
+import FooterBranding from "@/components/ui/footer-branding";
 
 type FieldStates = "idle" | "valid" | "invalid";
 type FieldStateObject = Record<keyof SignUpSchemaTypes, FieldStates>;
@@ -140,8 +140,8 @@ const SignUpPage = () => {
 
         <Button type='submit'  
                 className='w-full py-2.5 max-w-md rounded-lg shadow-xl mt-2'
-								intent="primary"
-								size="md"
+								variant="default"
+								size="lg"
 								disabled={isSubmitting}>
 					Sign Up
 				</Button>
