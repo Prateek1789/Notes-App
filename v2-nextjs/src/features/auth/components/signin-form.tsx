@@ -1,10 +1,13 @@
 "use client"
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ChangeEvent } from "react";
+import { createClient } from "@/lib/supabase/client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { loginSchema as SignInSchema, LoginSchemaTypes as SignInSchemaTypes } from "../auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangeEvent } from "react";
+import { LoaderCircle } from "lucide-react";
 
 import {
   Card,
@@ -24,7 +27,6 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import NoteFlowLogo from "@/components/icons/NoteFlowLogo";
 
 const SignInForm = () => {
@@ -40,14 +42,33 @@ const SignInForm = () => {
     reValidateMode: "onSubmit",
   });
 
-  const onSubmit: SubmitHandler<SignInSchemaTypes> = ({ user_email: email, user_password: password }) => {
-    console.log(email, password);
+  const router = useRouter();
+
+  const onSubmit: SubmitHandler<SignInSchemaTypes> = async ({ user_email: email, user_password: password }) => {
+    const supabase = createClient();
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      if (error) throw error;
+      router.refresh();
+      router.push("/dashboard");
+    }
+    catch (err: unknown) {
+      setError("root", {
+        type: "400",
+        message: `${err instanceof Error ? err.message : "Invalid sign in credentials"}`,
+      });
+    }
   };
 
   const handleErrors = (e: ChangeEvent<HTMLInputElement>) => {
     const key = e.target.name as keyof SignInSchemaTypes;
-    if (errors[key]) {
+    if (errors[key] || errors.root) {
       clearErrors(key);
+      clearErrors("root");
       return;
     }
   };
@@ -69,7 +90,7 @@ const SignInForm = () => {
           <FieldSet className="w-full h-full flex items-center justify-center">
             <FieldLegend className="sr-only">NoteFlow Sign In form</FieldLegend>
             <FieldGroup className="w-full h-full gap-1">
-              <Field data-invalid={errors.user_email ? true : false} className="min-h-23">
+              <Field data-invalid={errors.user_email || errors.root ? true : false} className="min-h-23">
                 <FieldLabel htmlFor="user-email">
                   Email Address
                 </FieldLabel>
@@ -78,13 +99,13 @@ const SignInForm = () => {
                   id="user-email"
                   className="text-sm md:text-base h-10" 
                   placeholder="e.g johndoe1437@xyz.com"
-                  aria-invalid={errors.user_email ? true : false} 
+                  aria-invalid={errors.user_email || errors.root ? true : false} 
                   { ...register("user_email", {
                     onChange: handleErrors,
                   }) } />
                 { errors.user_email && <FieldError className="text-right text-xs" errors={[errors.user_email]} />}
               </Field>
-              <Field data-invalid={errors.user_password ? true : false} className="min-h-23">
+              <Field data-invalid={errors.user_password || errors.root ? true : false} className="min-h-23">
                 <div className="w-full flex items-center justify-between">
                   <FieldLabel className="justify-self-start" htmlFor="user-password">
                     Password
@@ -96,11 +117,13 @@ const SignInForm = () => {
                   id="user-password"
                   className="text-sm md:text-base h-10" 
                   placeholder="e.g johndoe1437-xYz-PloL" 
-                  aria-invalid={errors.user_password ? true : false} 
+                  aria-invalid={errors.user_password || errors.root ? true : false} 
                   { ...register("user_password", {
                     onChange: handleErrors,
                   }) } />
-                { errors.user_password && <FieldError errors={[errors.user_password]} className="text-right text-xs" /> }
+                { (errors.user_password || errors.root) 
+                  && <FieldError errors={[errors.user_password || errors.root]} className="text-right text-xs" /> 
+                }
               </Field>
             </FieldGroup>
           </FieldSet>
@@ -114,7 +137,8 @@ const SignInForm = () => {
           size={"lg"}
           disabled={isSubmitting}
         >
-          Sign In
+          { isSubmitting && <LoaderCircle size={16} className="animate-spin duration-400 repeat-infinite" /> }
+          { isSubmitting ? "Signing in..." : "Sign In" }
         </Button>
       </CardFooter>
     </Card>
