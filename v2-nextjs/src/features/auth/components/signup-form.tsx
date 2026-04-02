@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { ChangeEvent, FocusEvent } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signUpSchema, SignUpSchemaTypes } from "../auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,10 +40,19 @@ const SignUpForm = () => {
 
   const onSubmit: SubmitHandler<SignUpSchemaTypes> = (data) => {
     console.log(data);
-  }; 
+  };
+  
+  const validateOnBlur = (e: FocusEvent<HTMLInputElement>) => {
+    const key = e.target.name as keyof SignUpSchemaTypes;
 
-  const handleErrors = () => {
+    if (!e.target.value) return; // if Input field has no value return early
+    trigger(key); // trigger validation on blur only if the input field has a value
+  };
 
+  const handleErrors = (e: ChangeEvent<HTMLInputElement>) => {
+    const key = e.target.name as keyof SignUpSchemaTypes;
+
+    if (errors[key]) clearErrors(key); // clear errors only if the field has an error
   };
 
   return (
@@ -60,7 +69,7 @@ const SignUpForm = () => {
           noValidate
         >
           <FieldSet className="w-full h-full flex items-center justify-center">
-            <FieldLegend className="sr-only">NoteFlow Sign In form</FieldLegend>
+            <FieldLegend className="sr-only">NoteFlow Sign Up form</FieldLegend>
             <FieldGroup className="w-full h-full gap-1">
               <Field data-invalid={errors.user_name ? true : false} className="min-h-23">
                 <FieldLabel htmlFor="user-name">
@@ -74,6 +83,7 @@ const SignUpForm = () => {
                   aria-invalid={errors.user_name ? true : false} 
                   { ...register("user_name", {
                     onChange: handleErrors,
+                    onBlur: validateOnBlur,
                   }) } />
                 { errors.user_name && <FieldError className="text-right text-xs" errors={[errors.user_name]} />}
               </Field>
@@ -89,6 +99,7 @@ const SignUpForm = () => {
                   aria-invalid={errors.user_email ? true : false} 
                   { ...register("user_email", {
                     onChange: handleErrors,
+                    onBlur: validateOnBlur,
                   }) } />
                 { errors.user_email && <FieldError className="text-right text-xs" errors={[errors.user_email]} />}
               </Field>
@@ -106,6 +117,7 @@ const SignUpForm = () => {
                   aria-invalid={errors.user_password ? true : false} 
                   { ...register("user_password", {
                     onChange: handleErrors,
+                    onBlur: validateOnBlur
                   }) } />
                 { errors.user_password && <FieldError errors={[errors.user_password]} className="text-right text-xs" /> }
               </Field>
@@ -123,6 +135,7 @@ const SignUpForm = () => {
                   aria-invalid={errors.user_confirm_password ? true : false} 
                   { ...register("user_confirm_password", {
                     onChange: handleErrors,
+                    onBlur: validateOnBlur,
                   }) } />
                 { errors.user_confirm_password && <FieldError errors={[errors.user_confirm_password]} className="text-right text-xs" /> }
               </Field>
