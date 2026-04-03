@@ -1,6 +1,8 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FocusEvent } from "react";
+import { createClient } from "@/lib/supabase/client";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signUpSchema, SignUpSchemaTypes } from "../auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,6 +25,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import NoteFlowLogo from "@/components/icons/NoteFlowLogo";
+import { LoaderCircle } from "lucide-react";
 
 const SignUpForm = () => {
   const {
@@ -38,26 +42,53 @@ const SignUpForm = () => {
     reValidateMode: "onSubmit"
   });
 
-  const onSubmit: SubmitHandler<SignUpSchemaTypes> = (data) => {
-    console.log(data);
+  const router = useRouter();
+
+  const onSubmit: SubmitHandler<SignUpSchemaTypes> = async ({ user_email: email, user_password: password, user_name }) => {
+    const supabase = createClient();
+
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            user_name,
+          },
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+        }
+      });
+      if (error) throw error;
+      router.push("/signup-success?verified=true");
+    }
+    catch(err) {
+      setError("root", {
+        type: "400",
+        message: `${err instanceof Error ? err.message : "An error occured"}`,
+      });
+    }
   };
   
   const validateOnBlur = (e: FocusEvent<HTMLInputElement>) => {
     const key = e.target.name as keyof SignUpSchemaTypes;
 
-    if (!e.target.value) return; // if Input field has no value return early
-    trigger(key); // trigger validation on blur only if the input field has a value
+    if (!e.target.value) return;      // if Input field has no value return early
+    trigger(key);                     // trigger validation on blur only if the input field has a value
   };
 
   const handleErrors = (e: ChangeEvent<HTMLInputElement>) => {
     const key = e.target.name as keyof SignUpSchemaTypes;
 
-    if (errors[key]) clearErrors(key); // clear errors only if the field has an error
+    if (errors[key] || errors.root) {   // clear errors if a field or the root has an error
+      clearErrors(key);
+      clearErrors("root");
+    };
   };
 
   return (
-    <Card className="w-full max-w-sm h-auto pt-6">
-      <CardHeader className="justify-items-center gap-2">
+    <Card className="w-full max-w-sm pt-0 gap-1">
+      <CardHeader className="pt-4 md:pt-6 justify-items-center gap-0 md:gap-2">
+        <span aria-hidden={true}><NoteFlowLogo /></span>
         <CardTitle className="text-xl font-semibold">Welcome to NoteFlow!</CardTitle>
         <CardDescription>Enter your details to sign up</CardDescription>
       </CardHeader>
@@ -137,13 +168,15 @@ const SignUpForm = () => {
                     onChange: handleErrors,
                     onBlur: validateOnBlur,
                   }) } />
-                { errors.user_confirm_password && <FieldError errors={[errors.user_confirm_password]} className="text-right text-xs" /> }
+                { (errors.user_confirm_password || errors.root) && 
+                  <FieldError errors={[errors.user_confirm_password || errors.root]} className="text-right text-xs" /> 
+                }
               </Field>
             </FieldGroup>
           </FieldSet>
         </form>
       </CardContent>
-      <CardFooter className="">
+      <CardFooter className="mt-1">
         <Button 
           type="submit" 
           form="noteflow-signup-form"
@@ -151,7 +184,8 @@ const SignUpForm = () => {
           size={"lg"}
           disabled={isSubmitting}
         >
-          Sign Up
+          { isSubmitting && <LoaderCircle size={16} className="animate-spin duration-400 repeat-infinite" />}
+          { isSubmitting ? "Signing Up..." : "Sign Up" }
         </Button>
       </CardFooter>
     </Card>
