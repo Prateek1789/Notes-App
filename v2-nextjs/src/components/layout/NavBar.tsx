@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import Button from "../ui/Button";
-import ButtonLanding from "../ui/ButtonLanding";
-import FlipLink from "../ui/FlipLink";
+import { Button } from "../ui/button";
+import ButtonHero from "../ui/button-hero";
+import FlipLink from "../ui/flip-link";
 import NoteFlowLogo from "../icons/NoteFlowLogo";
 
 const Navbar = () => {
@@ -48,8 +48,8 @@ const Navbar = () => {
 	});
 
 	return (
-  	<nav className={`w-full h-auto p-px bg-line mx-w-[90rem] overflow-x-hidden ${isMobileMenuOpen && 'shadow-2xl shadow-neutral-400 dark:shadow-neutral-900'}`}>
-			<div className={`navigation-container w-full h-full ${isMobileMenuOpen && 'open'} bg-white dark:bg-neutral-900 transition-all duration-300 ease-out overflow-hidden`}>
+  	<nav className={`w-full h-auto p-px bg-transparent mx-w-[90rem] overflow-x-hidden ${isMobileMenuOpen && 'shadow-2xl shadow-neutral-400 dark:shadow-neutral-900'}`}>
+			<div className={`navigation-container w-full h-full ${isMobileMenuOpen && 'open'} bg-background/70 backdrop-blur-md  transition-all duration-300 ease-out overflow-hidden`}>
 			{/* Logo container */}
 			<Link href={"/"}
 						className="flex items-center">
@@ -65,7 +65,7 @@ const Navbar = () => {
 								<FlipLink 
 									text={link.name} 
 									href={link.href} 
-									onClick={(e) => handleNavClick(e, link.href)}/>
+									onClick={(e) => handleNavClick(e, link.href)} />
 							</li>
 						)
 					})}
@@ -74,8 +74,8 @@ const Navbar = () => {
 			
 			{/* Hamburger menu button, only visible in screen sizes < 768px */} 
 			<Button
-				intent="primary"
-				size="md" 
+				variant="default"
+				size="sm" 
 				className="relative h-full aspect-square p-0 gap-2.75 md:hidden [grid-area:menu]"
 				onClick={() => setIsMobileMenuOpen(prev => !prev)}
 				aria-expanded={isMobileMenuOpen}
@@ -85,20 +85,20 @@ const Navbar = () => {
 			</Button>
 			
 			{/* Login button */}
-			<div className="w-auto h-auto flex gap-2 overflow-hidden [grid-area:login]">
-				<ButtonLanding 
-					intent="ghost"
-					size="sm"
+			<div className="w-auto h-auto flex items-center gap-2 overflow-hidden [grid-area:login]">
+				<ButtonHero 
+					variant="outline"
+					size="xs"
 					onClick={() => handleNavigation("/login")}>
-					Login
-				</ButtonLanding>
+					Sign In
+				</ButtonHero>
 
-				<ButtonLanding 
-					intent="primary"
-					size="sm"
+				<ButtonHero 
+					variant="default"
+					size="xs"
 					onClick={() => handleNavigation("/signup")}>
 					Sign Up
-				</ButtonLanding>
+				</ButtonHero>
 			</div>
 			</div>
   	</nav>
