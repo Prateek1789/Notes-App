@@ -28,6 +28,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -53,14 +54,6 @@
   --color-ping: var(--ping);
   --color-ping-pulse: var(--ping-pulse);
 
-  --color-idle: var(--field-idle);
-  --color-focus: var(--field-focus);
-  --color-focus-ring: var(--field-focus-2);
-  --color-valid: var(--field-valid);
-  --color-valid-focus: var(--field-valid-focus);
-  --color-invalid: var(--field-invalid);
-  --color-invalid-focus: var(--field-invalid-focus);
-
   --color-line: var(--line);
   --color-line-dark: var(--line-dark);
   --color-line-ghost: var(--line-ghost);
@@ -75,7 +68,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.488 0.243 264.376);
+  --primary: oklch(0.582 0.245 262.881) /* oklch(0.488 0.243 264.376)) */;
   --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
@@ -84,6 +77,7 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
+  --success: oklch(0.70 0.219 149.579);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -103,21 +97,11 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* --- Custom Variables --- */
-
   --ping: oklch(62.7% 0.194 149.214);
   --ping-pulse: oklch(79.2% 0.209 151.711);
   --hero-gradient-primary: oklch(0.9702 0 260);
   --hero-gradient-secondary: var(--background);
   --hero-gradient-dots: oklch(0.9041 0.0032 266.69);
-
-  --field-idle: oklch(87% 0 0);
-  --field-focus: var(--primary);
-  --field-focus-2: oklch(80.9% 0.105 251.813);
-  --field-valid: oklch(72.3% 0.219 149.579);
-  --field-valid-focus: oklch(87.1% 0.15 154.449);
-  --field-invalid: oklch(63.7% 0.237 25.331);
-  --field-invalid-focus: oklch(80.8% 0.114 19.571);
-
   --branding-text: oklch(93.0% 0.006 264.531);
 
   --line: oklch(91% 0 0);
@@ -138,7 +122,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.424 0.199 265.638);
+  --primary: oklch(0.582 0.245 262.881) /* oklch(0.424 0.199 265.638) */;
   --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
@@ -147,6 +131,7 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
+  --success: oklch(0.60 0.219 149.579);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
@@ -165,23 +150,14 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   /* --- Custom Variables --- */
-
   --hero-gradient-primary: oklch(15.5% 0 0);
   --hero-gradient-secondary: var(--background);
   --hero-gradient-dots: oklch(26% 0.0132 266);
+  --branding-text: oklch(30% 0.002 260);
 
-  --field-idle: oklch(37.1% 0 0 / 90%);
-  --field-focus: var(--primary);
-  --field-focus-2: oklch(88.2% 0.059 254.128 / 50%);
-  --field-valid: oklch(44.8% 0.119 151.328);
-  --field-valid-focus: oklch(79.2% 0.209 151.711 / 60%);
-  --field-invalid: oklch(44.4% 0.177 26.899);
-  --field-invalid-focus: oklch(70.4% 0.191 22.216 / 60%);
-
+  /* --- Custom Variables needs to be removed later --- */
   --line: var(--line-dark);
   --line-ghost: oklch(24% 0 0);
-
-  --branding-text: oklch(30% 0.002 260);
 }
 
 @theme {
@@ -254,7 +230,7 @@
     display: flex;
     flex-direction: column;
     gap: 1px;
-    background-color: var(--line);
+    background-color: var(--border);
   }
   
   section {
