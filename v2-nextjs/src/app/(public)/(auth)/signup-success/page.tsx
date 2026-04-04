@@ -1,9 +1,14 @@
 import { redirect } from "next/navigation";
 import SignUpSuccessCard from "@/features/auth/components/signup-success";
 
-const SignUpSuccessPage = ({ searchParams }: { searchParams: { verified?: string }}) => {
+const SignUpSuccessPage = async ({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ verified?: string }> 
+}) => {
+  const { verified } = await searchParams;
 
-  if (searchParams.verified !== "true") {
+  if (verified !== "true") {
     redirect("/signup");
   };
 
