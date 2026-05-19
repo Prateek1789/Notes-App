@@ -17,7 +17,7 @@ const themes = [
   { theme: 'dark', icon: MoonStar},
 ];
 
-const ThemeToggle = () => {
+const ThemeToggle = ({ className }: { className: React.ComponentProps<"div"> }) => {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -28,7 +28,7 @@ const ThemeToggle = () => {
   if (!mounted) return null;
 
   return (
-    <FieldSet className="w-auto h-auto rounded-full flex items-center">
+    <FieldSet className={`w-auto h-auto rounded-full flex items-center ${className}`}>
       <FieldLegend className="sr-only">Chose color theme preference</FieldLegend>
       <RadioGroup
         value={theme}
@@ -40,13 +40,13 @@ const ThemeToggle = () => {
             <FieldLabel
               key={th.theme}
               htmlFor={`radio-${th.theme}`}
-              className="relative size-8 p-0 flex items-center justify-center has-data-checked:bg-border dark:has-data-checked:bg-border rounded-full">
+              className="relative size-6 p-0 flex items-center justify-center has-data-checked:bg-border dark:has-data-checked:bg-border rounded-full">
               <RadioGroupItem
                 value={th.theme} 
                 id={`radio-${th.theme}`} 
                 className="absolute sr-only" />
               <span className="sr-only">Set theme preference: {th.theme}</span>
-              {<th.icon size={15} aria-hidden={true} className="shrink-0 inline-block"/>}
+              {<th.icon size={14} aria-hidden={true} className="shrink-0 inline-block"/>}
             </FieldLabel>
           )
         })}
