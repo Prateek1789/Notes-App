@@ -17,7 +17,7 @@ const themes = [
   { theme: 'dark', icon: MoonStar},
 ];
 
-const ThemeToggle = ({ className }: { className: React.ComponentProps<"div"> }) => {
+const ThemeToggle = ({ className }: React.ComponentProps<"fieldset">) => {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
