@@ -51,7 +51,7 @@ const FlipLink = ({
       whileHover="hovered"
       href={href} 
       aria-label={text}
-      className={cn("relative flex uppercase text-sm font-medium overflow-hidden whitespace-nowrap", className)}
+      className={cn("relative flex text-sm font-medium overflow-hidden whitespace-nowrap", className)}
       style={{ lineHeight: 0.98 }}
       { ...props }>
 
