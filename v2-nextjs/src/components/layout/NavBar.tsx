@@ -11,10 +11,10 @@ import {
 	motion, 
 	Variants,
 	stagger, 
-	AnimatePresence 
+	AnimatePresence
 } from "motion/react"
 import { useIsMobile } from "@/hooks/use-mobile"
-import ButtonHero from "../ui/button-hero"
+import { Button } from "../ui/button"
 import FlipLink from "../ui/flip-link"
 import NoteFlowLogo from "../icons/NoteFlowLogo"
 
@@ -31,8 +31,8 @@ const navLinks = [
 ];
 
 const navButtons = [
-  { name: "Sign In", href: "/login", type: "default" },
-  { name: "Sign Up", href: "/signup", type: "outline" },
+  { name: "Sign In", href: "/login", type: "outline" },
+  { name: "Sign Up", href: "/signup", type: "default" },
 ];
 
 const NavbarContext = createContext<NavigationContextType | null>(null);
@@ -64,10 +64,10 @@ export default function Navbar() {
 
   return (
 		<NavbarContext value={{ isMenuOpen, toggleNavMenu, handleNavClick }}>
-    	<nav className={`relative mx-w-[90rem] flex h-12 w-full items-center justify-between bg-background px-1`}>
+    	<nav className={`relative mx-w-[90rem] flex h-12 w-full items-center justify-between bg-background px-1 md:px-2 border-l border-r`}>
       	<Link 
 					href={"/"} 
-					className="flex items-center"
+					className="flex items-center ml-1 md:ml-0"
 				>
         	<NoteFlowLogo />
       	</Link>
@@ -90,14 +90,15 @@ export default function Navbar() {
 						<div className="w-auto h-auto hidden md:flex items-center gap-2">
 							{navButtons.map(btn => {
 								return (
-									<ButtonHero
+									<Button
 										key={btn.name}
 										variant={btn.type === "default" ? "default" : "outline"}
-										size="xs"
+										size="lg"
 										onClick={() => router.push(btn.href)}
+										className="px-2.75"
 									>
 										{btn.name}
-									</ButtonHero>
+									</Button>
 								)
 							})}
 						</div>
@@ -105,7 +106,7 @@ export default function Navbar() {
 				)}
 
 				{/* ---- Hamburger Menu and Trigger for mobile screens ---- */}
-				{ isMobile && (<HamburgerMenuTrigger />) }
+				<HamburgerMenuTrigger />
 				<AnimatePresence initial={false}>
 					{ (isMenuOpen && isMobile)&& (<HamburgerMenu />)}
 				</AnimatePresence>
@@ -133,18 +134,18 @@ const HamburgerMenuTrigger = () => {
   return (
     <motion.button 
 			onClick={toggleNavMenu}
-			className="relative mr-0.5 flex h-8 w-8 flex-col items-center justify-center gap-3 rounded-sm"
+			className="relative mr-0.5 flex md:hidden h-8 w-8 flex-col items-center justify-center gap-3 rounded-sm"
 		>
-      <motion.span 
+    	<motion.span 
 				variants={triggerVariants}
 				initial={false}
 				animate={isMenuOpen ? "openTop" : "closedTop"}
 				transition={{ type: "keyframes" }}
 				className="h-0.5 w-5 rounded-lg bg-foreground"
 			></motion.span>
-      <motion.span
-				variants={triggerVariants} 
-				initial={false}
+    	<motion.span
+				variants={triggerVariants}
+				initial={false} 
 				animate={isMenuOpen ? "openBottom" : "closedBottom"}
 				transition={{ type: "keyframes" }}
 				className="h-0.5 w-5 rounded-lg bg-foreground"
@@ -160,7 +161,7 @@ const listVariants: Variants = {
 	visible: { 
 		opacity: 1, 
 		transition: { 
-			delayChildren: stagger(0.1, { startDelay: 0.2 }), 
+			delayChildren: stagger(0.1, { startDelay: 0.1 }), 
 		}
 	}
 };
@@ -183,44 +184,53 @@ const HamburgerMenu = () => {
 				transition: { delay: 0.1 } }
 			}
 			transition={{ type: "keyframes", duration: 0.25 }}
-			className="h-[calc(100vh-3.5rem)] w-full bg-background absolute top-full left-0 flex flex-col items-center justify-center gap-8"
+			className="h-[calc(100vh-3.5rem)] w-full px-4 py-14 bg-background absolute top-full left-0 flex items-start"
 		>
       <motion.ul
 				variants={listVariants}
 				initial={"hidden"}
 				animate={isMenuOpen ? "visible" : "hidden"} 
-				className="flex flex-col items-center justify-center gap-8"
+				className="w-full flex flex-col items-start justify-center"
 			>
-        {navLinks.map((link) => {
+				{/* --- Navigation Links --- */}
+        {navLinks.map((link, idx) => {
           return (
             <motion.li 
 							key={link.name}
 							variants={itemVariants}
 							transition={{ type: "keyframes" }}
+							className={`${idx === navLinks.length - 1 ? "mb-14" : "mb-6"}`}
 						>
               <FlipLink 
 								text={link.name} 
 								href={link.href}
-								className="text-lg" 
+								className="text-xl"
 								onClick={(e) => handleNavClick(e, link.href)} />
             </motion.li>
           )
         })}
-      </motion.ul>
-			<div className="w-auto h-auto flex flex-col items-center gap-6">
+				{/* --- Navigation Buttons --- */}
 				{navButtons.map(btn => {
 					return (
-						<ButtonHero
+						<motion.li
 							key={btn.name}
-							variant={btn.type === "default" ? "default" : "outline"}
-							size="sm"
-							onClick={() => router.push(btn.href)}
+							variants={itemVariants}
+							transition={{ type: "keyframes" }}
+							className="w-full h-auto mb-4"
 						>
-							{btn.name}
-						</ButtonHero>
+							<Button
+								key={btn.name}
+								type="button"
+								variant={btn.type === "default" ? "default" : "outline"}
+								size={"lg"}
+								className="w-full text-lg py-6"
+							>
+								{btn.name}
+							</Button>
+						</motion.li>
 					)
 				})}
-			</div>
+      </motion.ul>
     </motion.div>
   )
 };
