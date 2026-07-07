@@ -1,10 +1,8 @@
-
+import DashboardClientWrapper from "@/features/dashboard/components/layout/dashboard-client-wrapper";
 
 const DashboardPage = () => {
   return (
-    <main className="w-screen h-screen">
-      <h1>Noteflow, here ideas meet the tools</h1>
-    </main>
+   <DashboardClientWrapper />
   )
 };
 
