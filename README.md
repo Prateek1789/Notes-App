@@ -1,4 +1,4 @@
-# 📝 NoteWeaver (Or Your App Name)
+# 📝 NoteFlow (Monorepo)
 
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
@@ -9,50 +9,47 @@ A comprehensive, rich-text note-taking application designed to demonstrate the e
 
 This repository is structured as a monorepo, showcasing the progression of the application from a Vanilla JavaScript Single Page Application (SPA) to a fully Server-Side Rendered (SSR) Next.js application.
 
-## 🚀 Project Evolution (Repository Structure)  
+## 📂 Repository Structure
 
-### 📂 Folder Structure
 ```text
 Notes-App/
-├── .git/                 # Shared Git repository
-├── .gitignore            # Global ignore rules (node_modules, .next, .env)
-├── index.html            # Portfolio Landing Page (Version Directory)
-├── v0-vanilla/           # Version 0: Pure Vanilla JS SPA
-├── v1-react/             # Version 1: React, Vite, React Router v7
-└── v2-nextjs/            # Version 2: Next.js App Router Monolith
+├── assets/              # Icons and assets for the monorepo landing page
+├── .gitignore           # Global ignore rules (node_modules, .next, .env)
+├── index.html           # Monorepo landing page (Vanilla HTML)
+├── styles.css           # Stylesheet for the landing page
+├── README.md            # Monorepo documentation
+├── v0-vanilla/          # Version 0: Pure Vanilla JS SPA
+├── v1_React_App/        # Version 1: React SPA
+└── v2-nextjs/           # Version 2: Next.js Fullstack App
+```
 
-This project was deliberately built in three distinct phases to master different state management and routing paradigms:
+## 🚀 The Architectural Journey
 
-* **[v0-vanilla](./v0-vanilla):** The foundational UI and logic built with pure HTML, CSS, and Vanilla JavaScript.
-* **[v1-react](./v1-react):** A Client-Side Rendered (CSR) migration using **React**, **Vite**, and **React Router v7 (Declrative Mode)**. Implements local state management and client-side route protection.
-* **[v2-nextjs](./v2-nextjs):** The final production architecture. Rebuilt using **Next.js App Router**, leveraging Server Components, Server Actions for data mutation, and Edge Middleware for zero-layout-shift authentication.
+This project was deliberately engineered in three distinct phases. Rather than just building a final product, this monorepo serves as a masterclass in understanding *why* modern frameworks and state management tools exist by solving the same problems at increasing levels of complexity.
 
-## ✨ Core Features
+### 📂 [v0: The Fundamentals (Vanilla JS)](./v0-vanilla)
+* **Focus:** DOM manipulation, event delegation, and browser APIs.
+* **Architecture:** Pure Single Page Application (SPA).
+* **Tech:** HTML5, CSS3, Vanilla JavaScript (ES6+), LocalStorage API.
 
-* **Rich Text Editing:** Integrated with **TipTap** to support varied text nodes, formatting, code blocks, and lists.
-* **Notebook Organization:** Categorize notes into dedicated notebooks for structured knowledge management.
-* **Authentication Flow:** Secure login and registration with route protection (handled via client-loading in v1 and Server Middleware in v2).
-* **Soft Delete (Trash):** A dedicated trash bin interface for recovering or permanently deleting notes.
-* **Responsive Design:** Fully fluid UI built with Tailwind CSS, optimized for both desktop and mobile workflows.
+### 📂 [v1: Component Driven (React SPA)](./v1_React_App)
+* **Focus:** Declarative UI, client-side routing, and local state management.
+* **Architecture:** Client-Side Rendered (CSR) Application.
+* **Tech:** React, Vite, React Router, React Context API, TipTap Editor, Tailwind CSS.
 
-## 🛠️ Tech Stack Highlights 
+### 📂 [v2: Production Full-Stack (Next.js)](./v2-nextjs)
+* **Focus:** Full-stack architecture, secure authentication, data persistence, and native-feeling UI/UX.
+* **Architecture:** App Router Monolith (SSR/CSR Hybrid) with Backend-as-a-Service (BaaS).
+* **Tech (Frontend):** Next.js 16+, Zustand (Global State), Tailwind CSS, Framer Motion (Complex layout animations), Shadcn UI, React Hook Form + Zod (Validation).
+* **Tech (Editor):** TipTap (Custom engineered Notion-style rich-text canvas).
+* **Tech (Backend):** Supabase (PostgreSQL Database, Row Level Security, and User Authentication).
 
-**Version 0 (Vanilla JS):**
-* Architecture: Single Page Application (SPA)
-* UI/DOM: HTML5, CSS3, Vanilla JavaScript (ES6+) 
-* Storage: Browser LocalStorage API 
+## ✨ Core Features (v2 Highlights)
 
-**Version 1 (React):**
-* Routing & Data Fetching: React Router v7
-* Client State: React Context API
-* Editor: TipTap 
-* Styling: Tailwind CSS
-
-**Version 2 (Next.js):**
-* Framework: Next.js (App Router)
-* Server State & Mutations: Server Components & Server Actions
-* Auth Protection: Next.js Middleware
-* Client State (Editor): Zustand
+* **Notion-Style Rich Text:** A deeply customized TipTap editor supporting advanced text nodes, formatting, and slash-commands.
+* **Full-Stack Authentication:** Secure user sessions and protected routes handled via Supabase and Next.js.
+* **Native-Feel Responsive Layout:** Highly engineered conditional layouts utilizing Framer Motion for stack-navigation on mobile and multi-pane views on desktop.
+* **Data Persistence:** Relational database architecture (Users → Notebooks → Notes) securely stored in PostgreSQL.
 
 ## 💻 Getting Started (Local Development)
 
@@ -62,7 +59,7 @@ Because this is a monorepo, you can run any version of the application in isolat
 * Node.js (v18 or higher)
 * npm or pnpm   
 
-### Running Version 0 (React/Vite)
+### Running Version 0 (HTML, CSS, JS)
 No build step or installation is required for this version.
 cd v0-Vanilla/
 open index.html in your browser or local server extension like Live server
@@ -71,4 +68,12 @@ open index.html in your browser or local server extension like Live server
 ```bash
 cd v1_React_App
 npm install
+npm run dev
+```
+
+### Running Version 2 (NextJS/Vite)
+```bash
+cd v2_nextjs
+npm install
+# Create a .env.local file and add your Supabase keys
 npm run dev  
