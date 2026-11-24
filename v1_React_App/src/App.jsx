@@ -15,7 +15,6 @@ import Notebook from './pages/Notebook'
 import TrashPage from './pages/TrashPage'
 import ProtectedRoutes from './routes/ProtectedRoutes'
 import GuestRoutes from './routes/GuestRoutes'
-import './App.css'
 
 function App() { 
   return (
